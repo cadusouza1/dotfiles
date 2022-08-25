@@ -1,0 +1,93 @@
+
+
+Thu Mar 24 12:13:10 2022
+Command line: TestDisk
+
+TestDisk 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 5.4.0-105-generic (#119-Ubuntu SMP Mon Mar 7 18:49:24 UTC 2022) x86_64
+Compiler: GCC 9.2
+ext2fs lib: 1.45.5, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.1
+User is not root!
+Hard disk list
+
+
+TestDisk exited normally.
+Using locale 'LC_CTYPE=en_US.UTF-8;LC_NUMERIC=pt_BR.UTF-8;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=pt_BR.UTF-8;LC_MESSAGES=en_US.UTF-8;LC_PAPER=pt_BR.UTF-8;LC_NAME=pt_BR.UTF-8;LC_ADDRESS=pt_BR.UTF-8;LC_TELEPHONE=pt_BR.UTF-8;LC_MEASUREMENT=pt_BR.UTF-8;LC_IDENTIFICATION=pt_BR.UTF-8'.
+
+
+Thu Mar 24 12:13:10 2022
+Command line: TestDisk /debug
+
+TestDisk 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 5.4.0-105-generic (#119-Ubuntu SMP Mon Mar 7 18:49:24 UTC 2022) x86_64
+Compiler: GCC 9.2
+ext2fs lib: 1.45.5, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.1
+/dev/sda: LBA, HPA, LBA48, DCO support
+/dev/sda: size       1953525168 sectors
+/dev/sda: user_max   1953525168 sectors
+/dev/sda: native_max 1953525168 sectors
+/dev/sda: dco        1953525168 sectors
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop22 - 0 B - 0 sectors, sector size=512
+Hard disk list
+Disk /dev/sda - 1000 GB / 931 GiB - CHS 121601 255 63, sector size=512 - ST1000DM003-1SB102, S/N:Z9A5B46R, FW:CC43
+Disk /dev/loop0 - 4096 B - 8 sectors (RO), sector size=512
+Disk /dev/loop1 - 22 MB / 21 MiB - 43400 sectors (RO), sector size=512
+Disk /dev/loop10 - 172 MB / 164 MiB - 337424 sectors (RO), sector size=512
+Disk /dev/loop11 - 164 MB / 156 MiB - 320520 sectors (RO), sector size=512
+Disk /dev/loop12 - 209 MB / 199 MiB - 409160 sectors (RO), sector size=512
+Disk /dev/loop13 - 68 MB / 65 MiB - 133320 sectors (RO), sector size=512
+Disk /dev/loop14 - 68 MB / 65 MiB - 133552 sectors (RO), sector size=512
+Disk /dev/loop15 - 20 KB / 20 KiB - 40 sectors (RO), sector size=512
+Disk /dev/loop16 - 113 MB / 107 MiB - 220832 sectors (RO), sector size=512
+Disk /dev/loop17 - 113 MB / 107 MiB - 220840 sectors (RO), sector size=512
+Disk /dev/loop18 - 65 MB / 62 MiB - 127392 sectors (RO), sector size=512
+Disk /dev/loop19 - 30 MB / 29 MiB - 60256 sectors (RO), sector size=512
+Disk /dev/loop2 - 23 MB / 21 MiB - 44936 sectors (RO), sector size=512
+Disk /dev/loop20 - 65 MB / 62 MiB - 127392 sectors (RO), sector size=512
+Disk /dev/loop21 - 30 MB / 29 MiB - 60288 sectors (RO), sector size=512
+Disk /dev/loop3 - 116 MB / 110 MiB - 226664 sectors (RO), sector size=512
+Disk /dev/loop4 - 58 MB / 55 MiB - 113680 sectors (RO), sector size=512
+Disk /dev/loop5 - 116 MB / 110 MiB - 226912 sectors (RO), sector size=512
+Disk /dev/loop6 - 58 MB / 55 MiB - 113696 sectors (RO), sector size=512
+Disk /dev/loop7 - 64 MB / 61 MiB - 126752 sectors (RO), sector size=512
+Disk /dev/loop8 - 64 MB / 61 MiB - 126760 sectors (RO), sector size=512
+Disk /dev/loop9 - 250 MB / 239 MiB - 490096 sectors (RO), sector size=512
+
+Partition table type (auto): Intel
+Disk /dev/sda - 1000 GB / 931 GiB - ST1000DM003-1SB102
+Partition table type: Intel
+
+Interface Advanced
+Geometry from i386 MBR: head=255 sector=2
+BAD_RS LBA=2048 64512
+FAT32 at 0/32/33
+Info: size boot_sector 1048576, partition 1048576
+FAT1 : 32-1055
+FAT2 : 1056-2079
+start_rootdir : 2080 root cluster : 2
+Data : 2080-1048575
+sectors : 1048576
+cluster_size : 8
+no_of_cluster : 130812 (2 - 130813)
+fat_length 1024 calculated 1022
+set_FAT_info: name from BS used
+BAD_RS LBA=1052670 16450498
+BAD_RS LBA=1052672 16450498
+ 1 * FAT32                    0  32 33    65 101 36    1048576 [NO NAME]
+     FAT32, blocksize=4096, 536 MB / 512 MiB
+ 2 E extended                65 134  4 121601  57 56 1952471042
+ 5 L Linux                   65 134  6 121601  57 56 1952471040
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 999 GB / 931 GiB
+
+FAT: cluster=2(0x2), pos=4128
+Directory /
+
+FAT: cluster=2(0x2), pos=4128
+Directory /
+
+TestDisk exited normally.
