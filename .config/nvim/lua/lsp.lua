@@ -1,4 +1,7 @@
 local telescope = require("telescope.builtin")
+local lspconfig = require("lspconfig")
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
 
 vim.keymap.set(
     "n",
@@ -50,32 +53,75 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-require("nvim-lsp-installer").on_server_ready(
-    function(server)
-        local server_opts = { on_attach = on_attach, capabilities = capabilities }
 
-        -- (optional) Customize the options passed to the server
-        if server.name == "sumneko_lua" then
-            server_opts["settings"] = {
-                Lua = {
-                    diagnostics = { globals = { "vim" } }
-                }
-            }
-        end
+lspconfig.jsonls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
-        if server.name == "ltex" then
-            server_opts["settings"] = {
-                ltex = {
-                    language = "en-US"
-                }
-            }
-        end
+lspconfig.sumneko_lua.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 
-        -- This setup() function will take the provided server configuration and decorate it with the necessary properties
-        -- before passing it onwards to lspconfig.
-        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-        server:setup(server_opts)
-    end
-)
+lspconfig.bashls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
+lspconfig.pyright.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.rust_analyzer.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.texlab.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.clangd.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.hls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+mason.setup()
+mason_lspconfig.setup()
+
+-- require("nvim-lsp-installer").on_server_ready(
+--     function(server)
+--         local server_opts = { on_attach = on_attach, capabilities = capabilities }
+
+--         -- (optional) Customize the options passed to the server
+--         if server.name == "sumneko_lua" then
+--             server_opts["settings"] = {
+--                 Lua = {
+--                     diagnostics = { globals = { "vim" } }
+--                 }
+--             }
+--         end
+
+--         if server.name == "ltex" then
+--             server_opts["settings"] = {
+--                 ltex = {
+--                     language = "en-US"
+--                 }
+--             }
+--         end
+
+--         -- This setup() function will take the provided server configuration and decorate it with the necessary properties
+--         -- before passing it onwards to lspconfig.
+--         -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+--         server:setup(server_opts)
+--     end
+-- )
 

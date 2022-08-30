@@ -21,7 +21,10 @@ require("packer").startup(
             }
         }
 
-        use { "williamboman/nvim-lsp-installer" }
+        use { "williamboman/mason.nvim" }
+        use { "williamboman/mason-lspconfig.nvim" }
+
+        use { "mfussenegger/nvim-dap" }
 
         -- Completion engine and some plugins for it
         use { "hrsh7th/nvim-cmp",
@@ -114,7 +117,7 @@ vim.g.everforest_better_performance = 1
 
 vim.cmd([[
     set termguicolors
-    colorscheme dracula
+    colorscheme gruvbox-baby
 ]])
 
 vim.cmd("runtime macros/matchit.vim")
