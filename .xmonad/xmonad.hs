@@ -4,6 +4,8 @@
 -- and how to override the defaults in your own xmonad.hs conf file.
 --
 -- Normally, you'd only override those defaults you care about.
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use head" #-}
 
 import Text.Show
 import GHC.IO.Exception
@@ -20,7 +22,6 @@ import XMonad.Actions.RotSlaves
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.TwoPane
 import XMonad.Layout.Combo
@@ -81,7 +82,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 myBorderWidth :: GHC.Word.Word32
-myBorderWidth = 2
+myBorderWidth = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -100,6 +101,7 @@ myModMask = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces :: [String]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+-- myWorkspaces = ["code", "web", "music", "calls", "games"] ++ map show [6..10]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
@@ -202,6 +204,7 @@ myKeys = [
     -- Common files thay I edit
     , ("M-e w", edit "~/.xmonad/xmonad.hs")
     , ("M-e f", edit "~/.config/fish/config.fish") 
+    , ("M-e t", edit "~/.tmux.conf")
 
     -- Fuzzy finder for specific paths
     , ("M-e h", fuzzyEdit "~/")
@@ -361,7 +364,6 @@ myLayout = workspaceDir "~" (dwindle ||| tall ||| tallMasterFocus ||| threeColum
 --         , resource  =? "desktop_window" --> doIgnore
 --         , resource  =? "kdesktop"       --> doIgnore ]
 
--- myManageHook = insertPosition Below Newer
 myManageHook = mempty
 
 ------------------------------------------------------------------------
@@ -373,7 +375,7 @@ myManageHook = mempty
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = ewmhDesktopsEventHook
+myEventHook = mempty
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -384,10 +386,10 @@ myLogHook x = dynamicLogWithPP xmobarPP {
     , ppSep             = " | "
     , ppCurrent         = xmobarColor color06 "" . wrap "[" "]"
     , ppVisible         = xmobarColor color06 ""
-    , ppHidden          = xmobarColor color04 "" . wrap "*" ""
+    , ppHidden          = xmobarColor color04 "" . wrap "(" ")"
     , ppHiddenNoWindows = xmobarColor color05 ""
     , ppUrgent          = xmobarColor color02 "" . wrap "!" "!"
-    , ppOrder           = \(ws:l:_:_) -> [ws, l]
+    , ppOrder           = \(ws:l:_:_) -> ["<fc=#1bb21b> <fn=0> \xf120 </fn> </fc> | " ++ ws, l]
     }
 
 ------------------------------------------------------------------------
@@ -405,7 +407,7 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 
 main = do 
-    xmproc <- spawnPipe "xmobar -x 0 /home/work/.xmonad/xmobar.hs"
+    xmproc <- spawnPipe "xmobar -x 0 /home/work/.config/xmobar/xmobar.config"
     xmonad $ dynamicProjects projects $ docks $ ewmh $ def {
          terminal           = myTerminal
        , focusFollowsMouse  = myFocusFollowsMouse
