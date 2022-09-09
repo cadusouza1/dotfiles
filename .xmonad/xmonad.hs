@@ -23,20 +23,12 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 
-import XMonad.Layout.TwoPane
-import XMonad.Layout.Combo
-import XMonad.Layout.Simplest
-import XMonad.Layout.Grid
+import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
-import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns 
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.BoringWindows
 import XMonad.Layout.Dwindle
-import XMonad.Layout.BinaryColumn
 import XMonad.Layout.WorkspaceDir
 
 import XMonad.Util.EZConfig
@@ -100,8 +92,8 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces :: [String]
-myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
--- myWorkspaces = ["code", "web", "music", "calls", "games"] ++ map show [6..10]
+-- myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+myWorkspaces = ["code", "web", "music"] ++ map show [4..9]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
@@ -176,13 +168,6 @@ myKeys = [
     -- Change the default directory in a workspace
     , ("M-x", changeDir myXPConfig)
 
-    -- Workspace operations
-    , ("M-w j", prevWS)
-    , ("M-w k", nextWS)
-    , ("M-w p", shiftToPrev)
-    , ("M-w n", shiftToNext)
-    , ("M-w z", toggleWS)
-
     -- Aplications to open
     , ("M-o b", notifyAndSpawn myBrowser)
     , ("M-o t", notifyAndSpawn "teams") 
@@ -204,13 +189,13 @@ myKeys = [
     -- Common files thay I edit
     , ("M-e w", edit "~/.xmonad/xmonad.hs")
     , ("M-e f", edit "~/.config/fish/config.fish") 
-    , ("M-e t", edit "~/.tmux.conf")
+    , ("M-e t", edit "~/.config/tmux/tmux.conf")
 
     -- Fuzzy finder for specific paths
     , ("M-e h", fuzzyEdit "~/")
     , ("M-e s", fuzzyEdit "~/school/")
     , ("M-e n", fuzzyEdit "~/.config/nvim/") 
-    , ("M-e c", fuzzyEdit "~/.config/ ~/.scripts/ ~/.xmonad/") 
+    , ("M-e c", fuzzyEdit "~/.config/ ~/.scripts/ ~/.xmonad/ ~/.local/bin/") 
     , ("M-e p", fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/") 
 
     -- Border keybindings
@@ -235,33 +220,29 @@ myKeys = [
     , ("M-.",   sendMessage $ IncMasterN $ -1) -- Decrease the number of windows in the master area
 
     -- Operations with windows
-    , ("M-j",       focusDown)
-    , ("M-k",       focusUp)
-    , ("M-h",       sendMessage $ Go L)
-    , ("M-l",       sendMessage $ Go R)
-    , ("M-S-j",     windows W.swapDown)
-    , ("M-S-k",     windows W.swapUp) 
-    , ("M-S-h",     sendMessage Shrink) -- Shrink the master area
-    , ("M-S-l",     sendMessage Expand) -- Expand the master area
-    , ("M-S-a",     sendMessage MirrorShrink) -- Shrink the other windows
-    , ("M-S-z",     sendMessage MirrorExpand) -- Expand the other windows
-    , ("M-S-t",     withFocused $ windows . W.sink) -- Push window back into tiling
-    , ("M-S-q",     kill) -- close focused window
+    , ("M-j",   windows W.focusDown)
+    , ("M-k",   windows W.focusUp)
+    , ("M-h",   sendMessage $ Go L)
+    , ("M-l",   sendMessage $ Go R)
+    , ("M-S-j", windows W.swapDown)
+    , ("M-S-k", windows W.swapUp) 
+    , ("M-S-h", sendMessage Shrink) -- Shrink the master area
+    , ("M-S-l", sendMessage Expand) -- Expand the master area
+    , ("M-S-a", sendMessage MirrorShrink) -- Shrink the other windows
+    , ("M-S-z", sendMessage MirrorExpand) -- Expand the other windows
+    , ("M-S-t", withFocused $ windows . W.sink) -- Push window back into tiling
+    , ("M-S-q", kill) -- close focused window
     , ("M-<Space>", sendMessage NextLayout)   -- Rotate through the available layout algorithms
-
-    -- Operations with windows in a sublayout
-    , ("M-C-h",  sendMessage $ pullGroup L)
-    , ("M-C-l",  sendMessage $ pullGroup R)
-    , ("M-C-k",  sendMessage $ pullGroup U)
-    , ("M-C-j",  sendMessage $ pullGroup D)
-    , ("M-C-m",  withFocused $ sendMessage . MergeAll)
-    , ("M-C-n",  withFocused $ sendMessage . UnMerge)
-    , ("M-M1-j", onGroup W.focusUp')
-    , ("M-M1-k", onGroup W.focusDown')
 
     , ("M-p",   spawn "rofi -show run")
     , ("M-q",   spawn recompileAndRestartXMonad)
     , ("M-S-c", io exitSuccess) -- Quit xmonad
+
+    -- TMUX sessions
+    , ("M-S-s", spawnTUI "tms")
+    , ("M-s p", spawnTUI "tms polynomial-calculus")
+    , ("M-s i", spawnTUI "tms image-duplicate-detector")
+    , ("M-s y", spawnTUI "tms yew-app")
 
     -- Switch and move between workspaces
     , ("M-1",   windows $ W.greedyView $ myWorkspaces !! 0)
@@ -273,7 +254,6 @@ myKeys = [
     , ("M-7",   windows $ W.greedyView $ myWorkspaces !! 6)
     , ("M-8",   windows $ W.greedyView $ myWorkspaces !! 7)
     , ("M-9",   windows $ W.greedyView $ myWorkspaces !! 8)
-    , ("M-0",   windows $ W.greedyView $ myWorkspaces !! 9)
     , ("M-S-1", windows $ W.shift      $ myWorkspaces !! 0)
     , ("M-S-2", windows $ W.shift      $ myWorkspaces !! 1)
     , ("M-S-3", windows $ W.shift      $ myWorkspaces !! 2)
@@ -283,47 +263,31 @@ myKeys = [
     , ("M-S-7", windows $ W.shift      $ myWorkspaces !! 6)
     , ("M-S-8", windows $ W.shift      $ myWorkspaces !! 7)
     , ("M-S-9", windows $ W.shift      $ myWorkspaces !! 8)
-    , ("M-S-0", windows $ W.shift      $ myWorkspaces !! 9)
-    ]
 
--- setting colors for tabs layout and tabs sublayout.
-myTabTheme = def { fontName            = myFont
-                 , activeColor         = color07
-                 , inactiveColor       = colorBack
-                 , activeBorderColor   = color07
-                 , inactiveBorderColor = colorBack
-                 , activeTextColor     = colorBack
-                 , inactiveTextColor   = color16
-                 }
+    -- Workspace operations
+    , ("M-w j", prevWS)
+    , ("M-w k", nextWS)
+    , ("M-w p", shiftToPrev)
+    , ("M-w n", shiftToNext)
+    , ("M-w z", toggleWS)
+    ]
 
 tall = 
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
-    $ windowNavigation 
-    $ boringWindows 
-    $ addTabs shrinkText myTabTheme
-    $ subLayout [] Simplest 
     $ ResizableTall 1 (2/100) (1/2) []
 
 tallMasterFocus = 
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
-    $ windowNavigation 
-    $ boringWindows 
-    $ addTabs shrinkText myTabTheme
-    $ subLayout [] Simplest 
     $ ResizableTall 1 (2/100) (2/3) []
 
 threeColumns = 
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
-    $ windowNavigation 
-    $ boringWindows 
-    $ addTabs shrinkText myTabTheme
-    $ subLayout [] Simplest 
     $ ThreeCol 1 (2/100) (1/2)
 
 full =
@@ -335,10 +299,6 @@ dwindle =
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
-    $ windowNavigation 
-    $ boringWindows 
-    $ addTabs shrinkText myTabTheme
-    $ subLayout [] Simplest 
     $ Dwindle R CW 1 1
 
 myLayout = workspaceDir "~" (dwindle ||| tall ||| tallMasterFocus ||| threeColumns ||| full)
