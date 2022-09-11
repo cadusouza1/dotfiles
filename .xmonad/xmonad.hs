@@ -19,6 +19,7 @@ import XMonad.Actions.DynamicProjects
 import XMonad.Actions.CycleWS
 import XMonad.Actions.RotSlaves
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.Volume
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -36,6 +37,7 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Loggers
+import XMonad.Util.Spotify
 
 import XMonad.Prompt
 
@@ -151,13 +153,23 @@ notifyAndSpawn command = do
 bluetoothConnect :: String -> String -> X ()
 bluetoothConnect deviceID deviceName = do
     notify 1 $ "Connecting to " ++ deviceName
-    notify 2 $ "$(pulseaudio --start && bluetoothctl connect " ++ deviceID ++ ")"
+    notify 2 $ "$(bluetoothctl connect " ++ deviceID ++ ")"
 
 bluetoothDisconnect :: String -> String -> X ()
 bluetoothDisconnect deviceID deviceName = do
     notify 1 $ "Disconnecting from " ++ deviceName
     notify 2 $ "$(bluetoothctl disconnect " ++ deviceID ++ ")"
      
+notifyRaiseVolume :: Double -> X ()
+notifyRaiseVolume volume = do
+    v <- raiseVolume volume
+    notify 1 $ show v
+
+notifyLowerVolume :: Double -> X ()
+notifyLowerVolume volume = do
+    v <- lowerVolume volume
+    notify 1 $ show v
+
 myKeys :: [(String, X ())]
 myKeys = [
       ("M-<Return>", spawn myTerminal) -- launch a terminal
@@ -191,12 +203,12 @@ myKeys = [
 
     -- Common files thay I edit
     , ("M-e w", edit "~/.xmonad/xmonad.hs")
-    , ("M-e f", edit "~/.config/fish/config.fish") 
     , ("M-e t", edit "~/.config/tmux/tmux.conf")
 
     -- Fuzzy finder for specific paths
     , ("M-e h", fuzzyEdit "~/")
     , ("M-e s", fuzzyEdit "~/school/")
+    , ("M-e f", fuzzyEdit "~/.config/fish/") 
     , ("M-e n", fuzzyEdit "~/.config/nvim/") 
     , ("M-e c", fuzzyEdit "~/.config/ ~/.scripts/ ~/.xmonad/ ~/.local/bin/") 
     , ("M-e p", fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/") 
@@ -218,7 +230,7 @@ myKeys = [
 
     -- Operations with the master window
     , ("M-S-m", windows W.swapMaster) -- Swap the focused window and the master window
-    , ("M-m",   windows W.focusMaster) -- Move focus to the master window
+    -- , ("M-m",   windows W.focusMaster) -- Move focus to the master window
     , ("M-,",   sendMessage $ IncMasterN 1) -- Increment the number of windows in the master area
     , ("M-.",   sendMessage $ IncMasterN $ -1) -- Decrease the number of windows in the master area
 
@@ -273,6 +285,16 @@ myKeys = [
     , ("M-w p", shiftToPrev)
     , ("M-w n", shiftToNext)
     , ("M-w z", toggleWS)
+
+    -- Volume control
+    , ("M-<F1>", setMute False >> notifyRaiseVolume 5)
+    , ("M-<F2>", setMute False >> notifyLowerVolume 5)
+    , ("M-<F3>", toggleMute    >> return ())
+
+    -- Spotify integration
+    , ("M-m j", audioPrev)
+    , ("M-m k", audioNext)
+    , ("M-m p", audioPlayPause)
     ]
 
 tall = 
