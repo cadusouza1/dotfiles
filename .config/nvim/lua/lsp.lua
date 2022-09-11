@@ -26,7 +26,7 @@ vim.keymap.set(
 
 local lsp_buffer_maps = {
     ["<C-h>"]      = vim.lsp.buf.signature_help,
-    ["<leader>fo"] = function() vim.lsp.buf.format { async = true } end,
+    -- ["<leader>fo"] = function() vim.lsp.buf.format { async = true } end,
     ["gd"]         = telescope.lsp_definition,
     ["gD"]         = vim.lsp.buf.declaration,
     ["gi"]         = telescope.lsp_implementation,
@@ -90,6 +90,11 @@ lspconfig.clangd.setup {
 }
 
 lspconfig.hls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.gopls.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }

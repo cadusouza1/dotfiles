@@ -9,7 +9,7 @@ local function attach_to_buffer(output_bufnr, pattern, command)
                     vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
                 end
             end
-            vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, { "jobstart" })
+            vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, { "jobstart", "" })
             vim.fn.jobstart(command, {
                 stdout_buffered = true,
                 on_stderr = data_to_append,

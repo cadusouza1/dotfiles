@@ -1,14 +1,17 @@
-require "custom"
-require "plugins"
-require "completion"
-require "lsp"
-require "fugitive"
-require "snippets"
-require "telescope-config"
-require "treesitter-config"
-require "autorun"
-require "pk"
-require "easymotion"
-require "symbols-outline-config"
-require "autocmds"
-require "colorizer".setup()
+require("custom")
+require("plugins")
+require("completion")
+require("lsp")
+require("fugitive")
+require("snippets")
+require("telescope-config")
+require("treesitter-config")
+require("autorun")
+require("pk")
+require("easymotion")
+require("symbols-outline-config")
+require("autocmds")
+require("formatter-config")
+require("iron-config")
+require("colorizer").setup()
+require("nvim-terminal").setup()
