@@ -18,6 +18,7 @@ import XMonad.Actions.Search
 import XMonad.Actions.DynamicProjects
 import XMonad.Actions.CycleWS
 import XMonad.Actions.RotSlaves
+import XMonad.Actions.SpawnOn
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -60,6 +61,9 @@ myTerminal = "alacritty"
 
 myBrowser:: String
 myBrowser = "firefox"
+
+myMusicPlayer :: String
+myMusicPlayer = "spotify"
 
 myEditor :: String
 myEditor = "nvim"
@@ -170,9 +174,8 @@ myKeys = [
 
     -- Aplications to open
     , ("M-o b", notifyAndSpawn myBrowser)
-    , ("M-o t", notifyAndSpawn "teams") 
+    , ("M-o m", notifyAndSpawn myMusicPlayer) 
     , ("M-o d", notifyAndSpawn "discord")
-    , ("M-o m", notifyAndSpawn "spotify") 
     , ("M-o h", spawnTUI "htop")
     , ("M-o l", fuzzyUrlOpen)
 
@@ -276,29 +279,34 @@ tall =
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
+    $ windowNavigation
     $ ResizableTall 1 (2/100) (1/2) []
 
 tallMasterFocus = 
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
+    $ windowNavigation
     $ ResizableTall 1 (2/100) (2/3) []
 
 threeColumns = 
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
+    $ windowNavigation
     $ ThreeCol 1 (2/100) (1/2)
 
 full =
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ avoidStruts
+    $ windowNavigation
     $ noBorders Full
 
 dwindle = 
       spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True 
     $ smartBorders
     $ avoidStruts
+    $ windowNavigation
     $ Dwindle R CW 1 1
 
 myLayout = workspaceDir "~" (dwindle ||| tall ||| tallMasterFocus ||| threeColumns ||| full)
@@ -360,7 +368,9 @@ myLogHook x = dynamicLogWithPP xmobarPP {
 -- per-workspace layout choices.
 
 myStartupHook = do
-    spawnOnce myTerminal
+    spawnOnOnce "workspace1" myTerminal
+    spawnOnOnce "workspace2" myBrowser
+    spawnOnOnce "workspace3" myMusicPlayer
     spawnOnce "picom --experimental-backend &"
 
 ------------------------------------------------------------------------
