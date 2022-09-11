@@ -657,24 +657,26 @@ delete in `''`. All of the usual seeking, growing and skipping works.
 
 # Treesitter
 
+These maps override the maps cited above
+
 - @attribute.inner
 - @attribute.outer
-- @block.inner
-- @block.outer
-- @call.inner
-- @call.outer
-- `ic` - @class.inner
-- `ac` - @class.outer
-- @comment.outer
-- @conditional.inner
-- @conditional.outer
+- `ib`  - @block.inner
+- `ab`  - @block.outer
+- `ica` - @call.inner
+- `aca` - @call.outer
+- `icl` - @class.inner
+- `acl` - @class.outer
+- `aco` - @comment.outer
+- `ico` - @conditional.inner
+- `aco` - @conditional.outer
 - @frame.inner
 - @frame.outer
 - `if` - @function.inner
 - `af` - @function.outer
-- @loop.inner
-- @loop.outer
-- @parameter.inner
-- @parameter.outer
+- `ir` - @loop.inner
+- `ar` - @loop.outer
+- `ia` - @parameter.inner
+- `aa` - @parameter.outer
 - @scopename.inner
-- @statement.outer
+- `aS` - @statement.outer
