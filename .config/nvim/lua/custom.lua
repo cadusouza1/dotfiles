@@ -84,6 +84,7 @@ end)
 vim.keymap.set("n", "<leader>zl", function()
 	os.execute("zathura " .. vim.fs.dirname(vim.fn.getreg("%")) .. "/lista*.pdf &")
 end)
+
 -- vim.keymap.set("n", "<A-q>", "<cmd>wq<cr>") -- Faster way to save and quit
 vim.keymap.set("n", "<A-j>", "<cmd>bp<cr>") -- Better buffer navigation
 vim.keymap.set("n", "<A-k>", "<cmd>bn<cr>") -- Better buffer navigation

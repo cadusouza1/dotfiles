@@ -4,12 +4,14 @@ require("packer").startup(function(use)
 	-- colorschemes
 	use({ "navarasu/onedark.nvim" })
 	use({ "luisiacc/gruvbox-baby" })
-	use({ "catppuccin/nvim", as = "catppuccin", disable = true })
+	use({ "catppuccin/nvim", as = "catppuccin" })
 	use({ "Mofiqul/dracula.nvim" })
 	use({ "sainnhe/everforest" })
-	use({ "shaunsingh/nord.nvim", disable = true })
+	use({ "shaunsingh/nord.nvim" })
 	use({ "Mofiqul/vscode.nvim" })
 	use({ "hzchirs/vim-material" })
+	use({ "tiagovla/tokyodark.nvim" })
+	use({ "RRethy/nvim-base16" })
 
 	-- LSP config
 	use({

@@ -3,7 +3,8 @@ require("formatter").setup({
 		python = { require("formatter.filetypes.python").black },
 		rust = { require("formatter.filetypes.rust").rustfmt },
 		lua = { require("formatter.filetypes.lua").stylua },
-        go = { require("formatter.filetypes.go").gofmt }
+		go = { require("formatter.filetypes.go").gofmt },
+		haskell = { require("formatter.filetypes.haskell").stylish_haskell },
 	},
 })
 
