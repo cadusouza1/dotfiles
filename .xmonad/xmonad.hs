@@ -103,8 +103,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces :: [String]
--- myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-myWorkspaces = ["code", "web", "music"] ++ map show [4..9]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
