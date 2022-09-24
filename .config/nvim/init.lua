@@ -1,4 +1,5 @@
-require("custom")
+require("options")
+require("maps")
 require("plugins")
 require("completion")
 require("lsp")

@@ -1,34 +1,87 @@
-local telescope = require("telescope.builtin")
+---@diagnostic disable: unused-local
+local builtin = require("telescope.builtin")
+local telescope = require("telescope")
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+
+local xdg_config_home = os.getenv("XDG_CONFIG_HOME")
+local home = os.getenv("HOME")
 
 local telescope_function_keys = {
-    ["f"] = telescope.find_files,
-    ["l"] = telescope.live_grep,
-    ["g"] = telescope.grep_string,
-    ["b"] = telescope.buffers,
-    ["t"] = telescope.tags,
-    ["m"] = telescope.marks,
-    ["q"] = telescope.quickfix,
-    ["j"] = telescope.jumplist,
-    ["r"] = telescope.registers,
-    ["s"] = telescope.spell_suggest,
-    ["h"] = telescope.highlights,
-    ["c"] = telescope.colorscheme,
+	["f"] = builtin.find_files,
+	["l"] = builtin.live_grep,
+	["g"] = builtin.grep_string,
+	["b"] = builtin.buffers,
+	["t"] = builtin.tags,
+	["m"] = builtin.marks,
+	["q"] = builtin.quickfix,
+	["j"] = builtin.jumplist,
+	["r"] = builtin.registers,
+	["s"] = builtin.spell_suggest,
+	["h"] = builtin.highlights,
+	["c"] = builtin.colorscheme,
 }
 
 for key, func in pairs(telescope_function_keys) do
-    vim.keymap.set("n", "<leader>f" .. key, func)
+	vim.keymap.set("n", "<leader>f" .. key, func)
 end
 
-require("telescope").setup {
-    extensions = {
-        fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-        }
-    }
-}
+telescope.setup({
+	extensions = {
+		fzf = {
+			fuzzy = true, -- false will only do exact matching
+			override_generic_sorter = true, -- override the generic sorter
+			override_file_sorter = true, -- override the file sorter
+			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+		},
+	},
+})
 
-require("telescope").load_extension("ui-select")
-require("telescope").load_extension("fzf")
+telescope.load_extension("ui-select")
+telescope.load_extension("fzf")
+
+vim.keymap.set("n", "<leader>cn", function()
+	builtin.find_files({
+		search_dirs = { xdg_config_home .. "/nvim" },
+	})
+end)
+
+vim.keymap.set("n", "<leader>co", function()
+	builtin.find_files({
+		search_dirs = {
+			xdg_config_home,
+			home .. "/.xmonad",
+			home .. "/.scripts",
+		},
+	})
+end)
+
+vim.keymap.set("n", "<leader>sc", function()
+	builtin.find_files({
+		search_dirs = {
+			home .. "/school",
+		},
+	})
+end)
+
+vim.keymap.set("n", "<leader>z", function()
+	local opts = require("telescope.themes").get_dropdown({})
+	pickers
+		.new(opts, {
+			prompt_title = "PDF Finder",
+			finder = finders.new_oneshot_job({ "fdfind", "-e", "pdf" }, opts),
+			sorter = conf.generic_sorter(opts),
+			attach_mappings = function(prompt_bufnr, map)
+				actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+					local selection = action_state.get_selected_entry()
+					os.execute("zathura " .. selection[1] .. " &")
+				end)
+				return true
+			end,
+		})
+		:find()
+end)

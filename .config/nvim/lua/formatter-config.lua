@@ -5,6 +5,7 @@ require("formatter").setup({
 		lua = { require("formatter.filetypes.lua").stylua },
 		go = { require("formatter.filetypes.go").gofmt },
 		haskell = { require("formatter.filetypes.haskell").stylish_haskell },
+		javascript = { require("formatter.filetypes.javascript").jsbeatify },
 	},
 })
 

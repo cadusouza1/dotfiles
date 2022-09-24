@@ -661,8 +661,8 @@ These maps override the maps cited above
 
 - @attribute.inner
 - @attribute.outer
-- `ib`  - @block.inner
-- `ab`  - @block.outer
+- @block.inner
+- @block.outer
 - `ica` - @call.inner
 - `aca` - @call.outer
 - `icl` - @class.inner

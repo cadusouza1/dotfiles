@@ -1,4 +1,4 @@
-local easymotion_prefix = "<Bslash><Bslash>"
+local easymotion_prefix = "<Bslash>"
 vim.keymap.set("n", easymotion_prefix, "<Plug>(easymotion-prefix)")
 
 local easymotion_maps = {
@@ -16,7 +16,7 @@ local easymotion_maps = {
     ["E"]  = "<Plug>(easymotion-bd-E)",
     -- ["ge"] = "<Plug>(easymotion-ge)",
     -- ["gE"] = "<Plug>(easymotion-gE)",
-    ["j"]  = "<Plug>(easymotion-bd-jk)",
+    -- ["j"]  = "<Plug>(easymotion-bd-jk)",
     -- ["k"]  = "<Plug>(easymotion-k)",
     ["n"]  = "<Plug>(easymotion-bd-n)",
     -- ["N"]  = "<Plug>(easymotion-N)",

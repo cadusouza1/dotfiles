@@ -17,8 +17,11 @@ require("nvim-treesitter.configs").setup({
 			enable = true,
 			lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
 			keymaps = {
-				["ib"] = "@block.inner",
-				["ab"] = "@block.outer",
+				-- ["ib"] = "@block.inner",
+				-- ["ab"] = "@block.outer",
+				-- ["ica"] = "@call.inner",
+				-- ["aca"] = "@call.outer",
+				-- ["acm"] = "@comment.outer",
 				["if"] = "@function.inner",
 				["af"] = "@function.outer",
 				["ir"] = "@loop.inner",
@@ -26,13 +29,10 @@ require("nvim-treesitter.configs").setup({
 				["ia"] = "@parameter.inner",
 				["aa"] = "@parameter.outer",
 				["aS"] = "@statement.outer",
-				["ica"] = "@call.inner",
-				["aca"] = "@call.outer",
-				["icl"] = "@class.inner",
-				["acl"] = "@class.outer",
-				["acm"] = "@comment.outer",
-				["ico"] = "@conditional.inner",
-				["aco"] = "@conditional.outer",
+				["iC"] = "@class.inner",
+				["aC"] = "@class.outer",
+				["ic"] = "@conditional.inner",
+				["ac"] = "@conditional.outer",
 			},
 
 			-- You can choose the select mode (default is charwise 'v')
@@ -50,16 +50,16 @@ require("nvim-treesitter.configs").setup({
 				["<leader>ar"] = "@loop.outer",
 				["<leader>aa"] = "@parameter.outer",
 				["<leader>as"] = "@statement.outer",
-				["<leader>acl"] = "@class.outer",
-				["<leader>aco"] = "@conditional.outer",
+				["<leader>ac"] = "@conditional.outer",
+				["<leader>aC"] = "@class.outer",
 			},
 			swap_previous = {
 				["<leader>Af"] = "@function.outer",
 				["<leader>Ar"] = "@loop.outer",
 				["<leader>Aa"] = "@parameter.outer",
 				["<leader>As"] = "@statement.outer",
-				["<leader>Acl"] = "@class.outer",
-				["<leader>Aco"] = "@conditional.outer",
+				["<leader>Ac"] = "@conditional.outer",
+				["<leader>AC"] = "@class.outer",
 			},
 		},
 		move = {
@@ -70,37 +70,116 @@ require("nvim-treesitter.configs").setup({
 				["]gr"] = "@loop.outer",
 				["]ga"] = "@parameter.outer",
 				["]gs"] = "@statement.outer",
-				["]gcm"] = "@comment.outer",
-				["]gcl"] = "@class.outer",
-				["]gco"] = "@conditional.outer",
+				-- ["]gcm"] = "@comment.outer",
+				["]gC"] = "@class.outer",
+				["]gc"] = "@conditional.outer",
 			},
 			goto_next_end = {
 				["]Gf"] = "@function.outer",
 				["]Gr"] = "@loop.outer",
 				["]Ga"] = "@parameter.outer",
 				["]Gs"] = "@statement.outer",
-				["]Gcm"] = "@comment.outer",
-				["]Gcl"] = "@class.outer",
-				["]Gco"] = "@conditional.outer",
+				-- ["]Gcm"] = "@comment.outer",
+				["]GC"] = "@class.outer",
+				["]Gc"] = "@conditional.outer",
 			},
 			goto_previous_start = {
 				["[gf"] = "@function.outer",
 				["[gr"] = "@loop.outer",
 				["[ga"] = "@parameter.outer",
 				["[gs"] = "@statement.outer",
-				["[gcm"] = "@comment.outer",
-				["[gcl"] = "@class.outer",
-				["[gco"] = "@conditional.outer",
+				-- ["[gcm"] = "@comment.outer",
+				["[gC"] = "@class.outer",
+				["[gc"] = "@conditional.outer",
 			},
 			goto_previous_end = {
 				["[Gf"] = "@function.outer",
 				["[Gr"] = "@loop.outer",
 				["[Ga"] = "@parameter.outer",
 				["[Gs"] = "@statement.outer",
-				["[Gcm"] = "@comment.outer",
-				["[Gcl"] = "@class.outer",
-				["[Gco"] = "@conditional.outer",
+				-- ["[Gcm"] = "@comment.outer",
+				["[GC"] = "@class.outer",
+				["[Gc"] = "@conditional.outer",
 			},
 		},
 	},
+})
+
+-- Defaults
+require("treesitter-context").setup({
+	enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+	max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+	trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+	min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+	patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+		-- For all filetypes
+		-- Note that setting an entry here replaces all other patterns for this entry.
+		-- By setting the 'default' entry below, you can control which nodes you want to
+		-- appear in the context window.
+		default = {
+			"class",
+			"function",
+			"method",
+			"for",
+			"while",
+			"if",
+			"switch",
+			"case",
+		},
+		-- Patterns for specific filetypes
+		-- If a pattern is missing, *open a PR* so everyone can benefit.
+		tex = {
+			"chapter",
+			"section",
+			"subsection",
+			"subsubsection",
+		},
+		rust = {
+			"impl_item",
+			"struct",
+			"enum",
+		},
+		scala = {
+			"object_definition",
+		},
+		vhdl = {
+			"process_statement",
+			"architecture_body",
+			"entity_declaration",
+		},
+		markdown = {
+			"section",
+		},
+		elixir = {
+			"anonymous_function",
+			"arguments",
+			"block",
+			"do_block",
+			"list",
+			"map",
+			"tuple",
+			"quoted_content",
+		},
+		json = {
+			"pair",
+		},
+		yaml = {
+			"block_mapping_pair",
+		},
+	},
+	exact_patterns = {
+		-- Example for a specific filetype with Lua patterns
+		-- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
+		-- exactly match "impl_item" only)
+		-- rust = true,
+	},
+
+	-- [!] The options below are exposed but shouldn't require your attention,
+	--     you can safely ignore them.
+
+	zindex = 20, -- The Z-index of the context window
+	mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+	-- Separator between context and content. Should be a single character string, like '-'.
+	-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+	separator = nil,
 })

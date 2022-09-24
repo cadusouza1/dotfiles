@@ -1,4 +1,5 @@
 local git_keymaps = {
+	["a"] = ":G add %",
 	["di"] = ":G diff %",
 	["da"] = ":G diff",
 	["dp"] = ":Ghdiffsplit",
@@ -7,7 +8,6 @@ local git_keymaps = {
 	["ed"] = ":Gedit",
 	["sp"] = ":Gsplit",
 	["vs"] = ":Gvsplit",
-	["at"] = ":G add %",
 	["co"] = ":G commit",
 	["re"] = ":G rebase -i",
 	["lo"] = ":G log",

@@ -11,7 +11,6 @@ require("packer").startup(function(use)
 	use({ "Mofiqul/vscode.nvim" })
 	use({ "hzchirs/vim-material" })
 	use({ "tiagovla/tokyodark.nvim" })
-	use({ "RRethy/nvim-base16" })
 
 	-- LSP config
 	use({
@@ -52,6 +51,7 @@ require("packer").startup(function(use)
 		requires = {
 			{ "p00f/nvim-ts-rainbow" },
 			{ "nvim-treesitter/nvim-treesitter-textobjects" },
+			{ "nvim-treesitter/nvim-treesitter-context" },
 		},
 	})
 

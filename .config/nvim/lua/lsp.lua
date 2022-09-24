@@ -84,5 +84,10 @@ lspconfig.gopls.setup({
 	on_attach = on_attach,
 })
 
+lspconfig.tsserver.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 mason.setup()
 mason_lspconfig.setup()
