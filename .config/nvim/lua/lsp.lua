@@ -10,21 +10,23 @@ vim.keymap.set("n", "<Bslash>k", vim.diagnostic.goto_prev, { silent = true })
 vim.keymap.set("n", "<Bslash>l", telescope.diagnostics, { silent = true })
 
 local lsp_buffer_maps = {
-	["<C-h>"] = vim.lsp.buf.signature_help,
-	-- ["<leader>fo"] = function() vim.lsp.buf.format { async = true } end,
+	["K"] = vim.lsp.buf.hover,
 	["gd"] = telescope.lsp_definition,
 	["gD"] = vim.lsp.buf.declaration,
 	["gi"] = telescope.lsp_implementation,
 	["gr"] = telescope.lsp_references,
+	["<C-h>"] = vim.lsp.buf.signature_help,
 	["<Bslash>h"] = vim.lsp.buf.code_action,
-	["K"] = vim.lsp.buf.hover,
 	["<leader>D"] = telescope.lsp_type_definition,
 	["<leader>rn"] = vim.lsp.buf.rename,
 	["<leader>wa"] = vim.lsp.buf.add_workspace_folder,
+	["<leader>wr"] = vim.lsp.buf.remove_workspace_folder,
 	["<leader>wl"] = function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end,
-	["<leader>wr"] = vim.lsp.buf.remove_workspace_folder,
+	["<leader>fo"] = function()
+		vim.lsp.buf.format({ async = true })
+	end,
 }
 
 ---@diagnostic disable-next-line: unused-local
@@ -36,7 +38,7 @@ local on_attach = function(client, bufnr)
 	end
 end
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 lspconfig.jsonls.setup({
 	capabilities = capabilities,
