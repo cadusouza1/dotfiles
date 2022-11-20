@@ -6,14 +6,12 @@ local git_keymaps = {
 	["ds"] = ":Gvdiffsplit",
 	["dt"] = ":G difftool",
 	["ed"] = ":Gedit",
-	["sp"] = ":Gsplit",
-	["vs"] = ":Gvsplit",
-	["co"] = ":G commit",
-	["re"] = ":G rebase -i",
-	["lo"] = ":G log",
-	["bl"] = ":G blame",
-	["mt"] = ":G mergetool",
-	["st"] = ":G ",
+	["c"] = ":G commit",
+	["r"] = ":G rebase -i",
+	["l"] = ":G log",
+	["b"] = ":G blame",
+	["m"] = ":G mergetool",
+	["s"] = ":G ",
 }
 
 for key, map in pairs(git_keymaps) do
