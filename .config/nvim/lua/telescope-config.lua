@@ -1,4 +1,3 @@
----@diagnostic disable: unused-local
 local builtin = require("telescope.builtin")
 local telescope = require("telescope")
 local pickers = require("telescope.pickers")
@@ -6,6 +5,7 @@ local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
+local themes = require("telescope.themes")
 
 local xdg_config_home = os.getenv("XDG_CONFIG_HOME")
 local home = os.getenv("HOME")
@@ -43,11 +43,24 @@ telescope.setup({
 telescope.load_extension("ui-select")
 telescope.load_extension("fzf")
 
-vim.keymap.set("n", "<leader>cn", function()
-	builtin.find_files({
-		search_dirs = { xdg_config_home .. "/nvim" },
-	})
-end)
+local function pdf_picker(search_path)
+	local opts = themes.get_dropdown({})
+	pickers
+		.new(opts, {
+			prompt_title = "PDF Finder",
+			finder = finders.new_oneshot_job({ "fdfind", "-e", "pdf", "--search-path", search_path }, opts),
+			sorter = conf.file_sorter(opts),
+			attach_mappings = function(prompt_bufnr, _)
+				actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+					local selection = action_state.get_selected_entry()
+					os.execute("zathura " .. selection[1] .. " & disown")
+				end)
+				return true
+			end,
+		})
+		:find()
+end
 
 vim.keymap.set("n", "<leader>co", function()
 	builtin.find_files({
@@ -59,29 +72,26 @@ vim.keymap.set("n", "<leader>co", function()
 	})
 end)
 
-vim.keymap.set("n", "<leader>sc", function()
-	builtin.find_files({
-		search_dirs = {
-			home .. "/school",
-		},
-	})
+vim.keymap.set("n", "<leader>cn", function()
+	builtin.find_files({ search_dirs = { xdg_config_home .. "/nvim" } })
+end)
+
+vim.keymap.set("n", "<leader>cs", function()
+	builtin.find_files({ search_dirs = { home .. "/school" } })
+end)
+
+vim.keymap.set("n", "<leader>ch", function()
+	builtin.find_files({ search_dirs = { home } })
+end)
+
+vim.keymap.set("n", "<leader>cf", function()
+	builtin.find_files({ search_dirs = { xdg_config_home .. "/fish/" } })
+end)
+
+vim.keymap.set("n", "<leader>Z", function()
+	pdf_picker(home)
 end)
 
 vim.keymap.set("n", "<leader>z", function()
-	local opts = require("telescope.themes").get_dropdown({})
-	pickers
-		.new(opts, {
-			prompt_title = "PDF Finder",
-			finder = finders.new_oneshot_job({ "fdfind", "-e", "pdf" }, opts),
-			sorter = conf.generic_sorter(opts),
-			attach_mappings = function(prompt_bufnr, map)
-				actions.select_default:replace(function()
-					actions.close(prompt_bufnr)
-					local selection = action_state.get_selected_entry()
-					os.execute("zathura " .. selection[1] .. " &")
-				end)
-				return true
-			end,
-		})
-		:find()
+	pdf_picker(vim.fs.dirname(vim.fn.expand("%")))
 end)
