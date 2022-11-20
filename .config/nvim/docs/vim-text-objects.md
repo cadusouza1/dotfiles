@@ -66,7 +66,8 @@ Lorem dolor sit amet...
 - `` is `` - inner sentence
 
 ```
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt
 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
 nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
@@ -85,19 +86,24 @@ nisi ut aliquip ex ea commodo consequat.
 
 ```
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+veniam, quis 
 nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+officia deserunt
 mollit anim id est laborum.
 ```
 
 `dap`
 
 ```
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+officia deserunt
 mollit anim id est laborum.
 ```
 
@@ -122,7 +128,8 @@ puts 'Hello "world"'
 puts 'Hello ""'
 ```
 
-Notice that the cursor was not even within the double-quoted phrase (“world”); the command defaulted to changing the first double-quoted phrase in the line.
+Notice that the cursor was not even within the double-quoted phrase (“world”);
+the command defaulted to changing the first double-quoted phrase in the line.
 
 ```ruby
 puts 'Hello "world"'
@@ -179,7 +186,8 @@ Project.all
 <h2></h2>
 ```
 
-Notice that the cursor was not even within the \<h2\>. This is a very efficient way to quickly replace tag content.
+Notice that the cursor was not even within the \<h2\>. This is a very efficient
+way to quickly replace tag content.
 
 - `` a> `` - a single tag
 - `` i> `` - inner single tag
@@ -533,7 +541,8 @@ including the letter `n`. The command `in,` selects inside of the next commas.
 Use the letter `l` instead to work on the previous (last) separators. Uses the
 count to skip multiple separator characters.
 
-See our [Cheat Sheet][cheatsheet] for a chart summarizing all separator mappings.
+See our [Cheat Sheet][cheatsheet] for a chart summarizing all separator
+mappings.
 
 ### Separator Seek
 
@@ -620,7 +629,8 @@ argument. Use the letter `l` instead to work on the previous (last) argument.
 Uses a [count] to skip multiple argument characters. The order is determined by
 the nearest surrounding argument delimiter.
 
-See our [Cheat Sheet][cheatsheet] for a chart summarizing all argument mappings.
+See our [Cheat Sheet][cheatsheet] for a chart summarizing all argument
+mappings.
 
 ### Argument Seek
 
@@ -645,7 +655,7 @@ these. If you do the same within `{}` it will delete in those. If you type
 kind). If you're within `()` nested in `{}`, type `d2ib` to delete in `{}`. All
 of the usual seeking, growing and skipping works.
 
-### Any Quote
+### [Any Quote](Any Quote)
 
 `inq anq Inq Anq ilq alq Ilq Alq`
 
@@ -659,24 +669,24 @@ delete in `''`. All of the usual seeking, growing and skipping works.
 
 These maps override the maps cited above
 
-- @attribute.inner
-- @attribute.outer
-- @block.inner
-- @block.outer
-- `ica` - @call.inner
-- `aca` - @call.outer
-- `icl` - @class.inner
-- `acl` - @class.outer
-- `aco` - @comment.outer
-- `ico` - @conditional.inner
-- `aco` - @conditional.outer
-- @frame.inner
-- @frame.outer
+- `ao` - @comment.outer
+- `iC` - @class.inner
+- `aC` - @class.outer
+- `ic` - @conditional.inner
+- `ac` - @conditional.outer
 - `if` - @function.inner
 - `af` - @function.outer
 - `ir` - @loop.inner
 - `ar` - @loop.outer
 - `ia` - @parameter.inner
 - `aa` - @parameter.outer
-- @scopename.inner
 - `aS` - @statement.outer
+- @scopename.inner
+- @frame.inner
+- @frame.outer
+- @attribute.inner
+- @attribute.outer
+- @block.inner
+- @block.outer
+- @call.inner
+- @call.outer
