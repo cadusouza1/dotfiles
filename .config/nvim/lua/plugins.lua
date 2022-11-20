@@ -4,13 +4,8 @@ require("packer").startup(function(use)
 	-- colorschemes
 	use({ "navarasu/onedark.nvim" })
 	use({ "luisiacc/gruvbox-baby" })
-	use({ "catppuccin/nvim", as = "catppuccin" })
 	use({ "Mofiqul/dracula.nvim" })
-	use({ "sainnhe/everforest" })
-	use({ "shaunsingh/nord.nvim" })
-	use({ "Mofiqul/vscode.nvim" })
-	use({ "hzchirs/vim-material" })
-	use({ "tiagovla/tokyodark.nvim" })
+	use({ "fcpg/vim-fahrenheit" })
 
 	-- LSP config
 	use({
@@ -68,19 +63,10 @@ require("packer").startup(function(use)
 		},
 	})
 
-	-- Bufferline
-	use({
-		"akinsho/bufferline.nvim",
-		disable = true,
-		requires = {
-			"kyazdani42/nvim-web-devicons",
-		},
-	})
-
 	-- Git integration
 	use({ "tpope/vim-fugitive" })
 
-	-- Operations with surrounding objects
+	-- Operations to surround text objects
 	use({ "tpope/vim-surround" })
 
 	-- Easily comment stuff
@@ -88,20 +74,11 @@ require("packer").startup(function(use)
 
 	-- Repeat everything with .
 	use({ "tpope/vim-repeat" })
-
 	use({ "tpope/vim-unimpaired" })
 
 	use({ "arthurxavierx/vim-caser" })
 
 	use({ "jiangmiao/auto-pairs" })
-
-	-- Better way to move around
-	use({
-		"easymotion/vim-easymotion",
-		requires = {
-			{ "tpope/vim-repeat" },
-		},
-	})
 
 	use({ "norcalli/nvim-colorizer.lua" })
 
@@ -118,22 +95,42 @@ require("packer").startup(function(use)
 	-- Nvim REPL
 	use({ "hkupty/iron.nvim" })
 
+	use({ "s1n7ax/nvim-terminal" })
+
+	use({ "lewis6991/impatient.nvim" })
+
 	use({
-		"s1n7ax/nvim-terminal",
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
+	})
+
+	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "kyazdani42/nvim-web-devicons" })
+
+	use({ "vimwiki/vimwiki" })
+
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	})
+
+	use({ "klen/nvim-test" })
+
+	use({
+		"MrcJkb/haskell-tools.nvim",
+		requires = {
+			"neovim/nvim-lspconfig",
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
 	})
 end)
 
-vim.o.background = "dark"
-vim.g.catppuccin_flavour = "mocha"
-vim.g.everforest_background = "hard"
-vim.g.everforest_better_performance = 1
-vim.g.material_style = "oceanic"
-
 vim.cmd([[
     set termguicolors
+    runtime macros/matchit.vim
     colorscheme gruvbox-baby
 ]])
-
-vim.cmd("runtime macros/matchit.vim")
 
 vim.g.AutoPairsShortcutToggle = "<M-z>"
