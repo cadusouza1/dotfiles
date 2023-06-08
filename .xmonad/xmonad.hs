@@ -136,16 +136,6 @@ notifyAndSpawn command = do
     notify 1 $ "Starting " ++ command
     spawnHere command
 
-bluetoothConnect :: String -> String -> X ()
-bluetoothConnect deviceID deviceName = do
-    notify 1 $ "Connecting to " ++ deviceName
-    notify 2 $ "$(bluetoothctl connect " ++ deviceID ++ ")"
-
-bluetoothDisconnect :: String -> String -> X ()
-bluetoothDisconnect deviceID deviceName = do
-    notify 1 $ "Disconnecting from " ++ deviceName
-    notify 2 $ "$(bluetoothctl disconnect " ++ deviceID ++ ")"
-
 notifySetVolume volume = do
     setVolume volume
     v <- getVolume
@@ -311,7 +301,7 @@ myKeys = [
 
 tall =
       renamed [Replace "Tall"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -319,7 +309,7 @@ tall =
 
 mirrorTall =
       renamed [Replace "Mirror Tall"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -328,7 +318,7 @@ mirrorTall =
 
 tallMasterFocus =
       renamed [Replace "Tall Master Focus"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -336,7 +326,7 @@ tallMasterFocus =
 
 threeColumns =
       renamed [Replace "ThreeCol"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -344,7 +334,7 @@ threeColumns =
 
 dwindle =
       renamed [Replace "Dwindle"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation

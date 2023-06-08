@@ -12,6 +12,9 @@ export PATH="$HOME/go/bin:$PATH"
 # Nim
 export PATH="$HOME/.nimble/bin/:$PATH"
 
+# Rust
+export PATH="$HOME/.cargo/env:$PATH"
+
 # Paths for my scripts
 for path in (du $HOME/.scripts/ | cut -f2)
     export PATH="$path:$PATH"

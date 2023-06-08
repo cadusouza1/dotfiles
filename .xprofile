@@ -5,9 +5,6 @@ xset s off
 xset -dpms
 xset s noblank
 
-# No key repeat
-xset r off
-
 # Environment variables set everywhere
 export EDITOR="nvim"
 export TERMINAL="alacritty"
