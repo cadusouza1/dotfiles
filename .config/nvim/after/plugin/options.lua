@@ -15,3 +15,4 @@ vim.opt.tabstop = 4 -- number of columns occupied by a tab
 vim.opt.encoding = "utf-8"
 -- vim.opt.cmdheight = 2
 vim.opt.updatetime = 50
+vim.opt.swapfile = false
