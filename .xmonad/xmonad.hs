@@ -7,7 +7,6 @@ import           GHC.IO.Exception
 import           System.Exit
 import           System.Process
 import           Text.Show
-
 import           XMonad
 import qualified XMonad.Actions.FlexibleResize  as Flex
 import           XMonad.Actions.RepeatAction
@@ -36,6 +35,10 @@ import           XMonad.Util.Spotify
 
 import           XMonad.Prompt
 
+import           System.Directory
+
+-- import           Graphics.X11.ExtraTypes.XF86
+
 import qualified Data.Binary                    as GHC
 import qualified Data.Binary                    as GHC.Word
 -- import qualified Data.Map                       as M
@@ -44,9 +47,6 @@ import qualified Foreign.C
 import qualified XMonad.StackSet                as W
 
 import           Colors.Dracula
-
-myFont :: String -> GHC.Word.Word32 -> String
-myFont weight size = "xft:FiraCode Nerd Font:weight=" ++ weight ++ ":pixelsize=" ++ show size
 
 myTerminal :: String
 myTerminal = "alacritty msg create-window || alacritty"
@@ -99,18 +99,7 @@ myFocusedBorderColor:: String
 myFocusedBorderColor = "#008b8b"
 
 recompileAndRestartXMonad :: String
-recompileAndRestartXMonad = "notify-send 'Recompiling XMonad' -t 1000 & killall xmobar & xmonad --recompile && xmonad --restart && notify-send 'Recompilation successfully' -t 1000"
-
-myXPConfig = def {
-      font         = myFont "regular" 16
-    , bgColor      = colorBack
-    , fgColor      = colorFore
-    , bgHLight     = color06
-    , fgHLight     = color01
-    , position     = Top
-    , height       = 24
-    , autoComplete = Just 100000
-    }
+recompileAndRestartXMonad = "notify-send 'Recompiling XMonad' -t 1000 & xmonad --recompile && xmonad --restart && notify-send 'Recompilation successfully' -t 1000"
 
 notify :: Int -> String -> X ()
 notify timeout message = spawn $ "notify-send -t " ++ show (timeout * 1000) ++ " " ++ "\"" ++ message ++ "\""
@@ -154,40 +143,57 @@ moveAndViewWS i = moveToWS i >> viewWS i
 
 myKeys :: [(String, X ())]
 myKeys = [
-    -- launch a terminal
+    {-  launch a terminal -}
       ("M-<Return>", spawn myTerminal)
 
     , ("M-m", myRunInTerm "fuzzy.sh manpage")
 
-    -- Make the windows fullscreen
+    {-  Make the windows fullscreen -}
     , ("M-f", sendMessage ToggleLayout)
 
-    -- Aplications to open
+    {-  Aplications to open -}
     , ("M-o b", notifyAndSpawn myBrowser)
     , ("M-o m", notifyAndSpawn myMusicPlayer)
     , ("M-o d", notifyAndSpawn "discord")
 
-    -- Terminal commands
+    {-  Terminal commands -}
     , ("M-o h", myRunInTerm "htop")
     , ("M-o c", myRunInTerm "fuzzy.sh cheatsheet")
     , ("M-o l", spawn "fuzzy.sh urls")
     , ("M-o s", spawn "xfce4-screenshooter")
 
-    -- Bluetooth devices that I use
-    , ("M-b c p", spawn "bluetooth.sh connect 10 Philips-SHB3175 A4:77:58:79:9E:2F")
+    {-  Bluetooth devices that I use -}
+    , ("M-b c p", spawn "bluetooth.sh connect Philips-SHB3175 A4:77:58:79:9E:2F")
     , ("M-b d p", spawn "bluetooth.sh disconnect Philips-SHB3175 A4:77:58:79:9E:2F")
-    , ("M-b c r", spawn "bluetooth.sh connect 10 Redmi-Airdots-S 1C:52:16:87:7B:D6")
+    , ("M-b c r", spawn "bluetooth.sh connect Redmi-Airdots-S 1C:52:16:87:7B:D6")
     , ("M-b d r", spawn "bluetooth.sh disconnect Redmi-Airdots-S 1C:52:16:87:7B:D6")
-    , ("M-b c b", spawn "bluetooth.sh connect 10 BT-SPEAKER 16:48:75:47:EF:3D")
+    , ("M-b c b", spawn "bluetooth.sh connect BT-SPEAKER 16:48:75:47:EF:3D")
     , ("M-b d b", spawn "bluetooth.sh disconnect BT-SPEAKER 16:48:75:47:EF:3D")
-    , ("M-b c e", spawn "bluetooth.sh connect 10 887 FC:58:FA:73:76:2A")
+    , ("M-b c e", spawn "bluetooth.sh connect 887 FC:58:FA:73:76:2A")
     , ("M-b d e", spawn "bluetooth.sh disconnect 887 FC:58:FA:73:76:2A")
 
-    -- Common files thay I edit
+    {- Quick workaround for the fact that I need to give privileges -}
+    , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
+    , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
+    , ("M-b s 1", myRunInTerm "lux -S 10%")
+    , ("M-b s 2", myRunInTerm "lux -S 20%")
+    , ("M-b s 3", myRunInTerm "lux -S 30%")
+    , ("M-b s 4", myRunInTerm "lux -S 40%")
+    , ("M-b s 5", myRunInTerm "lux -S 50%")
+    , ("M-b s 6", myRunInTerm "lux -S 60%")
+    , ("M-b s 7", myRunInTerm "lux -S 70%")
+    , ("M-b s 8", myRunInTerm "lux -S 80%")
+    , ("M-b s 9", myRunInTerm "lux -S 90%")
+    , ("M-b s 0", myRunInTerm "lux -S 100%")
+
+    {- Dont need to use a bar just to look at the capacity sometimes -}
+    , ("M-b b", spawn "battery.sh")
+
+    {-  Common files thay I edit -}
     , ("M-e w", edit "~/.xmonad/xmonad.hs")
     , ("M-e t", edit "~/.config/tmux/tmux.conf")
 
-    -- Fuzzy finder for specific paths
+    {-  Fuzzy finder for specific paths -}
     , ("M-e h", fuzzyEdit "~/")
     , ("M-e s", fuzzyEdit "~/school/")
     , ("M-e f", fuzzyEdit "~/.config/fish/")
@@ -195,13 +201,13 @@ myKeys = [
     , ("M-e c", fuzzyEdit "~/.config/ ~/.scripts/ ~/.xmonad/ ~/.local/bin/")
     , ("M-e p", fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
 
-    -- Operations with the master window
+    {-  Operations with the master window -}
     , ("M-S-m", windows W.swapMaster) -- Swap the focused window and the master window
     , ("M-S-,", sendMessage $ IncMasterN 1) -- Increment the number of windows in the master area
     , ("M-S-.", sendMessage $ IncMasterN $ -1) -- Decrease the number of windows in the master area
     -- , ("M-m",   windows W.focusMaster) -- Move focus to the master window
 
-    -- Operations with windows
+    {-  Operations with windows -}
     , ("M-j",   windows W.focusDown)
     , ("M-k",   windows W.focusUp)
     , ("M-h",   sendMessage $ Go L)
@@ -228,15 +234,15 @@ myKeys = [
     , ("M-q",   spawn recompileAndRestartXMonad)
     , ("M-S-c", io exitSuccess) -- Quit xmonad
 
-    -- TMUX session manager
+    {-  TMUX session manager -}
     , ("M-S-s", myRunInTerm "tms")
 
-    -- Spotify integration
+    {-  Spotify integration -}
     , ("M-s j", audioPrev)
     , ("M-s k", audioNext)
     , ("M-s p", audioPlayPause)
 
-    -- Switch and move between workspaces
+    {-  Switch and move between workspaces -}
     , ("M-1",   viewWS        0)
     , ("M-2",   viewWS        1)
     , ("M-3",   viewWS        2)
@@ -265,10 +271,10 @@ myKeys = [
     , ("M-C-8", moveAndViewWS 7)
     , ("M-C-9", moveAndViewWS 8)
 
-    -- Volume control
+    {-  Volume control -}
     , ("M-<F1>", raiseVolume 5 >>= \x -> notify 1 $ show x)
     , ("M-<F2>", lowerVolume 5 >>= \x -> notify 1 $ show x)
-    , ("M-<F3>", toggleMute >> return ())
+    , ("M-v t", toggleMute >> return ())
     , ("M-v 1",  notifySetVolume 10 )
     , ("M-v 2",  notifySetVolume 20 )
     , ("M-v 3",  notifySetVolume 30 )
@@ -280,7 +286,7 @@ myKeys = [
     , ("M-v 9",  notifySetVolume 90 )
     , ("M-v 0",  notifySetVolume 100)
 
-    -- Border keybindings
+    {-  Border keybindings -}
     , ("M-=",   incScreenWindowSpacing  1)
     , ("M--",   decScreenWindowSpacing  1)
     , ("M-r 0", setScreenWindowSpacing  0)
@@ -295,13 +301,15 @@ myKeys = [
     , ("M-r 9", setScreenWindowSpacing 90)
     , ("M-r t", toggleBorders)
 
-    -- Resize focused window with the mouse
+    , ("M-r m", myRunInTerm "mangal")
+
+    {-  Resize focused window with the mouse -}
     , ("M-<button3>", withFocused Flex.mouseResizeWindow)
     ]
 
 tall =
       renamed [Replace "Tall"]
-    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -309,7 +317,7 @@ tall =
 
 mirrorTall =
       renamed [Replace "Mirror Tall"]
-    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -318,7 +326,7 @@ mirrorTall =
 
 tallMasterFocus =
       renamed [Replace "Tall Master Focus"]
-    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -326,7 +334,7 @@ tallMasterFocus =
 
 threeColumns =
       renamed [Replace "ThreeCol"]
-    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -334,7 +342,7 @@ threeColumns =
 
 dwindle =
       renamed [Replace "Dwindle"]
-    -- $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -386,16 +394,15 @@ myEventHook = mempty
 -- Status bars and logging
 
 -- Perform an arbitrary action on each internal state change or X event.
-myLogHook x = dynamicLogWithPP xmobarPP {
-      ppOutput          = hPutStrLn x
-    , ppSep             = " | "
-    , ppCurrent         = xmobarColor color06 "" . wrap "[" "]"
-    , ppVisible         = xmobarColor color06 ""
-    , ppHidden          = xmobarColor color04 "" . wrap "(" ")"
+myLogHook xmproc = dynamicLogWithPP xmobarPP {
+      ppOutput = hPutStrLn xmproc
+    , ppCurrent = xmobarColor color06 "" . wrap "[" "]"
+    , ppVisible = xmobarColor color06 ""
+    , ppHidden = xmobarColor color05 "" . wrap "(" ")"
     , ppHiddenNoWindows = xmobarColor color05 ""
-    , ppUrgent          = xmobarColor color02 "" . wrap "!" "!"
-    , ppOrder           = \(ws:l:_:_) -> ["<fc=#1bb21b> <fn=0> \xf120 </fn> </fc> | " ++ ws, l]
-    }
+    , ppSep = " | "
+    , ppOrder = \(ws:l:ex) -> [ws,l]
+}
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -406,13 +413,13 @@ myLogHook x = dynamicLogWithPP xmobarPP {
 
 myStartupHook = do
     spawnOnOnce "workspace1" myTerminal
-    spawnOnce   "picom &"
+    spawnOnce "picom &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with the settings you specify. No need to modify this.
-
 main = do
-    xmproc <- spawnPipe "xmobar -x 0 /home/work/.config/xmobar/xmobar.config"
+    home <- getHomeDirectory
+    xmproc <- spawnPipe "xmobar $HOME/.config/xmobar/xmobar.config"
     xmonad $ docks $ ewmh $ def {
          terminal           = myTerminal
        , focusFollowsMouse  = myFocusFollowsMouse
