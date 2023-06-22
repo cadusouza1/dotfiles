@@ -10,25 +10,6 @@ local themes = require("telescope.themes")
 local xdg_config_home = os.getenv("XDG_CONFIG_HOME")
 local home = os.getenv("HOME")
 
-local telescope_function_keys = {
-	["f"] = builtin.find_files,
-	["l"] = builtin.live_grep,
-	["g"] = builtin.grep_string,
-	["b"] = builtin.buffers,
-	["t"] = builtin.tags,
-	["m"] = builtin.marks,
-	["q"] = builtin.quickfix,
-	["j"] = builtin.jumplist,
-	["r"] = builtin.registers,
-	["s"] = builtin.spell_suggest,
-	["h"] = builtin.highlights,
-	["c"] = builtin.colorscheme,
-}
-
-for key, func in pairs(telescope_function_keys) do
-	vim.keymap.set("n", "<leader>f" .. key, func)
-end
-
 telescope.setup({
 	extensions = {
 		fzf = {
@@ -66,6 +47,19 @@ local function pdf_picker(search_path)
 		})
 		:find()
 end
+
+vim.keymap.set("n", "<leader>ff", builtin.find_files)
+vim.keymap.set("n", "<leader>fl", builtin.live_grep)
+vim.keymap.set("n", "<leader>fg", builtin.grep_string)
+vim.keymap.set("n", "<leader>fb", builtin.buffers)
+vim.keymap.set("n", "<leader>ft", builtin.tags)
+vim.keymap.set("n", "<leader>fm", builtin.marks)
+vim.keymap.set("n", "<leader>fq", builtin.quickfix)
+vim.keymap.set("n", "<leader>fj", builtin.jumplist)
+vim.keymap.set("n", "<leader>fr", builtin.registers)
+vim.keymap.set("n", "<leader>fs", builtin.spell_suggest)
+vim.keymap.set("n", "<leader>fh", builtin.highlights)
+vim.keymap.set("n", "<leader>fc", builtin.colorscheme)
 
 vim.keymap.set("n", "<leader>co", function()
 	builtin.find_files({
