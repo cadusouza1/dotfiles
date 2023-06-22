@@ -1,12 +1,7 @@
-local git_keymaps = {
-	["a"] = ":G add %",
-	["d"] = ":G diff %",
-	["D"] = ":G diff",
-	["l"] = ":G log",
-	["r"] = ":G rebase -i",
-	["s"] = ":G status",
-}
-
-for key, map in pairs(git_keymaps) do
-	vim.keymap.set("n", "<leader>g" .. key, map .. "<cr>")
-end
+vim.keymap.set("n", "<leader>ga", ":G add ")
+vim.keymap.set("n", "<leader>gA", ":G add %<cr>")
+vim.keymap.set("n", "<leader>gd", ":G diff %<cr>")
+vim.keymap.set("n", "<leader>gD", ":G diff<cr>")
+vim.keymap.set("n", "<leader>gl", ":G log<cr>")
+vim.keymap.set("n", "<leader>gr", ":G rebase -i<cr>")
+vim.keymap.set("n", "<leader>gs", ":G status<cr>")
