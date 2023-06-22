@@ -33,4 +33,13 @@ vim.keymap.set("n", "<A-9>", function()
 	vim.cmd.BufferLineGoToBuffer("9")
 end)
 
-require("bufferline").setup()
+require("bufferline").setup({
+	options = {
+		numbers = "none",
+		diagnostics = "nvim_lsp",
+		separator_style = "slant",
+		show_tab_indicators = true,
+		show_buffer_close_icons = false,
+		show_close_icons = false,
+	},
+})
