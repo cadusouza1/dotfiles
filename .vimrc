@@ -1,4 +1,5 @@
 set nocompatible " Disable compatibility with vi
+set termguicolors
 
 filetype on " Enable type file detection
 filetype plugin on " Enable plugins and load plugin for the detected file type.
@@ -26,6 +27,10 @@ set scrolloff=999
 
 set wildmenu " Enable auto completion menu after pressing TAB.
 
+set background=dark
+
+let g:mapleader=" "
+
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -45,4 +50,31 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'wellle/targets.vim'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'bkad/CamelCaseMotion'
 call plug#end()
+
+colorscheme gruvbox
+
+nnoremap <leader>so :so %<cr>
+
+" CamelCaseMotion Config
+map <silent> <leader>w <Plug>CamelCaseMotion_w
+map <silent> <leader>b <Plug>CamelCaseMotion_b
+map <silent> <leader>e <Plug>CamelCaseMotion_e
+map <silent> g<leader>e <Plug>CamelCaseMotion_ge
+omap <silent> i<leader>w <Plug>CamelCaseMotion_iw
+xmap <silent> i<leader>w <Plug>CamelCaseMotion_iw
+omap <silent> i<leader>b <Plug>CamelCaseMotion_ib
+xmap <silent> i<leader>b <Plug>CamelCaseMotion_ib
+omap <silent> i<leader>e <Plug>CamelCaseMotion_ie
+xmap <silent> i<leader>e <Plug>CamelCaseMotion_ie
+
+" Terminal Config
+nnoremap <silent> <leader>t :term<cr>
