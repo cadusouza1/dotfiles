@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Nodejs
+set VERSION v18.16.0
+set DISTRO linux-x64
+export PATH="/usr/local/lib/nodejs/node-$VERSION-$DISTRO/bin:$PATH"
+
 # Haskell
 export PATH="$HOME/.ghcup/bin:$PATH"
 
