@@ -4,7 +4,20 @@ require("formatter").setup({
 	filetype = {
 		python = { require("formatter.filetypes.python").black },
 		rust = { require("formatter.filetypes.rust").rustfmt },
-		lua = { require("formatter.filetypes.lua").stylua },
+		lua = {
+			{
+				exe = "stylua",
+				args = {
+					"--column-width 80",
+					"--search-parent-directories",
+					"--stdin-filepath",
+					util.escape_path(util.get_current_buffer_file_path()),
+					"--",
+					"-",
+				},
+				stdin = true,
+			},
+		},
 		go = { require("formatter.filetypes.go").gofmt },
 		haskell = { require("formatter.filetypes.haskell").stylish_haskell },
 		javascript = { require("formatter.filetypes.javascript").jsbeatify },
