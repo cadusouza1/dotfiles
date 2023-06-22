@@ -7,37 +7,100 @@ vim.keymap.set("n", "<Bslash>j", vim.diagnostic.goto_next, { silent = true })
 vim.keymap.set("n", "<Bslash>k", vim.diagnostic.goto_prev, { silent = true })
 vim.keymap.set("n", "<Bslash>l", telescope.diagnostics, { silent = true })
 
-local lsp_buffer_maps = {
-	["K"] = vim.lsp.buf.hover,
-	["gd"] = telescope.lsp_definition,
-	["gD"] = vim.lsp.buf.declaration,
-	["gi"] = telescope.lsp_implementation,
-	["gr"] = telescope.lsp_references,
-	["<C-h>"] = vim.lsp.buf.signature_help,
-	["<Bslash>h"] = vim.lsp.buf.code_action,
-	["<leader>D"] = telescope.lsp_type_definition,
-	["<leader>rn"] = vim.lsp.buf.rename,
-	["<leader>wa"] = vim.lsp.buf.add_workspace_folder,
-	["<leader>wr"] = vim.lsp.buf.remove_workspace_folder,
-	["<leader>wl"] = function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end,
-	["<leader>fo"] = function()
-		vim.lsp.buf.format({ async = true })
-	end,
-}
-
----@diagnostic disable-next-line: unused-local
 lsp.on_attach(function(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	for key, func in pairs(lsp_buffer_maps) do
-		vim.api.nvim_buf_set_keymap(bufnr, "n", key, "", { callback = func, silent = true, noremap = true })
-	end
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"K",
+		"",
+		{ callback = vim.lsp.buf.hover, silent = true, noremap = true }
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"gd",
+		"",
+		{ callback = telescope.lsp_definition, silent = true, noremap = true }
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"gD",
+		"",
+		{ callback = vim.lsp.buf.declaration, silent = true, noremap = true }
+	)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "", {
+		callback = telescope.lsp_implementation,
+		silent = true,
+		noremap = true,
+	})
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"gr",
+		"",
+		{ callback = telescope.lsp_references, silent = true, noremap = true }
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<C-h>",
+		"",
+		{ callback = vim.lsp.buf.signature_help, silent = true, noremap = true }
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<Bslash>h",
+		"",
+		{ callback = vim.lsp.buf.code_action, silent = true, noremap = true }
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<leader>rn",
+		"",
+		{ callback = vim.lsp.buf.rename, silent = true, noremap = true }
+	)
+
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>D", "", {
+		callback = telescope.lsp_type_definition,
+		silent = true,
+		noremap = true,
+	})
+
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wa", "", {
+		callback = vim.lsp.buf.add_workspace_folder,
+		silent = true,
+		noremap = true,
+	})
+
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wr", "", {
+		callback = vim.lsp.buf.remove_workspace_folder,
+		silent = true,
+		noremap = true,
+	})
+
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wl", "", {
+		callback = function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end,
+		silent = true,
+		noremap = true,
+	})
+
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>fo", "", {
+		callback = function()
+			vim.lsp.buf.format({ async = true })
+		end,
+		silent = true,
+		noremap = true,
+	})
 end)
 
 -- local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 lsp.setup()
 mason.setup()
 mason_lsp.setup()
