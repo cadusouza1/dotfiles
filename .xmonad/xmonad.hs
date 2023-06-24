@@ -118,7 +118,7 @@ edit :: String -> X ()
 edit filePath = myRunInTerm $ myEditor ++ " " ++ filePath
 
 fuzzyEdit :: String -> X ()
-fuzzyEdit path = myRunInTerm $ "fuzzy.sh edit " ++ path
+fuzzyEdit path = myRunInTerm $ "~/.scripts/fuzzy.sh edit " ++ path
 
 notifyAndSpawn :: String -> X ()
 notifyAndSpawn command = do
@@ -146,7 +146,7 @@ myKeys = [
     {-  launch a terminal -}
       ("M-<Return>", spawn myTerminal)
 
-    , ("M-m", myRunInTerm "fuzzy.sh manpage")
+    , ("M-m", myRunInTerm "~/.scripts/fuzzy.sh manpage")
 
     {-  Make the windows fullscreen -}
     , ("M-f", sendMessage ToggleLayout)
@@ -158,21 +158,21 @@ myKeys = [
 
     {-  Terminal commands -}
     , ("M-o h", myRunInTerm "htop")
-    , ("M-o c", myRunInTerm "fuzzy.sh cheatsheet")
-    , ("M-o l", spawn "fuzzy.sh urls")
+    , ("M-o c", myRunInTerm "~/.scripts/fuzzy.sh cheatsheet")
+    , ("M-o l", spawn "~/.scripts/fuzzy.sh urls")
     , ("M-o s", spawn "xfce4-screenshooter")
 
     {-  Bluetooth devices that I use -}
-    , ("M-b c p", spawn "bluetooth.sh connect Philips-SHB3175 A4:77:58:79:9E:2F")
-    , ("M-b d p", spawn "bluetooth.sh disconnect Philips-SHB3175 A4:77:58:79:9E:2F")
-    , ("M-b c r", spawn "bluetooth.sh connect Redmi-Airdots-S 1C:52:16:87:7B:D6")
-    , ("M-b d r", spawn "bluetooth.sh disconnect Redmi-Airdots-S 1C:52:16:87:7B:D6")
-    , ("M-b c b", spawn "bluetooth.sh connect BT-SPEAKER 16:48:75:47:EF:3D")
-    , ("M-b d b", spawn "bluetooth.sh disconnect BT-SPEAKER 16:48:75:47:EF:3D")
-    , ("M-b c e", spawn "bluetooth.sh connect 887 FC:58:FA:73:76:2A")
-    , ("M-b d e", spawn "bluetooth.sh disconnect 887 FC:58:FA:73:76:2A")
+    , ("M-b c p", spawn "~/.scripts/bluetooth.sh connect Philips-SHB3175 A4:77:58:79:9E:2F")
+    , ("M-b d p", spawn "~/.scripts/bluetooth.sh disconnect Philips-SHB3175 A4:77:58:79:9E:2F")
+    , ("M-b c r", spawn "~/.scripts/bluetooth.sh connect Redmi-Airdots-S 1C:52:16:87:7B:D6")
+    , ("M-b d r", spawn "~/.scripts/bluetooth.sh disconnect Redmi-Airdots-S 1C:52:16:87:7B:D6")
+    , ("M-b c b", spawn "~/.scripts/bluetooth.sh connect BT-SPEAKER 16:48:75:47:EF:3D")
+    , ("M-b d b", spawn "~/.scripts/bluetooth.sh disconnect BT-SPEAKER 16:48:75:47:EF:3D")
+    , ("M-b c e", spawn "~/.scripts/bluetooth.sh connect 887 FC:58:FA:73:76:2A")
+    , ("M-b d e", spawn "~/.scripts/bluetooth.sh disconnect 887 FC:58:FA:73:76:2A")
 
-    {- Quick workaround for the fact that I need to give privileges -}
+    {- Brightness Control -}
     , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
     , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
     , ("M-b s 1", myRunInTerm "lux -S 10%")
@@ -187,11 +187,12 @@ myKeys = [
     , ("M-b s 0", myRunInTerm "lux -S 100%")
 
     {- Dont need to use a bar just to look at the capacity sometimes -}
-    , ("M-b b", spawn "battery.sh")
+    , ("M-b b", spawn "~/.scripts/battery.sh")
 
     {-  Common files thay I edit -}
     , ("M-e w", edit "~/.xmonad/xmonad.hs")
     , ("M-e t", edit "~/.config/tmux/tmux.conf")
+    , ("M-e b", edit "~/.config/xmobar/xmobar.config")
 
     {-  Fuzzy finder for specific paths -}
     , ("M-e h", fuzzyEdit "~/")
@@ -230,7 +231,7 @@ myKeys = [
     , ("M-C-q",  killAll) -- close all windows
     , ("M-M1-q", killOthers) -- close all windows without focus
 
-    , ("M-p",   spawn "rofi -show run")
+    , ("M-p",   spawn "rofi -dpi 1 -normal-window -show run")
     , ("M-q",   spawn recompileAndRestartXMonad)
     , ("M-S-c", io exitSuccess) -- Quit xmonad
 
@@ -398,10 +399,10 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
       ppOutput = hPutStrLn xmproc
     , ppCurrent = xmobarColor color06 "" . wrap "[" "]"
     , ppVisible = xmobarColor color06 ""
-    , ppHidden = xmobarColor color05 "" . wrap "(" ")"
+    , ppHidden = xmobarColor color12 "" . wrap "(" ")"
     , ppHiddenNoWindows = xmobarColor color05 ""
     , ppSep = " | "
-    , ppOrder = \(ws:l:ex) -> [ws,l]
+    , ppOrder = \(ws:l:ex) -> [ws,"<fc=" ++ color03 ++ "><fn=2>\xebeb</fn> </fc>" ++ l]
 }
 
 ------------------------------------------------------------------------
