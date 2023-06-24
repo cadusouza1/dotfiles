@@ -7,6 +7,10 @@ require("packer").startup(function(use)
 	use({ "Mofiqul/dracula.nvim" })
 	use({ "fcpg/vim-fahrenheit" })
 	use({ "wittyjudge/gruvbox-material.nvim" })
+	use({ "nvim-tree/nvim-web-devicons" })
+
+	use({ "mfussenegger/nvim-dap" })
+	use({ "rcarriga/nvim-dap-ui" })
 
 	-- LSP config
 	use({
@@ -19,8 +23,6 @@ require("packer").startup(function(use)
 
 	use({ "williamboman/mason.nvim" })
 	use({ "williamboman/mason-lspconfig.nvim" })
-
-	use({ "mfussenegger/nvim-dap" })
 
 	-- Completion engine and some plugins for it
 	use({
@@ -76,6 +78,7 @@ require("packer").startup(function(use)
 	-- Repeat everything with .
 	use({ "tpope/vim-repeat" })
 	use({ "tpope/vim-unimpaired" })
+	use({ "tpope/vim-vinegar" })
 
 	use({ "arthurxavierx/vim-caser" })
 
@@ -129,11 +132,5 @@ require("packer").startup(function(use)
 
 	use({ "ellisonleao/gruvbox.nvim" })
 end)
-
-vim.cmd([[
-    set termguicolors
-    runtime macros/matchit.vim
-    colorscheme gruvbox-material
-]])
 
 vim.g.AutoPairsShortcutToggle = "<M-z>"
