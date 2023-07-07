@@ -38,8 +38,27 @@ require("formatter").setup({
 		},
 		yaml = { require("formatter.filetypes.yaml").prettier },
 		json = { require("formatter.filetypes.json").fixjson },
+		tex = { require("formatter.filetypes.latex").latexindent },
+		typescript = { require("formatter.filetypes.typescript").prettier },
+		arduino = {
+			function()
+				return {
+					exe = "clang-format",
+					args = {
+						"-style={IndentWidth: 4}",
+						"-assume-filename",
+						util.escape_path(util.get_current_buffer_file_name()),
+					},
+					stdin = true,
+					try_node_modules = true,
+				}
+			end,
+		},
 	},
 })
 
 local group = vim.api.nvim_create_augroup("FormatterGroup", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", { command = "FormatWrite", group = group })
+vim.api.nvim_create_autocmd(
+	"BufWritePost",
+	{ command = "FormatWrite", group = group }
+)
