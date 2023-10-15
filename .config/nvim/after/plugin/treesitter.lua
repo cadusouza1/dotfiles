@@ -1,3 +1,14 @@
+local rainbow_delimiters = require("rainbow-delimiters")
+
+vim.g.rainbow_delimiters = {
+	strategy = {
+		[""] = rainbow_delimiters.strategy["global"],
+	},
+	query = {
+		[""] = "rainbow-delimiters",
+	},
+}
+
 require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
@@ -11,8 +22,8 @@ require("nvim-treesitter.configs").setup({
 	rainbow = {
 		enable = true,
 		extended_mode = true, -- highlight non-bracket delimiters
-		query = "rainbow-parens",
-		strategy = require("ts-rainbow").strategy.global,
+		-- query = "rainbow-parens",
+		-- strategy = require("ts-rainbow").strategy.global,
 	},
 	textobjects = {
 		select = {
