@@ -1,10 +1,7 @@
 alias e="$EDITOR"
 alias t="tldr"
 alias r="rich"
-
-function z
-    zathura $argv[1] & disown
-end
+alias z="zathura --fork $argv[1]"
 
 # Fish config
 alias fup="source $FISHDOTDIR/config.fish"
@@ -14,12 +11,12 @@ alias ll="exa --color=auto --icons -a --group-directories-first"
 
 function lt 
     if test -n "$argv[1]"
-        set dept_level $argv[1]
+        set dept $argv[1]
     else
-        set dept_level 2
+        set dept 2
     end
 
-    exa --color=auto --icons -a --group-directories-first -T -R -L $dept_level -l --no-permissions --no-user --no-time --git
+    exa --color=auto --icons -a --group-directories-first -T -R -L $dept -l --no-permissions --no-user --no-time --git
 end
 
 ## Cargo
@@ -37,6 +34,8 @@ alias sai="sudo apt install"
 alias sar="sudo apt remove" 
 alias saup="sudo apt update"
 alias saug="sudo apt upgrade"
+
+alias tmf="tmuxifier"
 
 function ch 
     curl cheat.sh/$argv[1]
