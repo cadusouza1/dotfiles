@@ -1,5 +1,7 @@
 require("packer").startup(function(use)
 	use({ "wbthomason/packer.nvim" })
+	use({ "mfussenegger/nvim-jdtls" })
+	use({ "mhartington/formatter.nvim" })
 
 	-- colorschemes
 	use({ "navarasu/onedark.nvim" })
@@ -7,6 +9,7 @@ require("packer").startup(function(use)
 	use({ "Mofiqul/dracula.nvim" })
 	use({ "fcpg/vim-fahrenheit" })
 	use({ "wittyjudge/gruvbox-material.nvim" })
+
 	use({ "nvim-tree/nvim-web-devicons" })
 
 	use({ "mfussenegger/nvim-dap" })
@@ -47,7 +50,7 @@ require("packer").startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 		requires = {
-			{ "HiPhish/nvim-ts-rainbow2" },
+			{ "HiPhish/rainbow-delimiters.nvim" },
 			{ "nvim-treesitter/nvim-treesitter-textobjects" },
 			{ "nvim-treesitter/nvim-treesitter-context" },
 		},
@@ -80,21 +83,22 @@ require("packer").startup(function(use)
 	use({ "tpope/vim-unimpaired" })
 	use({ "tpope/vim-vinegar" })
 
+	-- Session management
+	use({ "tpope/vim-obsession" })
+
 	use({ "arthurxavierx/vim-caser" })
 
 	use({ "jiangmiao/auto-pairs" })
 
 	use({ "norcalli/nvim-colorizer.lua" })
 
-	use({ "nvim-telescope/telescope-ui-select.nvim" })
+	-- use({ "nvim-telescope/telescope-ui-select.nvim" })
 
 	-- More and better vim objects
 	use({ "wellle/targets.vim" })
 	use({ "bkad/CamelCaseMotion" })
 	use({ "vim-scripts/argtextobj.vim" })
 	use({ "michaeljsmith/vim-indent-object" })
-
-	use({ "mhartington/formatter.nvim" })
 
 	-- Nvim REPL
 	use({ "hkupty/iron.nvim" })
@@ -108,7 +112,11 @@ require("packer").startup(function(use)
 		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 	})
 
-	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
+	use({
+		"akinsho/bufferline.nvim",
+		tag = "*",
+		requires = "nvim-tree/nvim-web-devicons",
+	})
 
 	use({
 		"iamcco/markdown-preview.nvim",
