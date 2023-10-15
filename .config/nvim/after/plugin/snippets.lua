@@ -184,6 +184,9 @@ ls.add_snippets("tex", {
 			end
 		end),
 	}),
+	s("(", { t("\\left(") }),
+	s(")", { t("\\right)") }),
+	s("()", { t("\\left( "), i(0), t("\\right") }),
 })
 
 ls.add_snippets("fish", {
