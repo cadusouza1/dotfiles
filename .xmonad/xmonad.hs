@@ -141,6 +141,9 @@ moveToWS i = windows $ W.shift $ myWorkspaces !! i
 moveAndViewWS :: Int -> X ()
 moveAndViewWS i = moveToWS i >> viewWS i
 
+bluetoothConnect name address = spawn $ "~/.scripts/bluetooth.sh connect " ++ name ++ " " ++ address
+bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect " ++ name ++ " " ++ address
+
 myKeys :: [(String, X ())]
 myKeys = [
     {-  launch a terminal -}
@@ -155,36 +158,50 @@ myKeys = [
     , ("M-o b", notifyAndSpawn myBrowser)
     , ("M-o m", notifyAndSpawn myMusicPlayer)
     , ("M-o d", notifyAndSpawn "discord")
+    , ("M-o t", notifyAndSpawn "~/Telegram/Telegram")
+    , ("M-o o", notifyAndSpawn "obs")
 
     {-  Terminal commands -}
     , ("M-o h", myRunInTerm "htop")
     , ("M-o c", myRunInTerm "~/.scripts/fuzzy.sh cheatsheet")
+    , ("M-o n", myRunInTerm "nmtui")
     , ("M-o l", spawn "~/.scripts/fuzzy.sh urls")
     , ("M-o s", spawn "xfce4-screenshooter")
+    , ("M-o a", spawn "~/.scripts/fuzzy.sh series")
+
+    {- Steam games -}
+    , ("M-o g", myRunInTerm "steam")
+    , ("M-g c", myRunInTerm "steam steam://rungameid/255710")
+    , ("M-g b", myRunInTerm "steam steam://rungameid/960090")
+    , ("M-g r", myRunInTerm "steam steam://rungameid/291550")
+    , ("M-g f", myRunInTerm "steam steam://rungameid/427520")
 
     {-  Bluetooth devices that I use -}
-    , ("M-b c p", spawn "~/.scripts/bluetooth.sh connect Philips-SHB3175 A4:77:58:79:9E:2F")
-    , ("M-b d p", spawn "~/.scripts/bluetooth.sh disconnect Philips-SHB3175 A4:77:58:79:9E:2F")
-    , ("M-b c r", spawn "~/.scripts/bluetooth.sh connect Redmi-Airdots-S 1C:52:16:87:7B:D6")
-    , ("M-b d r", spawn "~/.scripts/bluetooth.sh disconnect Redmi-Airdots-S 1C:52:16:87:7B:D6")
-    , ("M-b c b", spawn "~/.scripts/bluetooth.sh connect BT-SPEAKER 16:48:75:47:EF:3D")
-    , ("M-b d b", spawn "~/.scripts/bluetooth.sh disconnect BT-SPEAKER 16:48:75:47:EF:3D")
-    , ("M-b c e", spawn "~/.scripts/bluetooth.sh connect 887 FC:58:FA:73:76:2A")
-    , ("M-b d e", spawn "~/.scripts/bluetooth.sh disconnect 887 FC:58:FA:73:76:2A")
+    , ("M-b c p", bluetoothConnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
+    , ("M-b d p", bluetoothDisconnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
+    , ("M-b c r", bluetoothConnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
+    , ("M-b d r", bluetoothDisconnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
+    , ("M-b c b", bluetoothConnect "BT-SPEAKER" "16:48:75:47:EF:3D")
+    , ("M-b d b", bluetoothDisconnect "BT-SPEAKER" "16:48:75:47:EF:3D")
+    , ("M-b c e", bluetoothConnect "887" "FC:58:FA:73:76:2A")
+    , ("M-b d e", bluetoothDisconnect "887" "FC:58:FA:73:76:2A")
+    , ("M-b c m", bluetoothConnect "M103" "39:C6:89:AF:DA:45")
+    , ("M-b d m", bluetoothDisconnect "M103" "39:C6:89:AF:DA:45")
 
     {- Brightness Control -}
     , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
     , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
-    , ("M-b s 1", myRunInTerm "lux -S 10%")
-    , ("M-b s 2", myRunInTerm "lux -S 20%")
-    , ("M-b s 3", myRunInTerm "lux -S 30%")
-    , ("M-b s 4", myRunInTerm "lux -S 40%")
-    , ("M-b s 5", myRunInTerm "lux -S 50%")
-    , ("M-b s 6", myRunInTerm "lux -S 60%")
-    , ("M-b s 7", myRunInTerm "lux -S 70%")
-    , ("M-b s 8", myRunInTerm "lux -S 80%")
-    , ("M-b s 9", myRunInTerm "lux -S 90%")
-    , ("M-b s 0", myRunInTerm "lux -S 100%")
+    , ("M-b s m", spawn "lux -S 1")
+    , ("M-b s 1", spawn "lux -S 10%")
+    , ("M-b s 2", spawn "lux -S 20%")
+    , ("M-b s 3", spawn "lux -S 30%")
+    , ("M-b s 4", spawn "lux -S 40%")
+    , ("M-b s 5", spawn "lux -S 50%")
+    , ("M-b s 6", spawn "lux -S 60%")
+    , ("M-b s 7", spawn "lux -S 70%")
+    , ("M-b s 8", spawn "lux -S 80%")
+    , ("M-b s 9", spawn "lux -S 90%")
+    , ("M-b s 0", spawn "lux -S 100%")
 
     {- Dont need to use a bar just to look at the capacity sometimes -}
     , ("M-b b", spawn "~/.scripts/battery.sh")
@@ -193,13 +210,14 @@ myKeys = [
     , ("M-e w", edit "~/.xmonad/xmonad.hs")
     , ("M-e t", edit "~/.config/tmux/tmux.conf")
     , ("M-e b", edit "~/.config/xmobar/xmobar.config")
+    , ("M-e u", edit "~/.scripts/urls.txt")
 
     {-  Fuzzy finder for specific paths -}
     , ("M-e h", fuzzyEdit "~/")
     , ("M-e s", fuzzyEdit "~/school/")
     , ("M-e f", fuzzyEdit "~/.config/fish/")
     , ("M-e n", fuzzyEdit "~/.config/nvim/")
-    , ("M-e c", fuzzyEdit "~/.config/ ~/.scripts/ ~/.xmonad/ ~/.local/bin/")
+    , ("M-e c", fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
     , ("M-e p", fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
 
     {-  Operations with the master window -}
@@ -231,12 +249,14 @@ myKeys = [
     , ("M-C-q",  killAll) -- close all windows
     , ("M-M1-q", killOthers) -- close all windows without focus
 
-    , ("M-p",   spawn "rofi -dpi 1 -normal-window -show run")
+    , ("M-p",   spawn "rofi -dpi 1 -normal-window -modi \"drun\" -show drun")
     , ("M-q",   spawn recompileAndRestartXMonad)
     , ("M-S-c", io exitSuccess) -- Quit xmonad
 
     {-  TMUX session manager -}
-    , ("M-S-s", myRunInTerm "tms")
+    , ("M-s s", myRunInTerm "~/.scripts/tms school/")
+    , ("M-s h", myRunInTerm "~/.scripts/tms ~/")
+    , ("M-s l", myRunInTerm "~/.scripts/tml")
 
     {-  Spotify integration -}
     , ("M-s j", audioPrev)
@@ -273,9 +293,12 @@ myKeys = [
     , ("M-C-9", moveAndViewWS 8)
 
     {-  Volume control -}
-    , ("M-<F1>", raiseVolume 5 >>= \x -> notify 1 $ show x)
-    , ("M-<F2>", lowerVolume 5 >>= \x -> notify 1 $ show x)
-    , ("M-v t", toggleMute >> return ())
+    , ("<XF86AudioRaiseVolume>", raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
+    , ("<XF86AudioLowerVolume>", lowerVolume 5 >>= \x -> notify 1 $ show $ round x)
+    , ("<XF86AudioMute>", toggleMute >> return ())
+    , ("M-<F1>", raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
+    , ("M-<F2>", lowerVolume 5 >>= \x -> notify 1 $ show $ round x)
+    , ("M-v t",  toggleMute >> return ())
     , ("M-v 1",  notifySetVolume 10 )
     , ("M-v 2",  notifySetVolume 20 )
     , ("M-v 3",  notifySetVolume 30 )
@@ -302,15 +325,15 @@ myKeys = [
     , ("M-r 9", setScreenWindowSpacing 90)
     , ("M-r t", toggleBorders)
 
-    , ("M-r m", myRunInTerm "mangal")
-
     {-  Resize focused window with the mouse -}
     , ("M-<button3>", withFocused Flex.mouseResizeWindow)
     ]
 
+mySpacing l = spacingRaw False (Border 0 0 0 0) True (Border 0 0 0 0) True $ l
+
 tall =
       renamed [Replace "Tall"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ mySpacing
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -318,7 +341,7 @@ tall =
 
 mirrorTall =
       renamed [Replace "Mirror Tall"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ mySpacing
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -327,7 +350,7 @@ mirrorTall =
 
 tallMasterFocus =
       renamed [Replace "Tall Master Focus"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ mySpacing
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -335,7 +358,7 @@ tallMasterFocus =
 
 threeColumns =
       renamed [Replace "ThreeCol"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ mySpacing
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -343,7 +366,7 @@ threeColumns =
 
 dwindle =
       renamed [Replace "Dwindle"]
-    $ spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+    $ mySpacing
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
@@ -411,10 +434,10 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
 -- Perform an arbitrary action each time xmonad starts or is restarted
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
-
 myStartupHook = do
     spawnOnOnce "workspace1" myTerminal
-    spawnOnce "picom &"
+    -- spawnOnce "picom &"
+    spawnOnce "nm-applet &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with the settings you specify. No need to modify this.
