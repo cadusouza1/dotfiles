@@ -26,7 +26,7 @@ telescope.setup({
 	},
 })
 
-telescope.load_extension("ui-select")
+-- telescope.load_extension("ui-select")
 telescope.load_extension("fzf")
 
 local function pdf_picker(search_path)
@@ -34,7 +34,10 @@ local function pdf_picker(search_path)
 	pickers
 		.new(opts, {
 			prompt_title = "PDF Finder",
-			finder = finders.new_oneshot_job({ "fdfind", "-e", "pdf", "--search-path", search_path }, opts),
+			finder = finders.new_oneshot_job(
+				{ "fdfind", "-e", "pdf", "--search-path", search_path },
+				opts
+			),
 			sorter = conf.file_sorter(opts),
 			attach_mappings = function(prompt_bufnr, _)
 				actions.select_default:replace(function()
