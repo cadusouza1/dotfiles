@@ -20,6 +20,9 @@ export PATH="$HOME/.nimble/bin/:$PATH"
 # Rust
 export PATH="$HOME/.cargo/env:$PATH"
 
+# Tmuxifier
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+
 # Paths for my scripts
 for path in (du $HOME/.scripts/ | cut -f2)
     export PATH="$path:$PATH"
