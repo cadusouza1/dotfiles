@@ -6,11 +6,11 @@ fzf-previwer() {
 }
 
 edit() {
-    fd -L -H -t f -E .git . $1 | fzf-previwer | xargs -r nvim
+    fd -L -H -t f -E .git . $@ | fzf-previwer | xargs -r $EDITOR
 }
 
 urls() {
-    rofi -dpi 1 -auto-select -normal-window -dmenu -input ~/urls.txt | xargs -r firefox
+    rofi -dpi 1 -auto-select -normal-window -dmenu -input ~/.scripts/urls.txt | xargs -r $BROWSER
 }
 
 cheatsheet() {
@@ -25,6 +25,14 @@ manpage() {
     if [[ -n "$selected" ]]; then
         man $selected | col -b | nvim -R -c "setfiletype man" -
     fi
+}
+
+series() {
+    cut -d'>' -f1 ~/.scripts/series.txt |
+        rofi -dpi 1 -auto-select -normal-window -dmenu |
+        xargs -r -I {} grep {} ~/.scripts/series.txt |
+        cut -d'>' -f2 |
+        xargs -r $BROWSER
 }
 
 # Check if the function exists (bash specific)
