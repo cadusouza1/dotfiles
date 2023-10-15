@@ -6,10 +6,22 @@ local function attach_to_buffer(output_bufnr, pattern, command)
 		callback = function()
 			local data_to_append = function(_, data)
 				if data then
-					vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
+					vim.api.nvim_buf_set_lines(
+						output_bufnr,
+						-1,
+						-1,
+						false,
+						data
+					)
 				end
 			end
-			vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, { "AutoRun Start", "" })
+			vim.api.nvim_buf_set_lines(
+				output_bufnr,
+				0,
+				-1,
+				false,
+				{ "AutoRun Start", "" }
+			)
 			vim.fn.jobstart(command, {
 				stdout_buffered = true,
 				on_stderr = data_to_append,
