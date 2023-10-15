@@ -2,12 +2,12 @@
 
 connect() {
     notify-send -t 1000 "Connecting to $1"
-    bluetoothctl connect $2
+    notify-send -t 1000 "$(bluetoothctl connect $2)"
 }
 
 disconnect() {
     notify-send -t 1000 "Disconnecting from $1"
-    bluetoothctl disconnect $2
+    notify-send -t 1000 "$(bluetoothctl disconnect $2)"
 }
 
 # Check if the function exists (bash specific)
