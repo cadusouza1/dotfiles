@@ -7,7 +7,7 @@ vim.keymap.set("n", "<Bslash>j", vim.diagnostic.goto_next, { silent = true })
 vim.keymap.set("n", "<Bslash>k", vim.diagnostic.goto_prev, { silent = true })
 vim.keymap.set("n", "<Bslash>l", telescope.diagnostics, { silent = true })
 
-lsp.on_attach(function(client, bufnr)
+lsp.on_attach(function(_, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
 	vim.api.nvim_buf_set_keymap(
@@ -100,7 +100,6 @@ lsp.on_attach(function(client, bufnr)
 	})
 end)
 
--- local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 lsp.setup()
 mason.setup()
 mason_lsp.setup()
