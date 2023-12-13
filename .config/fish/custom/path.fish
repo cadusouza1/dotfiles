@@ -7,7 +7,6 @@ export PATH="/usr/local/lib/nodejs/node-$VERSION-$DISTRO/bin:$PATH"
 
 # Haskell
 export PATH="$HOME/.ghcup/bin:$PATH"
-
 export PATH="$HOME/.local/bin:$PATH"
 
 # Golang
@@ -19,6 +18,9 @@ export PATH="$HOME/.nimble/bin/:$PATH"
 
 # Rust
 export PATH="$HOME/.cargo/env:$PATH"
+
+# Odin
+export PATH="$HOME/Odin/:$PATH"
 
 # Tmuxifier
 export PATH="$HOME/.tmuxifier/bin:$PATH"
