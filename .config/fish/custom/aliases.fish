@@ -7,7 +7,6 @@ alias z="zathura --fork $argv[1]"
 alias fup="source $FISHDOTDIR/config.fish"
 
 alias ls="exa --color=auto -a --group-directories-first"
-alias ll="exa --color=auto --icons -a --group-directories-first"
 
 function lt 
     if test -n "$argv[1]"
