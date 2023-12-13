@@ -1,5 +1,5 @@
 function fuzzy-edit
-    fd -H -L -t f . $argv | fzf --height=10 | xargs -r $EDITOR
+    fd -H -L -t f . $argv | gum filter | xargs -r $EDITOR
     commandline -f repaint
 end
 
