@@ -1,0 +1,6 @@
+#!/bin/bash
+
+selected=$(man -k . | cut -d' ' -f1 | gum filter)
+if [[ -n "$selected" ]]; then
+    man $selected | col -b | nvim -R -c "setfiletype man" -
+fi

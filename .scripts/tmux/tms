@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ ! $(pgrep tmux) ]]; then
+    tmux start
+fi
+
+selected=$(find $1 -type d | sed 's|'"$HOME"/'||' | gum filter)
+tmux new-session -c "$selected" -A -s $(rev <<<$selected | cut -d'/' --fields=-$2 | rev)

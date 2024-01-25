@@ -1,0 +1,5 @@
+#!/bin/bash
+
+fd -e pdf -L -H -t f -E .git . $@ |
+    gum filter |
+    xargs -I {} -r zathura --fork "{}"
