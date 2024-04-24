@@ -7,6 +7,7 @@ Jujutsu Kaisen (Anime) > firefox https://www.crunchyroll.com/series/GRDV0019R/ju
 Jujutsu Kaisen (Manga) > evince ~/Jujutsu_Kaisen/Volume-*.pdf
 Konosuba - An Explosion on This Wonderful World > firefox https://www.crunchyroll.com/series/GJ0H7Q5V7/konosuba--an-explosion-on-this-wonderful-world
 Legend Of The Northern Blade > firefox https://www.legendnorthernblade.com/
+One Punch Man > evince ~/One-Punch_Man/Volume-*.pdf
 Spy x Family > firefox https://www.crunchyroll.com/series/G4PH0WXVJ/spy-x-family
 The Boondocks > firefox https://123moviesgo.su/series/the-boondocks/
 The Boys > firefox https://www.primevideo.com/region/na/detail/0KRGHGZCHKS920ZQGY5LBRF7MA/ref=atv_sr_fle_c_Tn74RA_1_1_1?sr=1-1&pageTypeIdSource=ASIN&pageTypeId=B07QRVGWKQ&qid=1698850067614

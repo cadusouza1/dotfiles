@@ -34,16 +34,22 @@ local function pdf_picker(search_path)
 	pickers
 		.new(opts, {
 			prompt_title = "PDF Finder",
-			finder = finders.new_oneshot_job(
-				{ "fdfind", "-e", "pdf", "--search-path", search_path },
-				opts
-			),
+			finder = finders.new_oneshot_job({
+				"fdfind",
+				"-e",
+				"pdf",
+				"--search-path",
+				search_path,
+			}, opts),
 			sorter = conf.file_sorter(opts),
 			attach_mappings = function(prompt_bufnr, _)
 				actions.select_default:replace(function()
 					actions.close(prompt_bufnr)
-					local selection = action_state.get_selected_entry()
-					os.execute("zathura " .. selection[1] .. " & disown")
+					local selection =
+						action_state.get_selected_entry()
+					os.execute(
+						"zathura --fork" .. selection[1]
+					)
 				end)
 				return true
 			end,
@@ -75,11 +81,15 @@ vim.keymap.set("n", "<leader>co", function()
 end)
 
 vim.keymap.set("n", "<leader>cn", function()
-	builtin.find_files({ search_dirs = { xdg_config_home .. "/nvim" } })
+	builtin.find_files({
+		search_dirs = { xdg_config_home .. "/nvim" },
+	})
 end)
 
 vim.keymap.set("n", "<leader>cs", function()
-	builtin.find_files({ search_dirs = { home .. "/school" } })
+	builtin.find_files({
+		search_dirs = { home .. "/school" },
+	})
 end)
 
 vim.keymap.set("n", "<leader>ch", function()
@@ -87,7 +97,9 @@ vim.keymap.set("n", "<leader>ch", function()
 end)
 
 vim.keymap.set("n", "<leader>cf", function()
-	builtin.find_files({ search_dirs = { xdg_config_home .. "/fish/" } })
+	builtin.find_files({
+		search_dirs = { xdg_config_home .. "/fish/" },
+	})
 end)
 
 vim.keymap.set("n", "<leader>Z", function()

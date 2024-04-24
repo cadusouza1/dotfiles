@@ -58,6 +58,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'wellle/targets.vim'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'bkad/CamelCaseMotion'
+Plug 'fcpg/vim-fahrenheit'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 colorscheme gruvbox
@@ -76,5 +78,17 @@ xmap <silent> i<leader>b <Plug>CamelCaseMotion_ib
 omap <silent> i<leader>e <Plug>CamelCaseMotion_ie
 xmap <silent> i<leader>e <Plug>CamelCaseMotion_ie
 
-" Terminal Config
-nnoremap <silent> <leader>t :term<cr>
+" Crude simulation of harpoon
+nnoremap <silent> <C-h> 'A<cr>
+nnoremap <silent> <C-j> 'B<cr>
+nnoremap <silent> <C-k> 'C<cr>
+nnoremap <silent> <C-l> 'D<cr>
+nnoremap <silent> <leader>h1 'E<cr>
+nnoremap <silent> <leader>h2 'F<cr>
+nnoremap <silent> <leader>h3 'G<cr>
+nnoremap <silent> <leader>h4 'H<cr>
+nnoremap <silent> <leader>h5 'I<cr>
+nnoremap <silent> <C-e> :marks<cr>
+
+" airline config
+" let g:airline#extensions#tabline#enabled = 1

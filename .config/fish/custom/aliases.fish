@@ -18,7 +18,7 @@ function lt
     exa --color=auto --icons -a --group-directories-first -T -R -L $dept -l --no-permissions --no-user --no-time --git
 end
 
-## Cargo
+# Cargo
 alias cgr="cargo run"
 alias cgb="cargo build"
 alias cgbr="cargo build --release"
@@ -48,4 +48,3 @@ end
 function m
     man $argv[1] | col -b | nvim -R -c "setfiletype man" -
 end
-

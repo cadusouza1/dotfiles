@@ -1,7 +1,5 @@
 module Colors.Dracula where
 
-import           XMonad
-
 colorScheme = "dracula"
 
 colorBack = "#161925"

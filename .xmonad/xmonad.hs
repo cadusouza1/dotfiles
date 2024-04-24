@@ -10,11 +10,11 @@ import           Text.Show
 import           XMonad
 import           XMonad.Actions.FindEmptyWorkspace
 import qualified XMonad.Actions.FlexibleResize     as Flex
-import           XMonad.Actions.RepeatAction
 import           XMonad.Actions.RotSlaves
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.Submap
 import           XMonad.Actions.SwapWorkspaces
+import           XMonad.Actions.TreeSelect
 import           XMonad.Actions.Volume
 import           XMonad.Actions.WithAll
 
@@ -52,13 +52,11 @@ import qualified XMonad.StackSet                   as W
 import           Colors.Dracula
 
 myTerminal :: String
-myTerminal = "alacritty msg create-window || alacritty"
+-- myTerminal = "alacritty msg create-window || alacritty"
+myTerminal = "alacritty"
 
 myBrowser :: String
 myBrowser = "firefox"
-
-myMusicPlayer :: String
-myMusicPlayer = "spotify"
 
 myEditor :: String
 myEditor = "nvim"
@@ -95,12 +93,11 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
-myNormalBorderColor = "#000000"
+myNormalBorderColor = color01
 
 -- Border colors for focused window
 myFocusedBorderColor:: String
--- myFocusedBorderColor = "#008b8b"
-myFocusedBorderColor = "#C00000"
+myFocusedBorderColor = color02
 
 recompileAndRestartXMonad :: String
 recompileAndRestartXMonad = "notify-send 'Recompiling XMonad' -t 1000 & xmonad --recompile && xmonad --restart && notify-send 'Recompilation successfully' -t 1000"
@@ -114,15 +111,14 @@ toggleBorders = do
     sendMessage (ModifyWindowBorderEnabled not)
     sendMessage ToggleStruts
 
--- Maintain only one alacritty process
 myRunInTerm :: String -> X ()
-myRunInTerm cmd = spawn $ "alacritty msg create-window -e " ++ cmd ++ " || alacritty -e " ++ cmd
+myRunInTerm cmd = spawn $ myTerminal ++ " -e " ++ cmd
 
 edit :: String -> X ()
 edit filePath = myRunInTerm $ myEditor ++ " " ++ filePath
 
 fuzzyEdit :: String -> X ()
-fuzzyEdit path = myRunInTerm $ "~/.scripts/fuzzy.sh edit " ++ path
+fuzzyEdit path = myRunInTerm $ "~/.scripts/fuzzy-edit/fedit " ++ path
 
 notifyAndSpawn :: String -> X ()
 notifyAndSpawn command = do
@@ -152,11 +148,11 @@ bluetoothConnect name address = spawn $ "~/.scripts/bluetooth.sh connect " ++ na
 bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect " ++ name ++ " " ++ address
 
 myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
-    [ ((modm, xK_Return), spawn myTerminal) {- launch a terminal -}
-    , ((modm, xK_m), myRunInTerm "~/.scripts/fuzzy.sh manpage")
+    [ ((modm, xK_Return), spawn myTerminal)
+    , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/manp")
 
-    {-  Operations with windows -}
-    , ((modm, xK_space), sendMessage NextLayout)   -- Rotate through the available layout algorithms
+    {- Operations with windows -}
+    , ((modm, xK_space), sendMessage NextLayout) -- Rotate through the available layout algorithms
     , ((modm, xK_j), windows W.focusDown)
     , ((modm, xK_k), windows W.focusUp)
     , ((modm .|. shiftMask, xK_j), windows W.swapDown)
@@ -169,14 +165,13 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. controlMask, xK_q),  killAll) -- close all windows
     , ((modm .|. mod1Mask, xK_q), killOthers) -- close all windows without focus
 
-    {-  Make the windows fullscreen -}
+    {- Make the windows fullscreen -}
     , ((modm, xK_f), sendMessage ToggleLayout)
 
-    {-  Operations with the master window -}
+    {- Operations with the master window -}
+    , ((modm, xK_comma), sendMessage $ IncMasterN 1) -- Increment the number of windows in the master area
+    , ((modm, xK_period), sendMessage $ IncMasterN $ -1) -- Decrease the number of windows in the master area
     , ((modm .|. shiftMask, xK_m), windows W.swapMaster) -- Swap the focused window and the master window
-    , ((modm .|. shiftMask, xK_comma), sendMessage $ IncMasterN 1) -- Increment the number of windows in the master area
-    , ((modm .|. shiftMask, xK_period), sendMessage $ IncMasterN $ -1) -- Decrease the number of windows in the master area
-    -- , ((modm, xK_m),   windows W.focusMaster) -- Move focus to the master window
 
     , ((modm, xK_q), spawn recompileAndRestartXMonad)
     , ((modm .|. shiftMask, xK_p), spawn "rofi -dpi 1 -normal-window -modi \"drun\" -show drun")
@@ -185,111 +180,120 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_o), submap . M.fromList $
         {- Aplications to spawn -}
         [ ((0, xK_b), notifyAndSpawn myBrowser)
-        , ((0, xK_m), notifyAndSpawn myMusicPlayer)
+        , ((0, xK_m), notifyAndSpawn "spotify")
         , ((0, xK_d), notifyAndSpawn "discord")
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
+        , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
         , ((0, xK_g), myRunInTerm "steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
+        , ((0, xK_p), spawn "ppsspp")
+        , ((0, xK_r), spawn "ruffle")
 
         {- Terminal Commands -}
         , ((0, xK_h), myRunInTerm "htop")
         , ((0, xK_n), myRunInTerm "nmtui")
-        , ((0, xK_c), myRunInTerm "~/.scripts/fuzzy.sh cheatsheet")
-        , ((0, xK_a), spawn "~/.scripts/fuzzy.sh series")
-        , ((0, xK_l), spawn "~/.scripts/fuzzy.sh urls")
-        , ((shiftMask, xK_l), spawn "~/.scripts/fuzzy.sh urls-new-window")
+        , ((0, xK_c), myRunInTerm "~/.scripts/cheatsheet/cheat")
+        , ((0, xK_a), spawn "~/.scripts/series-hub/serieshub ~/.scripts/series-hub/series.txt")
+        , ((0, xK_l), spawn "~/.scripts/url-bookmarks/urls ~/.scripts/url-bookmarks/urls.txt")
+        , ((shiftMask, xK_l), spawn "~/.scripts/url-bookmarks/urls-new-window ~/.scripts/url-bookmarks/urls.txt")
         ])
 
-        , ((modm, xK_b), submap . M.fromList $
-            {-  Bluetooth devices that I use -}
-            [ ((0, xK_c), submap . M.fromList $
-                [ ((0, xK_m), bluetoothConnect "M103" "39:C6:89:AF:DA:45")
-                , ((0, xK_e), bluetoothConnect "887" "FC:58:FA:73:76:2A")
-                , ((0, xK_b), bluetoothConnect "BT-SPEAKER" "16:48:75:47:EF:3D")
-                , ((0, xK_r), bluetoothConnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
-                , ((0, xK_p), bluetoothConnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
-                ])
-
-            , ((0, xK_d), submap . M.fromList $
-                [ ((0, xK_m), bluetoothDisconnect "M103" "39:C6:89:AF:DA:45")
-                , ((0, xK_e), bluetoothDisconnect "887" "FC:58:FA:73:76:2A")
-                , ((0, xK_b), bluetoothDisconnect "BT-SPEAKER" "16:48:75:47:EF:3D")
-                , ((0, xK_r), bluetoothDisconnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
-                , ((0, xK_p), bluetoothDisconnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
-                ])
-
-            {- Brightness Control -}
-            , ((0, xK_s), submap . M.fromList $
-                [ ((0, xK_m), spawn "lux -S 1")
-                , ((0, xK_1), spawn "lux -S 10%")
-                , ((0, xK_2), spawn "lux -S 20%")
-                , ((0, xK_3), spawn "lux -S 30%")
-                , ((0, xK_4), spawn "lux -S 40%")
-                , ((0, xK_5), spawn "lux -S 50%")
-                , ((0, xK_6), spawn "lux -S 60%")
-                , ((0, xK_7), spawn "lux -S 70%")
-                , ((0, xK_8), spawn "lux -S 80%")
-                , ((0, xK_9), spawn "lux -S 90%")
-                , ((0, xK_0), spawn "lux -S 100%")
-                ])
-
-            {- Alternative to look at the battery in full screen -}
-            , ((0, xK_b), spawn "~/.scripts/battery.sh")
+    , ((modm, xK_b), submap . M.fromList $
+        {- Bluetooth devices that I use -}
+        [ ((0, xK_c), submap . M.fromList $
+            [ ((0, xK_m), bluetoothConnect "M103" "39:C6:89:AF:DA:45")
+            , ((0, xK_e), bluetoothConnect "887" "FC:58:FA:73:76:2A")
+            , ((0, xK_b), bluetoothConnect "BT-SPEAKER" "16:48:75:47:EF:3D")
+            , ((0, xK_r), bluetoothConnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
+            , ((0, xK_p), bluetoothConnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
             ])
 
-            , ((modm, xK_p), submap . M.fromList $
-                [ ((0, xK_s), myRunInTerm "~/.scripts/fuzzy.sh pdfs ~/school/")
-                , ((0, xK_h), myRunInTerm "~/.scripts/fuzzy.sh pdfs ~/")
-                ])
+        , ((0, xK_d), submap . M.fromList $
+            [ ((0, xK_m), bluetoothDisconnect "M103" "39:C6:89:AF:DA:45")
+            , ((0, xK_e), bluetoothDisconnect "887" "FC:58:FA:73:76:2A")
+            , ((0, xK_b), bluetoothDisconnect "BT-SPEAKER" "16:48:75:47:EF:3D")
+            , ((0, xK_r), bluetoothDisconnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
+            , ((0, xK_p), bluetoothDisconnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
+            ])
 
-            , ((modm, xK_e), submap . M.fromList $
-                {-  Common files thay I edit -}
-                [ ((0, xK_w), edit "~/.xmonad/xmonad.hs")
-                , ((0, xK_t), edit "~/.config/tmux/tmux.conf")
-                , ((0, xK_b), edit "~/.config/xmobar/xmobar.config")
-                , ((0, xK_u), edit "~/.scripts/urls.txt")
+        {- Brightness Control -}
+        , ((0, xK_s), submap . M.fromList $
+            [ ((0, xK_m), spawn "lux -S 1")
+            , ((0, xK_1), spawn "lux -S 10%")
+            , ((0, xK_2), spawn "lux -S 20%")
+            , ((0, xK_3), spawn "lux -S 30%")
+            , ((0, xK_4), spawn "lux -S 40%")
+            , ((0, xK_5), spawn "lux -S 50%")
+            , ((0, xK_6), spawn "lux -S 60%")
+            , ((0, xK_7), spawn "lux -S 70%")
+            , ((0, xK_8), spawn "lux -S 80%")
+            , ((0, xK_9), spawn "lux -S 90%")
+            , ((0, xK_0), spawn "lux -S 100%")
+            ])
 
-                {-  Fuzzy finder for specific paths -}
-                , ((0, xK_h), fuzzyEdit "~/")
-                , ((0, xK_f), fuzzyEdit "~/.config/fish/")
-                , ((0, xK_n), fuzzyEdit "~/.config/nvim/")
-                , ((0, xK_c), fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
-                , ((0, xK_p), fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
-                , ((0, xK_s), fuzzyEdit "~/school/")
-                , ((shiftMask, xK_s), fuzzyEdit "~/.scripts/")
-                ])
+        {- Alternative to look at the battery in full screen -}
+        , ((0, xK_b), spawn "~/.scripts/battery.sh")
+        ])
 
-            , ((modm, xK_s), submap . M.fromList $
-                [ {- Steam games -}
-                  ((0, xK_c), myRunInTerm "steam steam://rungameid/255710")
-                , ((0, xK_b), myRunInTerm "steam steam://rungameid/960090")
-                , ((0, xK_r), myRunInTerm "steam steam://rungameid/291550")
-                , ((0, xK_f), myRunInTerm "steam steam://rungameid/427520")
+    , ((modm, xK_p), submap . M.fromList $
+        [ ((0, xK_s), myRunInTerm "~/.scripts/pdf-reader/pdfr ~/school/")
+        , ((0, xK_p), myRunInTerm "~/.scripts/pdf-reader/pdfr ~/piano/")
+        , ((0, xK_h), myRunInTerm "~/.scripts/pdf-reader/pdfr ~/")
+        ])
 
-                {-  Spotify integration -}
-                , ((0, xK_j), audioPrev)
-                , ((0, xK_k), audioNext)
-                , ((0, xK_p), audioPlayPause)
+    , ((modm, xK_e), submap . M.fromList $
+        {- Common files thay I edit -}
+        [ ((0, xK_w), edit "~/.xmonad/xmonad.hs")
+        , ((0, xK_t), edit "~/.config/tmux/tmux.conf")
+        , ((0, xK_b), edit "~/.config/xmobar/xmobar.config")
+        , ((0, xK_u), edit "~/.scripts/url-bookmarks/urls.txt")
+        , ((0, xK_a), edit "~/.config/alacritty/alacritty.yml")
+        , ((0, xK_v), myRunInTerm "vim ~/.vimrc")
 
-                {- Workspace swapping -}
-                , ((0, xK_1), swapWorkspace 0)
-                , ((0, xK_2), swapWorkspace 1)
-                , ((0, xK_3), swapWorkspace 2)
-                , ((0, xK_4), swapWorkspace 3)
-                , ((0, xK_5), swapWorkspace 4)
-                , ((0, xK_6), swapWorkspace 5)
-                , ((0, xK_7), swapWorkspace 6)
-                , ((0, xK_8), swapWorkspace 7)
-                , ((0, xK_9), swapWorkspace 8)
+        {- Fuzzy finder for specific paths -}
+        , ((0, xK_h), fuzzyEdit "~/")
+        , ((0, xK_f), fuzzyEdit "~/.config/fish/")
+        , ((0, xK_n), fuzzyEdit "~/.config/nvim/")
+        , ((0, xK_c), fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
+        , ((0, xK_p), fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
+        , ((0, xK_s), fuzzyEdit "~/school/")
+        , ((shiftMask, xK_s), fuzzyEdit "~/.scripts/")
+        ])
 
-                {- Easier way to find and operate empty workspaces -}
-                , ((0, xK_v), viewEmptyWorkspace)
-                , ((0, xK_t), tagToEmptyWorkspace)
-                , ((0, xK_s), sendToEmptyWorkspace)
-                ])
+    , ((modm, xK_s), submap . M.fromList $
+        [ {- Games -}
+          ((0, xK_c), myRunInTerm "steam steam://rungameid/255710")
+        , ((0, xK_b), myRunInTerm "steam steam://rungameid/960090")
+        , ((0, xK_r), myRunInTerm "steam steam://rungameid/291550")
+        , ((0, xK_f), myRunInTerm "steam steam://rungameid/427520")
+        , ((0, xK_x), myRunInTerm "steam steam://rungameid/323470")
+        , ((0, xK_m), myRunInTerm "steam steam://rungameid/1604000")
+        , ((0, xK_i), myRunInTerm "java -jar ~/TLauncher-2.885/TLauncher-2.885.jar")
 
-    {-  Switch and move between workspaces -}
+        {- Spotify integration -}
+        , ((0, xK_j), audioPrev)
+        , ((0, xK_k), audioNext)
+        , ((0, xK_p), audioPlayPause)
+
+        {- Workspace swapping -}
+        , ((0, xK_1), swapWorkspace 0)
+        , ((0, xK_2), swapWorkspace 1)
+        , ((0, xK_3), swapWorkspace 2)
+        , ((0, xK_4), swapWorkspace 3)
+        , ((0, xK_5), swapWorkspace 4)
+        , ((0, xK_6), swapWorkspace 5)
+        , ((0, xK_7), swapWorkspace 6)
+        , ((0, xK_8), swapWorkspace 7)
+        , ((0, xK_9), swapWorkspace 8)
+
+        {- Easier way to find and operate empty workspaces -}
+        , ((0, xK_v), viewEmptyWorkspace)
+        , ((0, xK_t), tagToEmptyWorkspace)
+        , ((0, xK_s), sendToEmptyWorkspace)
+        ])
+
+    {- Switch and move between workspaces -}
     , ((modm, xK_1),                 viewWS 0)
     , ((modm, xK_2),                 viewWS 1)
     , ((modm, xK_3),                 viewWS 2)
@@ -319,27 +323,36 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. controlMask, xK_9), moveAndViewWS 8)
 
     , ((modm, xK_t), submap . M.fromList $
-        [ ((0, xK_l), myRunInTerm "~/.scripts/tml")
-        , ((0, xK_p), myRunInTerm "~/.scripts/tms ~/pprojects/")
-        , ((0, xK_h), myRunInTerm "~/.scripts/tms ~")
-        , ((0, xK_s), myRunInTerm "~/.scripts/tms ~/school/")
-        , ((shiftMask, xK_s), myRunInTerm "~/.scripts/tms ~/.scripts/")
+        [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tml")
+        , ((0, xK_p), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/ 2")
+        , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/leetcode/ 1")
+        , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/aoc/ 4")
+        , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tms ~ 2")
+        , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tms ~/.config/ 2")
+        , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tms ~/dotfiles/ 2")
+        , ((shiftMask, xK_s), myRunInTerm "~/.scripts/tmux/tms ~/.scripts/ 2")
+        , ((0, xK_s), submap . M.fromList $
+            [ ((0, xK_1), myRunInTerm "~/.scripts/tmux/tms ~/school/ 2")
+            , ((0, xK_2), myRunInTerm "~/.scripts/tmux/tms ~/school/p2/ 2")
+            , ((0, xK_3), myRunInTerm "~/.scripts/tmux/tms ~/school/p3/ 2")
+            , ((0, xK_4), myRunInTerm "~/.scripts/tmux/tms ~/school/p4/ 2")
+            ])
         ])
 
     , ((modm, xK_F1), raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
     , ((modm, xK_F2), lowerVolume 5 >>= \x -> notify 1 $ show $ round x)
     , ((modm, xK_v), submap . M.fromList $
-        [ ((0, xK_t),  toggleMute >> return ())
-        , ((0, xK_1),  notifySetVolume 10 )
-        , ((0, xK_2),  notifySetVolume 20 )
-        , ((0, xK_3),  notifySetVolume 30 )
-        , ((0, xK_4),  notifySetVolume 40 )
-        , ((0, xK_5),  notifySetVolume 50 )
-        , ((0, xK_6),  notifySetVolume 60 )
-        , ((0, xK_7),  notifySetVolume 70 )
-        , ((0, xK_8),  notifySetVolume 80 )
-        , ((0, xK_9),  notifySetVolume 90 )
-        , ((0, xK_0),  notifySetVolume 100)
+        [ ((0, xK_t), toggleMute >> return ())
+        , ((0, xK_1), notifySetVolume 10 )
+        , ((0, xK_2), notifySetVolume 20 )
+        , ((0, xK_3), notifySetVolume 30 )
+        , ((0, xK_4), notifySetVolume 40 )
+        , ((0, xK_5), notifySetVolume 50 )
+        , ((0, xK_6), notifySetVolume 60 )
+        , ((0, xK_7), notifySetVolume 70 )
+        , ((0, xK_8), notifySetVolume 80 )
+        , ((0, xK_9), notifySetVolume 90 )
+        , ((0, xK_0), notifySetVolume 100)
         ])
 
     {- Border keybindings -}
@@ -365,12 +378,12 @@ myKeys = [
       ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
     , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
 
-    {-  Volume control -}
+    {- Volume control -}
     , ("<XF86AudioRaiseVolume>", raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
     , ("<XF86AudioLowerVolume>", lowerVolume 5 >>= \x -> notify 1 $ show $ round x)
     , ("<XF86AudioMute>", toggleMute >> return ())
 
-    {-  Resize focused window with the mouse -}
+    {- Resize focused window with the mouse -}
     , ("M-<button3>", withFocused Flex.mouseResizeWindow)
     ]
 
@@ -391,7 +404,7 @@ mirrorTall =
     $ avoidStruts
     $ windowNavigation
     $ Mirror
-    $ ResizableTall 2 (2/100) (1/2) []
+    $ ResizableTall 1 (2/100) (1/2) []
 
 tallMasterFocus =
       renamed [Replace "Tall Master Focus"]
@@ -399,6 +412,15 @@ tallMasterFocus =
     $ smartBorders
     $ avoidStruts
     $ windowNavigation
+    $ ResizableTall 1 (2/100) (2/3) []
+
+mirrorTallMasterFocus =
+      renamed [Replace "Mirrot Tall Master Focus"]
+    $ mySpacing
+    $ smartBorders
+    $ avoidStruts
+    $ windowNavigation
+    $ Mirror
     $ ResizableTall 1 (2/100) (2/3) []
 
 threeColumns =
@@ -422,7 +444,14 @@ full =
     $ windowNavigation
     $ noBorders Full
 
-myLayout = toggleLayouts full (dwindle ||| mirrorTall ||| tall ||| tallMasterFocus ||| threeColumns ||| full)
+myLayout = toggleLayouts full (
+        tall
+    ||| mirrorTall
+    ||| mirrorTallMasterFocus
+    ||| dwindle
+    ||| tallMasterFocus
+    ||| threeColumns
+    )
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -482,7 +511,6 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
 myStartupHook = do
     spawnOnOnce "workspace1" myTerminal
     -- spawnOnce "picom &"
-    spawnOnce "nm-applet &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with the settings you specify. No need to modify this.
@@ -504,4 +532,4 @@ main = do
        , handleEventHook    = myEventHook
        , startupHook        = myStartupHook
        , logHook            = myLogHook xmproc
-    } `additionalKeysP` rememberActions "M-." myKeys
+    } `additionalKeysP` myKeys

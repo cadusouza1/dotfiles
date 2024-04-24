@@ -1,1 +1,5 @@
-vim.keymap.set("n", "<leader>mdp", vim.cmd.MarkdownPreviewToggle)
+vim.keymap.set(
+	"n",
+	"<leader>mdp",
+	vim.cmd.MarkdownPreviewToggle
+)

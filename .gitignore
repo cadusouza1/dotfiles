@@ -1,4 +1,4 @@
 .xmonad/xmonad-x86_64-linux
 .xmonad/xmonad.o
 .config/fish/custom/api.fish
-.config/nvim/plugin/packer_compiled.lua
+.config/nvim/plugin/

@@ -1,11 +1,23 @@
 require("packer").startup(function(use)
 	use({ "wbthomason/packer.nvim" })
-	use({ "mfussenegger/nvim-jdtls" })
 	use({ "mhartington/formatter.nvim" })
+	use({ "nvim-lua/plenary.nvim" })
+
+	use({
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
+
+	use({ "mipmip/vim-scimark" })
+	use({ "mfussenegger/nvim-lint" })
+	use({ "mfussenegger/nvim-jdtls" })
 
 	-- colorschemes
+	use({ "ptdewey/darkearth-nvim" })
+	use({ "RRethy/base16-nvim" })
+	use({ "ellisonleao/gruvbox.nvim" })
 	use({ "navarasu/onedark.nvim" })
-	use({ "luisiacc/gruvbox-baby" })
 	use({ "Mofiqul/dracula.nvim" })
 	use({ "fcpg/vim-fahrenheit" })
 	use({ "wittyjudge/gruvbox-material.nvim" })
@@ -19,7 +31,6 @@ require("packer").startup(function(use)
 	use({
 		"neovim/nvim-lspconfig",
 		requires = {
-			{ "simrat39/symbols-outline.nvim" },
 			{ "onsails/lspkind.nvim" },
 		},
 	})
@@ -51,7 +62,9 @@ require("packer").startup(function(use)
 		run = ":TSUpdate",
 		requires = {
 			{ "HiPhish/rainbow-delimiters.nvim" },
-			{ "nvim-treesitter/nvim-treesitter-textobjects" },
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+			},
 			{ "nvim-treesitter/nvim-treesitter-context" },
 		},
 	})
@@ -86,13 +99,9 @@ require("packer").startup(function(use)
 	-- Session management
 	use({ "tpope/vim-obsession" })
 
-	use({ "arthurxavierx/vim-caser" })
-
 	use({ "jiangmiao/auto-pairs" })
 
 	use({ "norcalli/nvim-colorizer.lua" })
-
-	-- use({ "nvim-telescope/telescope-ui-select.nvim" })
 
 	-- More and better vim objects
 	use({ "wellle/targets.vim" })
@@ -100,22 +109,14 @@ require("packer").startup(function(use)
 	use({ "vim-scripts/argtextobj.vim" })
 	use({ "michaeljsmith/vim-indent-object" })
 
-	-- Nvim REPL
-	use({ "hkupty/iron.nvim" })
-
-	use({ "s1n7ax/nvim-terminal" })
-
 	use({ "lewis6991/impatient.nvim" })
 
 	use({
 		"nvim-lualine/lualine.nvim",
-		requires = { "nvim-tree/nvim-web-devicons", opt = true },
-	})
-
-	use({
-		"akinsho/bufferline.nvim",
-		tag = "*",
-		requires = "nvim-tree/nvim-web-devicons",
+		requires = {
+			"nvim-tree/nvim-web-devicons",
+			opt = true,
+		},
 	})
 
 	use({
@@ -125,20 +126,25 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	use({ "klen/nvim-test" })
+	use({ "VonHeikemen/lsp-zero.nvim" })
 
 	use({
-		"MrcJkb/haskell-tools.nvim",
+		"kawre/leetcode.nvim",
+		build = ":TSUpdate html",
 		requires = {
-			"neovim/nvim-lspconfig",
-			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
 		},
 	})
 
-	use({ "VonHeikemen/lsp-zero.nvim" })
-
-	use({ "ellisonleao/gruvbox.nvim" })
+	use({
+		"epwalsh/obsidian.nvim",
+		tag = "*",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
 end)
 
 vim.g.AutoPairsShortcutToggle = "<M-z>"
