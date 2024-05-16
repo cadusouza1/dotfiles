@@ -20,7 +20,7 @@ require("packer").startup(function(use)
 	use({ "navarasu/onedark.nvim" })
 	use({ "Mofiqul/dracula.nvim" })
 	use({ "fcpg/vim-fahrenheit" })
-	use({ "wittyjudge/gruvbox-material.nvim" })
+	use({ "f4z3r/gruvbox-material.nvim" })
 
 	use({ "nvim-tree/nvim-web-devicons" })
 

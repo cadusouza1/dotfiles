@@ -187,7 +187,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
         , ((0, xK_g), myRunInTerm "steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
-        , ((0, xK_p), spawn "ppsspp")
+        , ((0, xK_p), spawn "flatpak run io.github.alainm23.planify")
         , ((0, xK_r), spawn "ruffle")
 
         {- Terminal Commands -}
@@ -207,6 +207,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
             , ((0, xK_b), bluetoothConnect "BT-SPEAKER" "16:48:75:47:EF:3D")
             , ((0, xK_r), bluetoothConnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
             , ((0, xK_p), bluetoothConnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
+            , ((0, xK_t), bluetoothConnect "950BT" "41:42:FE:25:B7:07")
             ])
 
         , ((0, xK_d), submap . M.fromList $
@@ -215,6 +216,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
             , ((0, xK_b), bluetoothDisconnect "BT-SPEAKER" "16:48:75:47:EF:3D")
             , ((0, xK_r), bluetoothDisconnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
             , ((0, xK_p), bluetoothDisconnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
+            , ((0, xK_t), bluetoothDisconnect "950BT" "41:42:FE:25:B7:07")
             ])
 
         {- Brightness Control -}
@@ -258,6 +260,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_c), fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
         , ((0, xK_p), fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
         , ((0, xK_s), fuzzyEdit "~/school/")
+        , ((0, xK_o), fuzzyEdit "~/Documents/Kdu/")
         , ((shiftMask, xK_s), fuzzyEdit "~/.scripts/")
         ])
 

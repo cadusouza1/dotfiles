@@ -9,6 +9,8 @@ chatpdf.com
 classroom.google.com/u/1/
 crunchyroll.com
 docs.google.com/document/u/0
+dotfyle.com/this-week-in-neovim
+drive.google.com/drive/u/0/home
 github.com
 hackage.haskell.org/package/xmonad-contrib
 jojo.fandom.com/wiki/Steel_Ball_Run/Chapter_List
@@ -21,7 +23,6 @@ phind.com
 portal.ufrj.br/Portal/
 removepaywall.com
 teoria.dcc.ufrj.br:8080/cgi-bin/recebe.pl
-dotfyle.com/this-week-in-neovim
 topper64.co.uk/nk/btd6/income/chimps
 twitch.tv
 web.whatsapp.com

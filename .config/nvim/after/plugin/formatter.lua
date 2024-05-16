@@ -20,7 +20,7 @@ local black = function()
 		exe = "black",
 		args = {
 			"-q",
-			"-l 60",
+			"-l 80",
 			"--stdin-filename",
 			util.escape_path(
 				util.get_current_buffer_file_name()
