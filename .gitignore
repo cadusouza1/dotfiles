@@ -3,3 +3,4 @@
 .config/fish/custom/api.fish
 .config/nvim/plugin/
 .config/fish/custom/secret.fish
+.config/fish/custom/key.fish
