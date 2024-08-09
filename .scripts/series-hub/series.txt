@@ -1,12 +1,9 @@
 Berserk > evince ~/Berserk/Volume-*.pdf
 Breaking Bad > firefox https://www.netflix.com/title/70143836
-Frieren: Beyond Journeys End > firefox https://www.crunchyroll.com/series/GG5H5XQX4/frieren-beyond-journeys-end
-Invincible > firefox https://www.primevideo.com/region/na/detail/0KRK7IABRYDORGPDYP1XO3OT0Q/ref=atv_sr_fle_c_Tn74RA_1_1_1?sr=1-1&pageTypeIdSource=ASIN&pageTypeId=B0CHSXYYM3&qid=1699665060613
-JoJo > evince ~/JoJo_no_Kimyou_na_Bouken_Part_7_Steel_Ball_Run_Official_Colored/Volume-*.pdf
+Hunter x Hunter > firefox https://www.crunchyroll.com/series/GY3VKX1MR/hunter-x-hunter
 Jujutsu Kaisen (Anime) > firefox https://www.crunchyroll.com/series/GRDV0019R/jujutsu-kaisen
-Jujutsu Kaisen (Manga) > evince ~/Jujutsu_Kaisen/Volume-*.pdf
+Jujutsu Kaisen (Manga) > firefox https://tcbscans-manga.com/manga/jujutsu-kaisen 
 Konosuba - An Explosion on This Wonderful World > firefox https://www.crunchyroll.com/series/GJ0H7Q5V7/konosuba--an-explosion-on-this-wonderful-world
-Legend Of The Northern Blade > firefox https://www.legendnorthernblade.com/
 One Punch Man > evince ~/One-Punch_Man/Volume-*.pdf
 Spy x Family > firefox https://www.crunchyroll.com/series/G4PH0WXVJ/spy-x-family
 The Boondocks > firefox https://123moviesgo.su/series/the-boondocks/

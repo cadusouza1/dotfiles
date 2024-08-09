@@ -10,6 +10,7 @@ import           Text.Show
 import           XMonad
 import           XMonad.Actions.FindEmptyWorkspace
 import qualified XMonad.Actions.FlexibleResize     as Flex
+import           XMonad.Actions.Minimize
 import           XMonad.Actions.RotSlaves
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.Submap
@@ -23,6 +24,7 @@ import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 
 import           XMonad.Layout.Dwindle
+import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Renamed
 import           XMonad.Layout.ResizableTile
@@ -89,7 +91,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces :: [String]
-myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+myWorkspaces = [ "1", "2", "3", "4", "Learning", "Anime", "Discord", "GPT", "Games", "Music" ]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
@@ -150,6 +152,7 @@ bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect "
 myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     [ ((modm, xK_Return), spawn myTerminal)
     , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/manp")
+    , ((modm, xK_c), spawn "chat-gpt")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout) -- Rotate through the available layout algorithms
@@ -181,11 +184,11 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         {- Aplications to spawn -}
         [ ((0, xK_b), notifyAndSpawn myBrowser)
         , ((0, xK_m), notifyAndSpawn "spotify")
-        , ((0, xK_d), notifyAndSpawn "discord")
+        , ((0, xK_d), viewWS 6 >> notifyAndSpawn "discord")
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
         , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
-        , ((0, xK_g), myRunInTerm "steam")
+        , ((0, xK_g), myRunInTerm "steam -gamepadui")
         , ((0, xK_s), spawn "xfce4-screenshooter")
         , ((0, xK_p), spawn "flatpak run io.github.alainm23.planify")
         , ((0, xK_r), spawn "ruffle")
@@ -207,7 +210,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
             , ((0, xK_b), bluetoothConnect "BT-SPEAKER" "16:48:75:47:EF:3D")
             , ((0, xK_r), bluetoothConnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
             , ((0, xK_p), bluetoothConnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
-            , ((0, xK_t), bluetoothConnect "950BT" "41:42:FE:25:B7:07")
+            , ((0, xK_t), bluetoothConnect "950BT" "41:42:3D:C0:7D:07")
             ])
 
         , ((0, xK_d), submap . M.fromList $
@@ -216,7 +219,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
             , ((0, xK_b), bluetoothDisconnect "BT-SPEAKER" "16:48:75:47:EF:3D")
             , ((0, xK_r), bluetoothDisconnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
             , ((0, xK_p), bluetoothDisconnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
-            , ((0, xK_t), bluetoothDisconnect "950BT" "41:42:FE:25:B7:07")
+            , ((0, xK_t), bluetoothDisconnect "950BT" "41:42:3D:C0:7D:07")
             ])
 
         {- Brightness Control -}
@@ -250,7 +253,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_t), edit "~/.config/tmux/tmux.conf")
         , ((0, xK_b), edit "~/.config/xmobar/xmobar.config")
         , ((0, xK_u), edit "~/.scripts/url-bookmarks/urls.txt")
-        , ((0, xK_a), edit "~/.config/alacritty/alacritty.yml")
+        , ((0, xK_a), edit "~/.config/alacritty/alacritty.toml")
         , ((0, xK_v), myRunInTerm "vim ~/.vimrc")
 
         {- Fuzzy finder for specific paths -}
@@ -266,13 +269,13 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
     , ((modm, xK_s), submap . M.fromList $
         [ {- Games -}
-          ((0, xK_c), myRunInTerm "steam steam://rungameid/255710")
-        , ((0, xK_b), myRunInTerm "steam steam://rungameid/960090")
-        , ((0, xK_r), myRunInTerm "steam steam://rungameid/291550")
-        , ((0, xK_f), myRunInTerm "steam steam://rungameid/427520")
-        , ((0, xK_x), myRunInTerm "steam steam://rungameid/323470")
-        , ((0, xK_m), myRunInTerm "steam steam://rungameid/1604000")
-        , ((0, xK_i), myRunInTerm "java -jar ~/TLauncher-2.885/TLauncher-2.885.jar")
+          ((0, xK_c), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1252780")
+        , ((0, xK_b), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/960090")
+        , ((0, xK_r), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/291550")
+        , ((0, xK_f), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/427520")
+        , ((0, xK_x), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/323470")
+        , ((0, xK_m), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1604000")
+        , ((0, xK_i), viewWS 8 >> myRunInTerm "java -jar ~/TLauncher-2.885/TLauncher-2.885.jar")
 
         {- Spotify integration -}
         , ((0, xK_j), audioPrev)
@@ -306,6 +309,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_7),                 viewWS 6)
     , ((modm, xK_8),                 viewWS 7)
     , ((modm, xK_9),                 viewWS 8)
+    , ((modm, xK_0),                 viewWS 9)
     , ((modm .|. shiftMask, xK_1),   moveToWS 0)
     , ((modm .|. shiftMask, xK_2),   moveToWS 1)
     , ((modm .|. shiftMask, xK_3),   moveToWS 2)
@@ -315,6 +319,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. shiftMask, xK_7),   moveToWS 6)
     , ((modm .|. shiftMask, xK_8),   moveToWS 7)
     , ((modm .|. shiftMask, xK_9),   moveToWS 8)
+    , ((modm .|. shiftMask, xK_0),   moveToWS 9)
     , ((modm .|. controlMask, xK_1), moveAndViewWS 0)
     , ((modm .|. controlMask, xK_2), moveAndViewWS 1)
     , ((modm .|. controlMask, xK_3), moveAndViewWS 2)
@@ -324,6 +329,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. controlMask, xK_7), moveAndViewWS 6)
     , ((modm .|. controlMask, xK_8), moveAndViewWS 7)
     , ((modm .|. controlMask, xK_9), moveAndViewWS 8)
+    , ((modm .|. controlMask, xK_0), moveAndViewWS 9)
 
     , ((modm, xK_t), submap . M.fromList $
         [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tml")
@@ -331,6 +337,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/leetcode/ 1")
         , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/aoc/ 4")
         , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tms ~ 2")
+        , ((0, xK_o), myRunInTerm "~/.scripts/tmux/tms ~/Documents/Kdu/ 3")
         , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tms ~/.config/ 2")
         , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tms ~/dotfiles/ 2")
         , ((shiftMask, xK_s), myRunInTerm "~/.scripts/tmux/tms ~/.scripts/ 2")
@@ -374,6 +381,9 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_9), setScreenWindowSpacing 90)
         , ((0, xK_t), toggleBorders)
         ])
+
+    , ((modm, xK_n), withFocused minimizeWindow)
+    , ((modm .|. shiftMask, xK_n), withLastMinimized maximizeWindow)
     ]
 
 myKeys :: [(String, X ())]
@@ -390,10 +400,11 @@ myKeys = [
     , ("M-<button3>", withFocused Flex.mouseResizeWindow)
     ]
 
-mySpacing = spacingRaw False (Border 0 0 0 0) True (Border 0 0 0 0) True
+mySpacing = spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
 
 tall =
       renamed [Replace "Tall"]
+    $ minimize
     $ mySpacing
     $ smartBorders
     $ avoidStruts
@@ -418,7 +429,7 @@ tallMasterFocus =
     $ ResizableTall 1 (2/100) (2/3) []
 
 mirrorTallMasterFocus =
-      renamed [Replace "Mirrot Tall Master Focus"]
+      renamed [Replace "Mirror Tall Master Focus"]
     $ mySpacing
     $ smartBorders
     $ avoidStruts
@@ -426,21 +437,21 @@ mirrorTallMasterFocus =
     $ Mirror
     $ ResizableTall 1 (2/100) (2/3) []
 
-threeColumns =
-      renamed [Replace "ThreeCol"]
-    $ mySpacing
-    $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
-    $ ThreeCol 1 (2/100) (1/2)
+-- threeColumns =
+--       renamed [Replace "ThreeCol"]
+--     $ mySpacing
+--     $ smartBorders
+--     $ avoidStruts
+--     $ windowNavigation
+--     $ ThreeCol 1 (2/100) (1/2)
 
-dwindle =
-      renamed [Replace "Dwindle"]
-    $ mySpacing
-    $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
-    $ Dwindle R CW 1 1
+-- dwindle =
+--       renamed [Replace "Dwindle"]
+--     $ mySpacing
+--     $ smartBorders
+--     $ avoidStruts
+--     $ windowNavigation
+--     $ Dwindle R CW 1 1
 
 full =
       renamed [Replace "Full"]
@@ -450,10 +461,10 @@ full =
 myLayout = toggleLayouts full (
         tall
     ||| mirrorTall
-    ||| mirrorTallMasterFocus
-    ||| dwindle
     ||| tallMasterFocus
-    ||| threeColumns
+    ||| mirrorTallMasterFocus
+    -- ||| dwindle
+    -- ||| threeColumns
     )
 
 ------------------------------------------------------------------------
@@ -513,7 +524,7 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
 -- per-workspace layout choices.
 myStartupHook = do
     spawnOnOnce "workspace1" myTerminal
-    -- spawnOnce "picom &"
+    spawnOnce "picom &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with the settings you specify. No need to modify this.

@@ -1,7 +1,7 @@
 vim.cmd([[
     set termguicolors
     runtime macros/matchit.vim
-    colorscheme darkearth
+    colorscheme gruvbox-material
 ]])
 
 -- require("base16-colorscheme").setup({
@@ -24,3 +24,22 @@ vim.cmd([[
 -- })
 
 require("colorizer").setup()
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = "*.md",
+	command = "colorscheme gruvbox-material",
+	group = vim.api.nvim_create_augroup(
+		"MdColorGroup",
+		{ clear = true }
+	),
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = "*.md",
+	command = "set spell",
+	group = vim.api.nvim_create_augroup(
+		"MdSpellGroup",
+		{ clear = true }
+	),
+})
+
+-- require("noirbuddy").setup({ preset = "minimal" })

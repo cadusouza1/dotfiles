@@ -12,6 +12,7 @@ vim.g.rainbow_delimiters = {
 require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
+		extended_mode = true,
 	},
 	incremental_selection = {
 		enable = true,

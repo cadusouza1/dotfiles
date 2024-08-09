@@ -37,6 +37,3 @@ export FZF_ALT_C_COMMAND="fdfind -H -t d . $HOME"
 eval (tmuxifier init - fish)
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/kdu/.ghcup/bin $PATH # ghcup-env
-
-# opam configuration
-source /home/kdu/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

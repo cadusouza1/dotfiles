@@ -4,6 +4,11 @@ require("packer").startup(function(use)
 	use({ "nvim-lua/plenary.nvim" })
 
 	use({
+		"smoka7/hop.nvim",
+		tag = "*", -- optional but strongly recommended
+	})
+
+	use({
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		requires = { { "nvim-lua/plenary.nvim" } },
@@ -14,11 +19,14 @@ require("packer").startup(function(use)
 	use({ "mfussenegger/nvim-jdtls" })
 
 	-- colorschemes
+	use({
+		"jesseleite/nvim-noirbuddy",
+		requires = { "tjdevries/colorbuddy.nvim" },
+	})
+	use({ "aliqyan-21/darkvoid.nvim" })
+	use({ "Mofiqul/vscode.nvim" })
 	use({ "ptdewey/darkearth-nvim" })
-	use({ "RRethy/base16-nvim" })
 	use({ "ellisonleao/gruvbox.nvim" })
-	use({ "navarasu/onedark.nvim" })
-	use({ "Mofiqul/dracula.nvim" })
 	use({ "fcpg/vim-fahrenheit" })
 	use({ "f4z3r/gruvbox-material.nvim" })
 

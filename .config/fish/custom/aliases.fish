@@ -31,6 +31,7 @@ alias cgin="cargo init"
 
 alias sai="sudo apt install"
 alias sar="sudo apt remove" 
+alias sap="sudo apt purge" 
 alias saup="sudo apt update"
 alias saug="sudo apt upgrade"
 

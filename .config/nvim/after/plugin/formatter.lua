@@ -48,6 +48,37 @@ local stylua = function()
 	}
 end
 
+local prettier = function(parser)
+	if not parser then
+		return {
+			exe = "prettier",
+			args = {
+				"--stdin-filepath",
+				"--tab-width 4",
+				util.escape_path(
+					util.get_current_buffer_file_path()
+				),
+			},
+			stdin = true,
+			try_node_modules = true,
+		}
+	end
+
+	return {
+		exe = "prettier",
+		args = {
+			"--stdin-filepath",
+			util.escape_path(
+				util.get_current_buffer_file_path()
+			),
+			"--parser",
+			parser,
+		},
+		stdin = true,
+		try_node_modules = true,
+	}
+end
+
 require("formatter").setup({
 	filetype = {
 		python = {
@@ -57,7 +88,9 @@ require("formatter").setup({
 		lua = { stylua },
 		c = { clangformat },
 		arduino = { clangformat },
-		java = { clangformat },
+		java = {
+			require("formatter.filetypes.java").google_java_format,
+		},
 		rust = {
 			require("formatter.filetypes.rust").rustfmt,
 		},
@@ -72,23 +105,21 @@ require("formatter").setup({
 		tex = {
 			require("formatter.filetypes.latex").latexindent,
 		},
-		yaml = {
-			require("formatter.filetypes.yaml").prettier,
-		},
-		typescript = {
-			require("formatter.filetypes.typescript").prettier,
-		},
-		javascript = {
-			require("formatter.filetypes.javascript").prettier,
+		yaml = { prettier },
+		typescript = { prettier },
+		typescriptreact = { prettier },
+		javascript = { prettier },
+		html = { prettier },
+		sql = {
+			require("formatter.filetypes.sql").pgformat,
 		},
 	},
 })
 
-local group = vim.api.nvim_create_augroup(
-	"FormatterGroup",
-	{ clear = true }
-)
-vim.api.nvim_create_autocmd(
-	"BufWritePost",
-	{ command = "FormatWrite", group = group }
-)
+vim.api.nvim_create_autocmd("BufWritePost", {
+	command = "FormatWrite",
+	group = vim.api.nvim_create_augroup(
+		"FormatterGroup",
+		{ clear = true }
+	),
+})
