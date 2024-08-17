@@ -7,6 +7,8 @@ filetype indent on " Load an indent file for the detected file type.
 
 syntax on " Turn syntax highlighting on.
 
+set showcmd
+
 set relativenumber
 set number 
 
@@ -24,8 +26,6 @@ set tabstop=4 " number of columns occupied by a tab
 
 set autoindent " indent a new line the same amount as the line just typed
 set scrolloff=999
-
-set wildmenu " Enable auto completion menu after pressing TAB.
 
 set background=dark
 
@@ -66,6 +66,9 @@ colorscheme gruvbox
 
 nnoremap <leader>so :so %<cr>
 
+nnoremap <silent> <Bslash>j :bn<cr>
+nnoremap <silent> <Bslash>k :bp<cr>
+
 " CamelCaseMotion Config
 map <silent> <leader>w <Plug>CamelCaseMotion_w
 map <silent> <leader>b <Plug>CamelCaseMotion_b
@@ -90,5 +93,24 @@ nnoremap <silent> <leader>h4 'H<cr>
 nnoremap <silent> <leader>h5 'I<cr>
 nnoremap <silent> <C-e> :marks<cr>
 
-" airline config
-" let g:airline#extensions#tabline#enabled = 1
+" Fuzzy File Search
+set path+=**
+set wildmenu
+
+cnoremap <C-j> <C-p>
+cnoremap <C-k> <C-n>
+
+" Tags
+command! MakeTags !ctags -R .
+
+" File Browsing
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_liststyle=3
+
+" this makes vim startup really slow
+" let g:netrw_list_hide=netrw_gitignore#Hide() 
+
+" Snippets
+nnoremap \mainc :-1read $HOME/.vim/snippets/.skeleton.main.c<cr>j
