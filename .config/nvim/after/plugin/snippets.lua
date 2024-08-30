@@ -90,17 +90,13 @@ ls.add_snippets("tex", {
 	s(
 		{ trig = "([a-zA-Z]+)(%d+)", regTrig = true },
 		f(function(args, snip, user_args)
-			if snip.captures[2]:len() == 1 then
-				return snip.captures[1]
-					.. "^"
-					.. snip.captures[2]
-			else
-				return snip.captures[1]
-					.. "^"
-					.. "{"
-					.. snip.captures[2]
-					.. "}"
-			end
+			local exponent = snip.captures[2]
+			return snip.captures[1]
+				.. "^"
+				.. (
+					exponent:len() == 1 and exponent
+					or "{" .. exponent .. "}"
+				)
 		end, {})
 	),
 	s("Ra", t("\\Rightarrow ")),
@@ -195,6 +191,40 @@ ls.add_snippets("tex", {
 	s("(", { t("\\left(") }),
 	s(")", { t("\\right)") }),
 	s("()", { t("\\left( "), i(0), t("\\right") }),
+	s("matrix", {
+		-- Prompt for M (rows) and N (columns)
+		i(1, "M"),
+		t("x"),
+		i(2, "N"),
+		t({ "", "\\begin{bmatrix}" }),
+		d(3, function(args)
+			local rows = tonumber(args[1][1]) or 2
+			local cols = tonumber(args[2][1]) or 2
+
+			-- Create dynamic nodes for matrix elements
+			local matrix_nodes = {}
+			for row = 1, rows do
+				for col = 1, cols do
+					table.insert(
+						matrix_nodes,
+						i(row * cols + col, "0")
+					)
+					if col < cols then
+						table.insert(matrix_nodes, t(" & "))
+					end
+				end
+				if row < rows then
+					table.insert(
+						matrix_nodes,
+						t({ " \\\\", "" })
+					)
+				end
+			end
+			return sn(nil, matrix_nodes)
+		end, { 1, 2 }),
+		t({ "", "\\end{bmatrix}" }),
+		i(0),
+	}),
 })
 
 ls.add_snippets("fish", {

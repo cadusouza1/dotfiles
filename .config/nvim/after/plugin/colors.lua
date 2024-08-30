@@ -4,6 +4,17 @@ vim.cmd([[
     colorscheme gruvbox-material
 ]])
 
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = "*.md",
+	command = "set spell",
+	group = vim.api.nvim_create_augroup(
+		"MdSpellGroup",
+		{ clear = true }
+	),
+})
+
+-- require("noirbuddy").setup({ preset = "minimal" })
+
 -- require("base16-colorscheme").setup({
 -- 	base00 = "#282828",
 -- 	base01 = "#3c3836",
@@ -23,23 +34,13 @@ vim.cmd([[
 -- 	base0F = "#d65d0e",
 -- })
 
+-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+-- 	pattern = "*.md",
+-- 	command = "colorscheme gruvbox-material",
+-- 	group = vim.api.nvim_create_augroup(
+-- 		"MdColorGroup",
+-- 		{ clear = true }
+-- 	),
+-- })
+
 require("colorizer").setup()
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-	pattern = "*.md",
-	command = "colorscheme gruvbox-material",
-	group = vim.api.nvim_create_augroup(
-		"MdColorGroup",
-		{ clear = true }
-	),
-})
-
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-	pattern = "*.md",
-	command = "set spell",
-	group = vim.api.nvim_create_augroup(
-		"MdSpellGroup",
-		{ clear = true }
-	),
-})
-
--- require("noirbuddy").setup({ preset = "minimal" })

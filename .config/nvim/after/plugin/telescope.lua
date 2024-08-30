@@ -86,6 +86,12 @@ vim.keymap.set("n", "<leader>cn", function()
 	})
 end)
 
+vim.keymap.set("n", "<leader>cN", function()
+	builtin.find_files({
+		search_dirs = { home .. "/.local/share/nvim" },
+	})
+end)
+
 vim.keymap.set("n", "<leader>cs", function()
 	builtin.find_files({
 		search_dirs = { home .. "/school" },

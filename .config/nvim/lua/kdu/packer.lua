@@ -3,10 +3,7 @@ require("packer").startup(function(use)
 	use({ "mhartington/formatter.nvim" })
 	use({ "nvim-lua/plenary.nvim" })
 
-	use({
-		"smoka7/hop.nvim",
-		tag = "*", -- optional but strongly recommended
-	})
+	use({ "mbbill/undotree" })
 
 	use({
 		"ThePrimeagen/harpoon",
@@ -127,24 +124,7 @@ require("packer").startup(function(use)
 		},
 	})
 
-	use({
-		"iamcco/markdown-preview.nvim",
-		run = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-	})
-
 	use({ "VonHeikemen/lsp-zero.nvim" })
-
-	use({
-		"kawre/leetcode.nvim",
-		build = ":TSUpdate html",
-		requires = {
-			"nvim-telescope/telescope.nvim",
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-		},
-	})
 
 	use({
 		"epwalsh/obsidian.nvim",

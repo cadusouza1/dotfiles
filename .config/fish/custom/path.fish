@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Deno
+export DENO_INSTALL="/home/kdu/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # Nodejs
 set VERSION v18.16.0
 set DISTRO linux-x64

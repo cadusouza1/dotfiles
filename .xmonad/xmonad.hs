@@ -91,7 +91,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces :: [String]
-myWorkspaces = [ "1", "2", "3", "4", "Learning", "Anime", "Discord", "GPT", "Games", "Music" ]
+myWorkspaces = [ "1", "2", "3", "4", "5", "6:Learning", "7:Discord", "8:GPT", "9:Games", "0:Music" ]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
@@ -152,7 +152,6 @@ bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect "
 myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     [ ((modm, xK_Return), spawn myTerminal)
     , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/manp")
-    , ((modm, xK_c), spawn "chat-gpt")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout) -- Rotate through the available layout algorithms
@@ -163,6 +162,9 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. shiftMask, xK_t), withFocused $ windows . W.sink) -- Push window back into tiling
     , ((modm .|. controlMask, xK_j), rotSlavesUp)
     , ((modm .|. controlMask, xK_k), rotSlavesDown)
+
+  , ((modm, xK_h), sendMessage Shrink)
+  , ((modm, xK_l), sendMessage Expand)
 
     , ((modm .|. shiftMask, xK_q),  kill) -- close focused window
     , ((modm .|. controlMask, xK_q),  killAll) -- close all windows
@@ -251,7 +253,6 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         {- Common files thay I edit -}
         [ ((0, xK_w), edit "~/.xmonad/xmonad.hs")
         , ((0, xK_t), edit "~/.config/tmux/tmux.conf")
-        , ((0, xK_b), edit "~/.config/xmobar/xmobar.config")
         , ((0, xK_u), edit "~/.scripts/url-bookmarks/urls.txt")
         , ((0, xK_a), edit "~/.config/alacritty/alacritty.toml")
         , ((0, xK_v), myRunInTerm "vim ~/.vimrc")
@@ -260,6 +261,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_h), fuzzyEdit "~/")
         , ((0, xK_f), fuzzyEdit "~/.config/fish/")
         , ((0, xK_n), fuzzyEdit "~/.config/nvim/")
+        , ((0, xK_b), fuzzyEdit "~/.config/xmobar")
         , ((0, xK_c), fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
         , ((0, xK_p), fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
         , ((0, xK_s), fuzzyEdit "~/school/")
@@ -337,16 +339,10 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/leetcode/ 1")
         , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/aoc/ 4")
         , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tms ~ 2")
-        , ((0, xK_o), myRunInTerm "~/.scripts/tmux/tms ~/Documents/Kdu/ 3")
+        , ((0, xK_n), myRunInTerm "~/.scripts/tmux/tms ~/Documents/Kdu/ 3")
         , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tms ~/.config/ 2")
         , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tms ~/dotfiles/ 2")
-        , ((shiftMask, xK_s), myRunInTerm "~/.scripts/tmux/tms ~/.scripts/ 2")
-        , ((0, xK_s), submap . M.fromList $
-            [ ((0, xK_1), myRunInTerm "~/.scripts/tmux/tms ~/school/ 2")
-            , ((0, xK_2), myRunInTerm "~/.scripts/tmux/tms ~/school/p2/ 2")
-            , ((0, xK_3), myRunInTerm "~/.scripts/tmux/tms ~/school/p3/ 2")
-            , ((0, xK_4), myRunInTerm "~/.scripts/tmux/tms ~/school/p4/ 2")
-            ])
+        , ((0, xK_s), myRunInTerm "~/.scripts/tmux/tms ~/.scripts/ 2")
         ])
 
     , ((modm, xK_F1), raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
@@ -384,6 +380,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
     , ((modm, xK_n), withFocused minimizeWindow)
     , ((modm .|. shiftMask, xK_n), withLastMinimized maximizeWindow)
+
     ]
 
 myKeys :: [(String, X ())]
@@ -398,9 +395,10 @@ myKeys = [
 
     {- Resize focused window with the mouse -}
     , ("M-<button3>", withFocused Flex.mouseResizeWindow)
+    , ("M-<button1>", withFocused mouseMoveWindow >> windows W.shiftMaster)
     ]
 
-mySpacing = spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
+mySpacing = spacingRaw False (Border 0 0 0 0) True (Border 0 0 0 0) True
 
 tall =
       renamed [Replace "Tall"]
@@ -506,8 +504,8 @@ myEventHook = mempty
 -- Status bars and logging
 
 -- Perform an arbitrary action on each internal state change or X event.
-myLogHook xmproc = dynamicLogWithPP xmobarPP {
-      ppOutput = hPutStrLn xmproc
+myLogHook xmproc0 = dynamicLogWithPP xmobarPP {
+      ppOutput = hPutStrLn xmproc0
     , ppCurrent = xmobarColor color06 "" . wrap "[" "]"
     , ppVisible = xmobarColor color06 ""
     , ppHidden = xmobarColor color12 "" . wrap "(" ")"
@@ -524,13 +522,14 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
 -- per-workspace layout choices.
 myStartupHook = do
     spawnOnOnce "workspace1" myTerminal
-    spawnOnce "picom &"
+    -- spawnOnce "picom &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with the settings you specify. No need to modify this.
 main = do
     home <- getHomeDirectory
-    xmproc <- spawnPipe "xmobar $HOME/.config/xmobar/xmobar.config"
+    xmproc0 <- spawnPipe "xmobar $HOME/.config/xmobar/xmobar.config"
+    xmproc1 <- spawnPipe "xmobar $HOME/.config/xmobar/xmobar-1.config"
     xmonad $ docks $ ewmh $ def {
          terminal           = myTerminal
        , focusFollowsMouse  = myFocusFollowsMouse
@@ -545,5 +544,5 @@ main = do
        , manageHook         = myManageHook
        , handleEventHook    = myEventHook
        , startupHook        = myStartupHook
-       , logHook            = myLogHook xmproc
+       , logHook            = myLogHook xmproc1
     } `additionalKeysP` myKeys

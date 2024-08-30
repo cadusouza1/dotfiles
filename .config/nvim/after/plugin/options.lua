@@ -17,3 +17,5 @@ vim.opt.encoding = "utf-8"
 vim.opt.updatetime = 50
 vim.opt.swapfile = false
 vim.opt.spelllang = "en,pt_br"
+
+vim.opt.undofile = true

@@ -60,6 +60,7 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-airline/vim-airline'
+Plug 'kien/ctrlp.vim'
 call plug#end()
 
 colorscheme gruvbox
@@ -92,6 +93,8 @@ nnoremap <silent> <leader>h3 'G<cr>
 nnoremap <silent> <leader>h4 'H<cr>
 nnoremap <silent> <leader>h5 'I<cr>
 nnoremap <silent> <C-e> :marks<cr>
+
+set completeopt=menu,menuone
 
 " Fuzzy File Search
 set path+=**

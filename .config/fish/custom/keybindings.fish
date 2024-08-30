@@ -22,6 +22,7 @@ set bindings \
     "u:history-search-backward" \
     "d:history-search-forward" \
     "l:accept-autosuggestion" \
+    "a:la && commandline -f repaint" \
     "w:forward-word" \
     "W:forward-bigword"
 
