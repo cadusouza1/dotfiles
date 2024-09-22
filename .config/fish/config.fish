@@ -9,16 +9,10 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.state
 
-# remap caps to escape
-setxkbmap -option caps:escape
-setxkbmap -option ctrl:ralt_rctrl
-
 export FISHDOTDIR=$HOME/.config/fish
 
 source $FISHDOTDIR/themes/robbyrussell/functions/fish_prompt.fish
 set -U fish_greeting
-
-setxkbmap -model abnt2 -layout br -variant abnt2
 
 fish_vi_key_bindings
 
