@@ -1,8 +1,3 @@
-# Don't Randomly Turn off
-xset s off
-xset -dpms
-xset s noblank
-
 # Environment variables set everywhere
 export EDITOR="nvim"
 export TERMINAL="alacritty"

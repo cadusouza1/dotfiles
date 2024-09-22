@@ -21,7 +21,7 @@ telescope.setup({
 	},
 	pickers = {
 		find_files = {
-			theme = "dropdown",
+			theme = "ivy",
 		},
 	},
 })
@@ -59,16 +59,10 @@ end
 
 vim.keymap.set("n", "<leader>ff", builtin.find_files)
 vim.keymap.set("n", "<leader>fl", builtin.live_grep)
-vim.keymap.set("n", "<leader>fg", builtin.grep_string)
-vim.keymap.set("n", "<leader>fb", builtin.buffers)
-vim.keymap.set("n", "<leader>ft", builtin.tags)
-vim.keymap.set("n", "<leader>fm", builtin.marks)
-vim.keymap.set("n", "<leader>fq", builtin.quickfix)
-vim.keymap.set("n", "<leader>fj", builtin.jumplist)
-vim.keymap.set("n", "<leader>fr", builtin.registers)
-vim.keymap.set("n", "<leader>fs", builtin.spell_suggest)
-vim.keymap.set("n", "<leader>fh", builtin.highlights)
-vim.keymap.set("n", "<leader>fc", builtin.colorscheme)
+vim.keymap.set("n", "<leader>fs", builtin.grep_string)
+vim.keymap.set("n", "<leader>fg", function()
+	builtin.git_files({ use_git_root = true })
+end)
 
 vim.keymap.set("n", "<leader>co", function()
 	builtin.find_files({
@@ -94,7 +88,7 @@ end)
 
 vim.keymap.set("n", "<leader>cs", function()
 	builtin.find_files({
-		search_dirs = { home .. "/school" },
+		search_dirs = { home .. "/Documents/Kdu/" },
 	})
 end)
 

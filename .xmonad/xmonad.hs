@@ -294,6 +294,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_7), swapWorkspace 6)
         , ((0, xK_8), swapWorkspace 7)
         , ((0, xK_9), swapWorkspace 8)
+        , ((0, xK_0), swapWorkspace 9)
 
         {- Easier way to find and operate empty workspaces -}
         , ((0, xK_v), viewEmptyWorkspace)

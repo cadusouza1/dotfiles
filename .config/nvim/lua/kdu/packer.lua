@@ -29,9 +29,6 @@ require("packer").startup(function(use)
 
 	use({ "nvim-tree/nvim-web-devicons" })
 
-	use({ "mfussenegger/nvim-dap" })
-	use({ "rcarriga/nvim-dap-ui" })
-
 	-- LSP config
 	use({
 		"neovim/nvim-lspconfig",

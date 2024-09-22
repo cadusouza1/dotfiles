@@ -2,6 +2,7 @@ alias e="$EDITOR"
 alias t="tldr"
 alias r="rich"
 alias z="zathura --fork $argv[1]"
+alias b="bat"
 
 # Fish config
 alias fup="source $FISHDOTDIR/config.fish"
