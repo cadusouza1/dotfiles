@@ -13,7 +13,6 @@ require("packer").startup(function(use)
 
 	use({ "mipmip/vim-scimark" })
 	use({ "mfussenegger/nvim-lint" })
-	use({ "mfussenegger/nvim-jdtls" })
 
 	-- colorschemes
 	use({
@@ -21,7 +20,6 @@ require("packer").startup(function(use)
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
 	use({ "aliqyan-21/darkvoid.nvim" })
-	use({ "Mofiqul/vscode.nvim" })
 	use({ "ptdewey/darkearth-nvim" })
 	use({ "ellisonleao/gruvbox.nvim" })
 	use({ "fcpg/vim-fahrenheit" })
@@ -97,9 +95,6 @@ require("packer").startup(function(use)
 	use({ "tpope/vim-repeat" })
 	use({ "tpope/vim-unimpaired" })
 	use({ "tpope/vim-vinegar" })
-
-	-- Session management
-	use({ "tpope/vim-obsession" })
 
 	use({ "jiangmiao/auto-pairs" })
 

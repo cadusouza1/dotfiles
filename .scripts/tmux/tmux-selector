@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [ -z "$(pgrep tmux)" ]; then
+    tmux start
+fi
+
+tmux attach-session -t $(tmux ls | gum filter | cut -d':' -f1)

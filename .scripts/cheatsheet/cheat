@@ -1,6 +1,0 @@
-#!/bin/bash
-
-selected=$(man -k . | cut -d' ' -f1 | gum filter)
-if [[ -n "$selected" ]]; then
-    curl "cheat.sh/$selected?T" | nvim -R -c "setfiletype bash" -
-fi

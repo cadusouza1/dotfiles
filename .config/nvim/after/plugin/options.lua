@@ -19,3 +19,6 @@ vim.opt.swapfile = false
 vim.opt.spelllang = "en,pt_br"
 
 vim.opt.undofile = true
+vim.opt.signcolumn = "no"
+
+vim.opt.wrap = true

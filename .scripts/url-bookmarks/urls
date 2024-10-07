@@ -1,4 +1,0 @@
-#!/bin/bash
-
-rofi -i -dpi 1 -auto-select -normal-window -dmenu <"${1:-/dev/stdin}" |
-    xargs -r $BROWSER

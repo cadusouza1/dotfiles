@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+
+usage() {
+    echo "Usage: $(basename "$0") [options_file]"
+    echo
+    echo "This script presents a menu of names from 'name > command' pairs and executes the selected command."
+    echo
+    echo "If no options_file is specified, the script reads from standard input."
+    echo
+    echo "Options:"
+    echo "  -h, --help    Show this help message and exit."
+    echo
+    echo "Input Format:"
+    echo "  Each line in the options file should be in the format:"
+    echo "    name > command"
+    echo "  For example:"
+    echo "    List Files > ls -l"
+    echo "    Show Date > date"
+    echo
+    echo "Example Usage:"
+    echo "  $(basename "$0") my_options.txt"
+    echo "  cat my_options.txt | $(basename "$0")"
+    echo
+    echo "Note:"
+    echo "  - Ensure that 'rofi' is installed on your system."
+    echo "  - Commands are executed using 'sh'."
+}
+
+# Check for help option
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    usage
+    exit 0
+fi
+
+options_file="${1:-/dev/stdin}"
+cut -d'>' -f1 <$options_file |
+    rofi -i -dpi 1 -auto-select -normal-window -dmenu |
+    xargs -r -I {} grep {} $options_file |
+    cut -d'>' -f2 |
+    sh

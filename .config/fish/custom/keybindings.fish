@@ -12,11 +12,11 @@ set bindings \
     "jw:$EDITOR    ~/.xmonad/xmonad.hs" \
     "jt:$EDITOR    ~/.config/tmux/tmux.conf" \
     "jn:fuzzy-edit ~/.config/nvim/" \
-    "js:fuzzy-edit ~/school/" \
+    "js:fuzzy-edit ~/.scripts/" \
     "jf:fuzzy-edit ~/.config/fish/" \
     "jc:fuzzy-edit ~/.config/ ~/.scripts/ ~/.xmonad/ ~/.local/bin/" \
     "jp:fuzzy-edit ~/.local/share/nvim/site/pack/packer/start/" \
-    "ks:fuzzy-cd   ~/school/" \
+    "ks:fuzzy-cd   ~/.scripts/" \
     "kc:fuzzy-cd   ~/.config/ ~/.scripts/ ~/.xmonad/ ~/.local/" \
     "kp:fuzzy-cd   ~/.local/share/nvim/site/pack/packer/start/" \
     "u:history-search-backward" \

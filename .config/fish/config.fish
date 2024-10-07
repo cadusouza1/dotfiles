@@ -8,6 +8,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.state
+export DEFAULT_TMUX_SESSION_NAME="0"
 
 export FISHDOTDIR=$HOME/.config/fish
 
@@ -27,3 +28,7 @@ export FZF_ALT_C_COMMAND="fdfind -H -t d . $HOME"
 eval (tmuxifier init - fish)
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/kdu/.ghcup/bin $PATH # ghcup-env
+
+if test -z "$TMUX"
+    tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
+end

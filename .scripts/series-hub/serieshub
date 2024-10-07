@@ -1,8 +1,0 @@
-#!/bin/bash
-
-options_file="${1:-/dev/stdin}"
-cut -d'>' -f1 <$options_file |
-    rofi -i -dpi 1 -auto-select -normal-window -dmenu |
-    xargs -r -I {} grep {} $options_file |
-    cut -d'>' -f2 |
-    sh

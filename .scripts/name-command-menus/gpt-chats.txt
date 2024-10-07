@@ -1,0 +1,7 @@
+TGPT > $BROWSER https://chatgpt.com/g/g-FGhasb1tZ-therapist-psychologist-non-medical-therapy/c/67001034-c170-8006-9592-7cafd32737e7
+E2 > $BROWSER https://chatgpt.com/c/66df9b9e-ccb8-8006-a05b-12ca3f3dadf3
+Daria > $BROWSER https://chatgpt.com/c/66f9310c-1c9c-8006-9010-669f26f3aa3b
+Bash > $BROWSER https://chatgpt.com/c/66f44764-c1ac-8006-87cc-4c7b46e84040
+Anotações Cripto > $BROWSER https://chatgpt.com/c/592ee6c2-9acd-4fd5-8749-a9b55a3c9457
+Anotações Cálculo II > $BROWSER https://chatgpt.com/c/e20c8259-ccf2-46bc-8ba2-07d7a80a15e3
+Teoria dos Direitos Fundamentais > $BROWSER https://chatgpt.com/c/66f447d4-c11c-8006-85df-a54204602a38

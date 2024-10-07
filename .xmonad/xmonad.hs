@@ -120,7 +120,7 @@ edit :: String -> X ()
 edit filePath = myRunInTerm $ myEditor ++ " " ++ filePath
 
 fuzzyEdit :: String -> X ()
-fuzzyEdit path = myRunInTerm $ "~/.scripts/fuzzy-edit/fedit " ++ path
+fuzzyEdit path = myRunInTerm $ "~/.scripts/fuzzy-edit/fzf-edit " ++ path
 
 notifyAndSpawn :: String -> X ()
 notifyAndSpawn command = do
@@ -151,7 +151,8 @@ bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect "
 
 myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     [ ((modm, xK_Return), spawn myTerminal)
-    , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/manp")
+    , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man 1")
+    , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout) -- Rotate through the available layout algorithms
@@ -163,8 +164,8 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. controlMask, xK_j), rotSlavesUp)
     , ((modm .|. controlMask, xK_k), rotSlavesDown)
 
-  , ((modm, xK_h), sendMessage Shrink)
-  , ((modm, xK_l), sendMessage Expand)
+    , ((modm, xK_h), sendMessage Shrink)
+    , ((modm, xK_l), sendMessage Expand)
 
     , ((modm .|. shiftMask, xK_q),  kill) -- close focused window
     , ((modm .|. controlMask, xK_q),  killAll) -- close all windows
@@ -198,10 +199,10 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         {- Terminal Commands -}
         , ((0, xK_h), myRunInTerm "htop")
         , ((0, xK_n), myRunInTerm "nmtui")
-        , ((0, xK_c), myRunInTerm "~/.scripts/cheatsheet/cheat")
-        , ((0, xK_a), spawn "~/.scripts/series-hub/serieshub ~/.scripts/series-hub/series.txt")
-        , ((0, xK_l), spawn "~/.scripts/url-bookmarks/urls ~/.scripts/url-bookmarks/urls.txt")
-        , ((shiftMask, xK_l), spawn "~/.scripts/url-bookmarks/urls-new-window ~/.scripts/url-bookmarks/urls.txt")
+        , ((0, xK_c), myRunInTerm "~/.scripts/cheatsheet/cheatman")
+        , ((0, xK_a), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/series.txt")
+        , ((0, xK_l), spawn "~/.scripts/url-bookmarks/rofi-bookmark-open ~/.scripts/url-bookmarks/urls.txt")
+        , ((shiftMask, xK_l), spawn "~/.scripts/url-bookmarks/rofi-bookmark-new-window ~/.scripts/url-bookmarks/urls.txt")
         ])
 
     , ((modm, xK_b), submap . M.fromList $
@@ -264,9 +265,9 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_b), fuzzyEdit "~/.config/xmobar")
         , ((0, xK_c), fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
         , ((0, xK_p), fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
-        , ((0, xK_s), fuzzyEdit "~/school/")
         , ((0, xK_o), fuzzyEdit "~/Documents/Kdu/")
-        , ((shiftMask, xK_s), fuzzyEdit "~/.scripts/")
+        , ((0, xK_s), fuzzyEdit "~/.scripts/")
+        , ((shiftMask, xK_s), fuzzyEdit "~/school/")
         ])
 
     , ((modm, xK_s), submap . M.fromList $
@@ -277,7 +278,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_f), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/427520")
         , ((0, xK_x), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/323470")
         , ((0, xK_m), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1604000")
-        , ((0, xK_i), viewWS 8 >> myRunInTerm "java -jar ~/TLauncher-2.885/TLauncher-2.885.jar")
+        , ((0, xK_i), viewWS 8 >> myRunInTerm "java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
         , ((0, xK_j), audioPrev)
@@ -335,15 +336,15 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. controlMask, xK_0), moveAndViewWS 9)
 
     , ((modm, xK_t), submap . M.fromList $
-        [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tml")
-        , ((0, xK_p), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/ 2")
-        , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/leetcode/ 1")
-        , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tms ~/pprojects/aoc/ 4")
-        , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tms ~ 2")
-        , ((0, xK_n), myRunInTerm "~/.scripts/tmux/tms ~/Documents/Kdu/ 3")
-        , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tms ~/.config/ 2")
-        , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tms ~/dotfiles/ 2")
-        , ((0, xK_s), myRunInTerm "~/.scripts/tmux/tms ~/.scripts/ 2")
+        [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tmux-selector")
+        , ((0, xK_p), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/ 2")
+        , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/leetcode/ 1")
+        , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/aoc/ 4")
+        , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~ 2")
+        , ((0, xK_n), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/Documents/Kdu/ 3")
+        , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.config/ 2")
+        , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/dotfiles/ 2")
+        , ((0, xK_s), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.scripts/ 2")
         ])
 
     , ((modm, xK_F1), raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
