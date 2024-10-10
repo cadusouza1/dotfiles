@@ -29,6 +29,8 @@ eval (tmuxifier init - fish)
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/kdu/.ghcup/bin $PATH # ghcup-env
 
-if test -z "$TMUX"
-    tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
+if test (whoami) = "kdu"
+    if test -z "$TMUX"
+        tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
+    end
 end
