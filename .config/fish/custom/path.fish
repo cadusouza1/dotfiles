@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Deno
 export DENO_INSTALL="/home/kdu/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
@@ -22,6 +20,7 @@ export PATH="$HOME/.nimble/bin/:$PATH"
 
 # Rust
 export PATH="$HOME/.cargo/env:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Odin
 export PATH="$HOME/Odin/:$PATH"
