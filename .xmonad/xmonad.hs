@@ -23,12 +23,16 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 
+import           XMonad.Layout.BoringWindows
 import           XMonad.Layout.Dwindle
 import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Renamed
 import           XMonad.Layout.ResizableTile
+import           XMonad.Layout.Simplest
 import           XMonad.Layout.Spacing
+import           XMonad.Layout.SubLayouts
+import           XMonad.Layout.Tabbed
 import           XMonad.Layout.ThreeColumns
 import           XMonad.Layout.ToggleLayouts
 import           XMonad.Layout.WindowNavigation
@@ -54,11 +58,10 @@ import qualified XMonad.StackSet                   as W
 import           Colors.Dracula
 
 myTerminal :: String
--- myTerminal = "alacritty msg create-window || alacritty"
 myTerminal = "alacritty"
 
 myBrowser :: String
-myBrowser = "firefox"
+myBrowser = "librewolf"
 
 myEditor :: String
 myEditor = "nvim"
@@ -151,18 +154,31 @@ bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect "
 
 myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     [ ((modm, xK_Return), spawn myTerminal)
-    , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man 1")
+    , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man")
     , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout) -- Rotate through the available layout algorithms
-    , ((modm, xK_j), windows W.focusDown)
-    , ((modm, xK_k), windows W.focusUp)
+    , ((modm, xK_j), focusDown)
+    , ((modm, xK_k), focusUp)
     , ((modm .|. shiftMask, xK_j), windows W.swapDown)
     , ((modm .|. shiftMask, xK_k), windows W.swapUp)
     , ((modm .|. shiftMask, xK_t), withFocused $ windows . W.sink) -- Push window back into tiling
-    , ((modm .|. controlMask, xK_j), rotSlavesUp)
-    , ((modm .|. controlMask, xK_k), rotSlavesDown)
+
+    -- , ((modm .|. controlMask, xK_j), rotSlavesUp)
+    -- , ((modm .|. controlMask, xK_k), rotSlavesDown)
+
+    {- Operations with sublayouts -}
+    , ((modm .|. controlMask, xK_h), sendMessage $ pullGroup L)
+    , ((modm .|. controlMask, xK_l), sendMessage $ pullGroup R)
+    , ((modm .|. controlMask, xK_k), sendMessage $ pullGroup U)
+    , ((modm .|. controlMask, xK_j), sendMessage $ pullGroup D)
+
+    , ((modm .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
+    , ((modm .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
+
+    , ((modm .|. controlMask, xK_period), onGroup W.focusUp')
+    , ((modm .|. controlMask, xK_comma), onGroup W.focusDown')
 
     , ((modm, xK_h), sendMessage Shrink)
     , ((modm, xK_l), sendMessage Expand)
@@ -273,11 +289,13 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_s), submap . M.fromList $
         [ {- Games -}
           ((0, xK_c), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1252780")
+        , ((0, xK_e), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1066780")
         , ((0, xK_b), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/960090")
         , ((0, xK_r), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/291550")
         , ((0, xK_f), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/427520")
         , ((0, xK_x), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/323470")
         , ((0, xK_m), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1604000")
+        , ((0, xK_a), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/22380")
         , ((0, xK_i), viewWS 8 >> myRunInTerm "java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
@@ -403,7 +421,7 @@ myKeys = [
 mySpacing = spacingRaw False (Border 0 0 0 0) True (Border 0 0 0 0) True
 
 tall =
-      renamed [Replace "Tall"]
+      renamed [XMonad.Layout.Renamed.Replace "Tall"]
     $ minimize
     $ mySpacing
     $ smartBorders
@@ -412,7 +430,7 @@ tall =
     $ ResizableTall 1 (2/100) (1/2) []
 
 mirrorTall =
-      renamed [Replace "Mirror Tall"]
+      renamed [XMonad.Layout.Renamed.Replace "Mirror Tall"]
     $ mySpacing
     $ smartBorders
     $ avoidStruts
@@ -421,7 +439,7 @@ mirrorTall =
     $ ResizableTall 1 (2/100) (1/2) []
 
 tallMasterFocus =
-      renamed [Replace "Tall Master Focus"]
+      renamed [XMonad.Layout.Renamed.Replace "Tall Master Focus"]
     $ mySpacing
     $ smartBorders
     $ avoidStruts
@@ -429,7 +447,7 @@ tallMasterFocus =
     $ ResizableTall 1 (2/100) (2/3) []
 
 mirrorTallMasterFocus =
-      renamed [Replace "Mirror Tall Master Focus"]
+      renamed [XMonad.Layout.Renamed.Replace "Mirror Tall Master Focus"]
     $ mySpacing
     $ smartBorders
     $ avoidStruts
@@ -454,11 +472,20 @@ mirrorTallMasterFocus =
 --     $ Dwindle R CW 1 1
 
 full =
-      renamed [Replace "Full"]
+      renamed [XMonad.Layout.Renamed.Replace "Full"]
     $ windowNavigation
     $ noBorders Full
 
-myLayout = toggleLayouts full (
+-- myLayout = subTabbed $ boringWindows $ toggleLayouts full (
+--         tall
+--     ||| mirrorTall
+--     ||| tallMasterFocus
+--     ||| mirrorTallMasterFocus
+--     -- ||| dwindle
+--     -- ||| threeColumns
+--     )
+
+myLayout = addTabs shrinkText def $ subLayout [0] (Simplest) $ boringWindows $ toggleLayouts full (
         tall
     ||| mirrorTall
     ||| tallMasterFocus

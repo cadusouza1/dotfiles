@@ -34,21 +34,25 @@ lsp.on_attach(function(_, bufnr)
 		silent = true,
 		noremap = true,
 	})
+
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "", {
 		callback = telescope.lsp_definition,
 		silent = true,
 		noremap = true,
 	})
+
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "", {
 		callback = vim.lsp.buf.declaration,
 		silent = true,
 		noremap = true,
 	})
+
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "", {
 		callback = telescope.lsp_implementation,
 		silent = true,
 		noremap = true,
 	})
+
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "", {
 		callback = telescope.lsp_references,
 		silent = true,

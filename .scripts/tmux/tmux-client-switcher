@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-if [ -z "$(pgrep tmux)" ]; then
-    tmux start
-fi
-
-tmux switch-client -t $(tmux ls | gum filter | cut -d':' -f1)

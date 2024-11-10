@@ -3,6 +3,7 @@ alias t="tldr"
 alias r="rich"
 alias z="zathura --fork $argv[1]"
 alias b="bat"
+alias v="vim"
 
 # Fish config
 alias fup="source $FISHDOTDIR/config.fish"

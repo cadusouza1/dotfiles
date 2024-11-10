@@ -1,4 +1,5 @@
 ambientevirtual.nce.ufrj.br/my
+asciiflow.com/#/
 aternos.org/server
 bloons.fandom.com/wiki/
 brawlhalla.com/news/patch-notes
@@ -12,7 +13,6 @@ drive.google.com/drive/u/0/home
 github.com
 hackage.haskell.org/package/xmonad-contrib
 mail.google.com/mail/u/0
-orteil.dashnet.org/cookieclicker/
 portal.ufrj.br/Portal/
 teoria.dcc.ufrj.br:8080/cgi-bin/recebe.pl
 topper64.co.uk/nk/btd6/income/chimps

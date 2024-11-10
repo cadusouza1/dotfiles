@@ -5,6 +5,8 @@ require("packer").startup(function(use)
 
 	use({ "mbbill/undotree" })
 
+	use({ "smoka7/hop.nvim", tag = "*" })
+
 	use({
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",

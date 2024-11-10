@@ -62,6 +62,8 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-airline/vim-airline'
 Plug 'kien/ctrlp.vim'
+Plug 'skywind3000/vim-auto-popmenu'
+Plug 'skywind3000/vim-dict'
 call plug#end()
 
 colorscheme gruvbox
@@ -118,3 +120,17 @@ let g:netrw_liststyle=3
 
 " Snippets
 nnoremap \mainc :-1read $HOME/.vim/snippets/.skeleton.main.c<cr>j
+
+" vim-auto-popmenu
+
+" enable this plugin for filetypes, '*' for all files.
+let g:apc_enable_ft = {'*': 1, 'text':1, 'markdown':1, 'php':1}
+
+" source for dictionary, current or other loaded buffers, see ':help cpt'
+set cpt=.,k,w,b
+
+" don't select the first item.
+set completeopt=menu,menuone,noselect
+
+" suppress annoy messages.
+set shortmess+=c
