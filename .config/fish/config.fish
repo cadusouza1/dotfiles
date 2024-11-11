@@ -23,4 +23,6 @@ export FZF_ALT_C_COMMAND="fdfind -H -t d . $HOME"
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/kdu/.ghcup/bin $PATH # ghcup-env
 
 # Check if I'm on my termux
-[ (whoami) = "u0_a374" ] || [ -z "$TMUX" ] && tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
+if [ (whoami) != "u0_a374" ]
+    [ -z "$TMUX" ] && tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
+end
