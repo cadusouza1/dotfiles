@@ -58,7 +58,7 @@ import qualified XMonad.StackSet                   as W
 import           Colors.Dracula
 
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "st"
 
 myBrowser :: String
 myBrowser = "librewolf"
@@ -165,9 +165,6 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. shiftMask, xK_k), windows W.swapUp)
     , ((modm .|. shiftMask, xK_t), withFocused $ windows . W.sink) -- Push window back into tiling
 
-    -- , ((modm .|. controlMask, xK_j), rotSlavesUp)
-    -- , ((modm .|. controlMask, xK_k), rotSlavesDown)
-
     {- Operations with sublayouts -}
     , ((modm .|. controlMask, xK_h), sendMessage $ pullGroup L)
     , ((modm .|. controlMask, xK_l), sendMessage $ pullGroup R)
@@ -177,8 +174,8 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
     , ((modm .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
 
-    , ((modm .|. controlMask, xK_period), onGroup W.focusUp')
-    , ((modm .|. controlMask, xK_comma), onGroup W.focusDown')
+    , ((modm .|. controlMask, xK_period), onGroup W.focusDown')
+    , ((modm .|. controlMask, xK_comma), onGroup W.focusUp')
 
     , ((modm, xK_h), sendMessage Shrink)
     , ((modm, xK_l), sendMessage Expand)
@@ -405,8 +402,8 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
 myKeys :: [(String, X ())]
 myKeys = [
-      ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
-    , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
+      ("<XF86MonBrightnessUp>", spawn "lux -a 1%")
+    , ("<XF86MonBrightnessDown>", spawn "lux -s 1%")
 
     {- Volume control -}
     , ("<XF86AudioRaiseVolume>", raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
@@ -476,14 +473,6 @@ full =
     $ windowNavigation
     $ noBorders Full
 
--- myLayout = subTabbed $ boringWindows $ toggleLayouts full (
---         tall
---     ||| mirrorTall
---     ||| tallMasterFocus
---     ||| mirrorTallMasterFocus
---     -- ||| dwindle
---     -- ||| threeColumns
---     )
 
 myLayout = addTabs shrinkText def $ subLayout [0] (Simplest) $ boringWindows $ toggleLayouts full (
         tall

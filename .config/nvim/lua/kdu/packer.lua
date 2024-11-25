@@ -3,8 +3,6 @@ require("packer").startup(function(use)
 	use({ "mhartington/formatter.nvim" })
 	use({ "nvim-lua/plenary.nvim" })
 
-	use({ "mbbill/undotree" })
-
 	use({ "smoka7/hop.nvim", tag = "*" })
 
 	use({

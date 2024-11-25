@@ -8,7 +8,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Iosevka Nerd Font:pixelsize=22";
+static char font[] = "Iosevka Nerd Font:autohint=true:pixelsize=22";
 static int borderpx = 2;
 
 /*

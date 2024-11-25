@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+fzf_previwer() {
+    fzf --preview-window=up:60% \
+        --preview="bat -n --theme=gruvbox-dark --color=always --paging=never {}"
+}
+
+file=$(fd -L -H -t f -E .git . $@ | fzf_previwer)
+if [ ! -z "$file" ]; then
+    tmux new-session "$EDITOR $file"
+fi

@@ -47,7 +47,3 @@ function mkcd
     mkdir $argv[1]
     cd $argv[1]
 end
-
-function m
-    man $argv[1] | col -b | nvim -R -c "setfiletype man" -
-end

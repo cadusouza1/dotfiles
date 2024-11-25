@@ -16,6 +16,8 @@ for file in (du -a $FISHDOTDIR/custom/ | grep "\.fish" | cut -f2)
     source $file
 end
 
+# source $FISHDOTDIR/custom/**.fish
+
 export FZF_DEFAULT_COMMAND="fdfind -H . $HOME"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fdfind -H -t d . $HOME"
@@ -24,5 +26,6 @@ set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; se
 
 # Check if I'm on my termux
 if [ (whoami) != "u0_a374" ]
+    export MANPAGER="nvim +Man!"
     [ -z "$TMUX" ] && tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
 end

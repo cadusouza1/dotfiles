@@ -145,8 +145,10 @@ ls.add_snippets("tex", {
 		i(0),
 	}),
 	s("lim", {
-		t("\\lim_{x \\to "),
+		t("\\lim_{"),
 		i(1),
+		t(" \\to "),
+		i(2),
 		t("} "),
 		i(0),
 	}),

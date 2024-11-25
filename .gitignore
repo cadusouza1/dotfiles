@@ -1,6 +1,9 @@
 .xmonad/xmonad-x86_64-linux
 .xmonad/xmonad.o
-.config/fish/custom/api.fish
 .config/nvim/plugin/
+.config/fish/custom/api.fish
 .config/fish/custom/secret.fish
 .config/fish/custom/key.fish
+.config/zsh/custom/api.zsh
+.config/zsh/custom/secret.zsh
+.config/zsh/custom/key.zsh
