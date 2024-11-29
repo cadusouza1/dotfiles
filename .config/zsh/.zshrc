@@ -5,6 +5,7 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 # Basic auto/tab complete:
 # _comp_options+=(globdots)		# Include hidden files.
 autoload -U compinit
+setopt share_history
 setopt autocd
 setopt globdots
 zstyle ':completion:*' menu select
@@ -23,12 +24,27 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-source $ZDOTDIR/custom/**.zsh
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "\ee" edit-command-line
 
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Custom scripts
+for file in $(ls $ZDOTDIR/custom/**.zsh); do
+    . $file
+done
+
+. /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export FZF_ALT_C_COMMAND=""
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
 bindkey -v
+
+export DEFAULT_TMUX_SESSION_NAME=0
+
+# Check if I'm on my termux
+if [ $(whoami) != "u0_a374" ]; then
+    export MANPAGER="nvim +Man!"
+    [ -z "$TMUX" ] && tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
+fi

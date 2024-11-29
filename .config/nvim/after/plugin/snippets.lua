@@ -227,6 +227,16 @@ ls.add_snippets("tex", {
 		t({ "", "\\end{bmatrix}" }),
 		i(0),
 	}),
+	s("eq", {
+		i(1),
+		t(" \\equiv "),
+		i(2),
+		t(" \\mod{"),
+		i(3),
+		t("} "),
+		i(0),
+	}),
+	s("cd", { t({ "\\cdot " }), i(0) }),
 })
 
 ls.add_snippets("fish", {
@@ -392,4 +402,5 @@ ls.add_snippets("markdown", {
 	s("(", { t("\\left(") }),
 	s(")", { t("\\right)") }),
 	s("()", { t("\\left( "), i(0), t("\\right") }),
+	s("cd", { t({ "\\cdot " }), i(0) }),
 })

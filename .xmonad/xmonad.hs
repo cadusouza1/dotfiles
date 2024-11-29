@@ -474,7 +474,7 @@ full =
     $ noBorders Full
 
 
-myLayout = addTabs shrinkText def $ subLayout [0] (Simplest) $ boringWindows $ toggleLayouts full (
+myLayout = addTabsBottom shrinkText def $ subLayout [0] (Simplest) $ boringWindows $ toggleLayouts full (
         tall
     ||| mirrorTall
     ||| tallMasterFocus

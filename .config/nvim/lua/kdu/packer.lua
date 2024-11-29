@@ -20,6 +20,7 @@ require("packer").startup(function(use)
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
 	use({ "aliqyan-21/darkvoid.nvim" })
+	use({ "Mofiqul/vscode.nvim" })
 	use({ "ptdewey/darkearth-nvim" })
 	use({ "ellisonleao/gruvbox.nvim" })
 	use({ "fcpg/vim-fahrenheit" })

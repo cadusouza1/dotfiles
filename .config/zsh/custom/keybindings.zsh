@@ -1,12 +1,12 @@
-function fuzzy-edit
+fuzzy-edit() {
     fd -H -L -t f . $argv | gum filter | xargs -r $EDITOR
-    commandline -f repaint
-end
+    # commandline -f repaint
+}
 
-function fuzzy-cd
+fuzzy-cd() {
     cd (fd -H -L -t d . $argv | fzf --height=10)
-    commandline -f repaint
-end
+    # commandline -f repaint
+}
 
 set bindings \
     "jw:$EDITOR    ~/.xmonad/xmonad.hs" \
@@ -24,12 +24,13 @@ set bindings \
     "l:accept-autosuggestion" \
     "a:la && commandline -f repaint" \
     "w:forward-word" \
-    "W:forward-bigword"
+    "W:forward-bigword" \
+    "e:commandline-edit"
 
-for binding in $bindings
+for binding in $bindings; do
     set key (echo $binding | cut --delimiter=":" -f1)
     set fn (echo $binding | cut --delimiter=":" -f2)
 
     bind -M insert \e$key $fn
-end
+done
 

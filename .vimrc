@@ -124,7 +124,8 @@ nnoremap \mainc :-1read $HOME/.vim/snippets/.skeleton.main.c<cr>j
 " vim-auto-popmenu
 
 " enable this plugin for filetypes, '*' for all files.
-let g:apc_enable_ft = {'*': 1, 'text':1, 'markdown':1, 'php':1}
+let g:apc_enable_ft = {'*': 1}
+set shortmess+=c
 
 " source for dictionary, current or other loaded buffers, see ':help cpt'
 set cpt=.,k,w,b

@@ -4,4 +4,7 @@ if [ -z "$(pgrep tmux)" ]; then
     tmux start
 fi
 
+echo "Running script with argument: $1" >>/tmp/tmux-client-selector.log
+echo "Current PATH: $PATH" >>/tmp/tmux-client-selector.log
+
 tmux switch-client -t $(tmux ls | gum filter | cut -d':' -f1)
