@@ -1,10 +1,11 @@
-Isa > $BROWSER https://chatgpt.com/c/6726047d-6570-8006-b080-07a229bff4a3
-TGPT > $BROWSER https://chatgpt.com/g/g-FGhasb1tZ-therapist-psychologist-non-medical-therapy/c/67001034-c170-8006-9592-7cafd32737e7
-E3 > $BROWSER https://chatgpt.com/c/67066a7b-7ef8-8006-ac85-d07869ca2999
-EO1 > $BROWSER https://chatgpt.com/c/670d7b02-2718-8006-8970-b3e542d7632d
-Daria > $BROWSER https://chatgpt.com/c/66f9310c-1c9c-8006-9010-669f26f3aa3b
-Bash > $BROWSER https://chatgpt.com/c/66f44764-c1ac-8006-87cc-4c7b46e84040
-Anotações Cripto > $BROWSER https://chatgpt.com/c/592ee6c2-9acd-4fd5-8749-a9b55a3c9457
-Anotações Cálculo II > $BROWSER https://chatgpt.com/c/e20c8259-ccf2-46bc-8ba2-07d7a80a15e3
-Teoria dos Direitos Fundamentais > $BROWSER https://chatgpt.com/c/66f447d4-c11c-8006-85df-a54204602a38
-Meanie > $BROWSER https://chatgpt.com/c/66f17b42-9828-8006-bd8d-c90498960d72
+Bash > $BROWSER https://chat.deepseek.com/a/chat/s/b46d47af-8414-4856-8729-39e677492e78
+Calculus > $BROWSER https://chat.deepseek.com/a/chat/s/262a3e0e-a567-4f04-b285-baaba8d68cc3
+Collatz > $BROWSER https://chat.deepseek.com/a/chat/s/976e6eaa-576f-4126-b371-7a0b6333ab63
+Haskell > $BROWSER https://chat.deepseek.com/a/chat/s/25487ffa-ca08-4080-9cb4-93a8acceadbe
+Probest > $BROWSER https://chat.deepseek.com/a/chat/s/946426c8-eeee-4a64-be0d-ff107e15dd25
+Psychological Support > $BROWSER https://chat.deepseek.com/a/chat/s/4357eea1-7c4e-4083-af1a-de76a4f44b56
+Web Dev > $BROWSER https://chat.deepseek.com/a/chat/s/52c8b1aa-155a-4fb5-a166-95ab42a35abb
+pygraphx > $BROWSER https://chat.deepseek.com/a/chat/s/6aa4bae5-38f4-482a-bd0f-8272a2dfe506
+sps > $BROWSER https://chat.deepseek.com/a/chat/s/3535f44e-b09a-45af-97cb-ba44b7aab1be
+Dev Job > $BROWSER https://chat.deepseek.com/a/chat/s/0d23e69f-ab0f-4549-a2a7-208143dedfbf
+Lagrange Interpolator > $BROWSER https://chat.deepseek.com/a/chat/s/493a2da7-5a00-41fd-852a-3cd1ac1275d1

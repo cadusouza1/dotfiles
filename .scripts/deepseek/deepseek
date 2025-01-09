@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+echo "$1" | xargs -I {} curl https://api.deepseek.com/chat/completions \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $DEEP_TOKEN" \
+    -d '{
+    "model": "deepseek-chat",
+    "messages": [
+          {"role": "system", "content": "You are a helpful assistant."},
+          {"role": "user", "content": "{}"}
+        ],
+        "stream": false
+      }' | jq -r '.choices[0].message.content'

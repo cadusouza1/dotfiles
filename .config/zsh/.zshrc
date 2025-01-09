@@ -26,7 +26,7 @@ bindkey -v '^?' backward-delete-char
 
 autoload -z edit-command-line
 zle -N edit-command-line
-bindkey "\ee" edit-command-line
+# bindkey "\ee" edit-command-line
 
 # Custom scripts
 for file in $(ls $ZDOTDIR/custom/**.zsh); do

@@ -1,14 +1,13 @@
 Berserk > evince ~/Berserk/Volume-*.pdf
-Breaking Bad > firefox https://www.netflix.com/title/70143836
-Hunter x Hunter > firefox https://www.crunchyroll.com/series/GY3VKX1MR/hunter-x-hunter
-Jujutsu Kaisen (Anime) > firefox https://www.crunchyroll.com/series/GRDV0019R/jujutsu-kaisen
-Jujutsu Kaisen (Manga) > firefox https://tcbscans-manga.com/manga/jujutsu-kaisen 
-Konosuba - An Explosion on This Wonderful World > firefox https://www.crunchyroll.com/series/GJ0H7Q5V7/konosuba--an-explosion-on-this-wonderful-world
+Hunter x Hunter > $BROWSER https://www.crunchyroll.com/series/GY3VKX1MR/hunter-x-hunter
+Jujutsu Kaisen (Anime) > $BROWSER https://www.crunchyroll.com/series/GRDV0019R/jujutsu-kaisen
+Konosuba - An Explosion on This Wonderful World > $BROWSER https://www.crunchyroll.com/series/GJ0H7Q5V7/konosuba--an-explosion-on-this-wonderful-world
 One Punch Man > evince ~/One-Punch_Man/Volume-*.pdf
-Spy x Family > firefox https://www.crunchyroll.com/series/G4PH0WXVJ/spy-x-family
-The Boondocks > firefox https://123moviesgo.su/series/the-boondocks/
-The Boys > firefox https://www.primevideo.com/region/na/detail/0KRGHGZCHKS920ZQGY5LBRF7MA/ref=atv_sr_fle_c_Tn74RA_1_1_1?sr=1-1&pageTypeIdSource=ASIN&pageTypeId=B07QRVGWKQ&qid=1698850067614
-Under Ninja > firefox https://www.crunchyroll.com/series/GQWH0M1WK/under-ninja
+Spy x Family > $BROWSER https://www.crunchyroll.com/series/G4PH0WXVJ/spy-x-family
+The Boondocks > $BROWSER https://123moviesgo.su/series/the-boondocks/
+Under Ninja > $BROWSER https://www.crunchyroll.com/series/GQWH0M1WK/under-ninja
+[ Finished ] Breaking Bad > $BROWSER https://www.netflix.com/title/70143836
+[ Finished ] Jujutsu Kaisen (Manga) > $BROWSER https://tcbscans-manga.com/manga/jujutsu-kaisen 
 [ Finished ] Kaguya-sama: Love Is War > https://www.crunchyroll.com/series/GRJ0J828Y/kaguya-sama-love-is-war
-[ Finished ] Steins Gate 0 > firefox https://www.crunchyroll.com/series/GYW4D15K6/steinsgate-0
-[ Finished ] Steins Gate > firefox https://www.anitube.biz/187342
+[ Finished ] Steins Gate 0 > $BROWSER https://www.crunchyroll.com/series/GYW4D15K6/steinsgate-0
+[ Finished ] Steins Gate > $BROWSER https://www.anitube.biz/187342

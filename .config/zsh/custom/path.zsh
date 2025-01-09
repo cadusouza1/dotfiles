@@ -32,6 +32,6 @@ export PATH="$HOME/.tmuxifier/bin:$PATH"
 export PATH="$HOME/Obsidian:$PATH"
 
 # Paths for my scripts
-for p in $(du $HOME/.scripts/ | cut -f2); do
+for p in $(ls -d $HOME/.scripts/**/); do
     export PATH="$p:$PATH"
 done

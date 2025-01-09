@@ -1,7 +1,7 @@
 vim.cmd([[
     set termguicolors
     runtime macros/matchit.vim
-    colorscheme darkvoid
+    colorscheme gruvbox-material
 ]])
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {

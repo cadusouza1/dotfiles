@@ -4,7 +4,7 @@ local clangformat = function()
 	return {
 		exe = "clang-format",
 		args = {
-			"-style={IndentWidth: 4}",
+			'-style="{IndentWidth: 4}"',
 			"-assume-filename",
 			util.escape_path(
 				util.get_current_buffer_file_name()
@@ -79,6 +79,12 @@ local prettier = function(parser)
 	}
 end
 
+local ormolu = function()
+	return {
+		exe = "ormolu",
+	}
+end
+
 require("formatter").setup({
 	filetype = {
 		python = {
@@ -95,9 +101,6 @@ require("formatter").setup({
 			require("formatter.filetypes.rust").rustfmt,
 		},
 		go = { require("formatter.filetypes.go").gofmt },
-		haskell = {
-			require("formatter.filetypes.haskell").stylish_haskell,
-		},
 		sh = { require("formatter.filetypes.sh").shfmt },
 		json = {
 			require("formatter.filetypes.json").fixjson,

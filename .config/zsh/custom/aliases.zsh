@@ -39,4 +39,4 @@ alias saug="sudo apt upgrade"
 alias tmf="tmuxifier"
 
 alias ch="curl cheat.sh/${argv[1]}"
-alias mkcd="mkdir ${argv[1]} && cd ${argv[1]}"
+alias mkcd="mkdir $1 && cd $1"

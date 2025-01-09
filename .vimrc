@@ -135,3 +135,7 @@ set completeopt=menu,menuone,noselect
 
 " suppress annoy messages.
 set shortmess+=c
+
+" The brazilian dictionary is huge wtf
+set dictionary+=/usr/share/dict/words
+set dictionary+=/usr/share/dict/brazilian

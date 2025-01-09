@@ -8,14 +8,10 @@ import           System.Exit
 import           System.Process
 import           Text.Show
 import           XMonad
-import           XMonad.Actions.FindEmptyWorkspace
-import qualified XMonad.Actions.FlexibleResize     as Flex
-import           XMonad.Actions.Minimize
-import           XMonad.Actions.RotSlaves
+import qualified XMonad.Actions.FlexibleResize  as Flex
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.Submap
 import           XMonad.Actions.SwapWorkspaces
-import           XMonad.Actions.TreeSelect
 import           XMonad.Actions.Volume
 import           XMonad.Actions.WithAll
 
@@ -48,12 +44,13 @@ import           System.Directory
 
 -- import           Graphics.X11.ExtraTypes.XF86
 
-import qualified Data.Binary                       as GHC
-import qualified Data.Binary                       as GHC.Word
-import qualified Data.Map                          as M
+import qualified Data.Binary                    as GHC
+import qualified Data.Binary                    as GHC.Word
+import qualified Data.Map                       as M
 -- import           Data.Maybe
 import qualified Foreign.C
-import qualified XMonad.StackSet                   as W
+import qualified XMonad.StackSet                as W
+import Data.List (isPrefixOf)
 
 import           Colors.Dracula
 
@@ -94,7 +91,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces :: [String]
-myWorkspaces = [ "1", "2", "3", "4", "5", "6:Learning", "7:Discord", "8:GPT", "9:Games", "0:Music" ]
+myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8:Discord", "9:Games", "0:Music" ]
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
@@ -158,7 +155,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
 
     {- Operations with windows -}
-    , ((modm, xK_space), sendMessage NextLayout) -- Rotate through the available layout algorithms
+    , ((modm, xK_space), sendMessage NextLayout)
     , ((modm, xK_j), focusDown)
     , ((modm, xK_k), focusUp)
     , ((modm .|. shiftMask, xK_j), windows W.swapDown)
@@ -180,17 +177,17 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_h), sendMessage Shrink)
     , ((modm, xK_l), sendMessage Expand)
 
-    , ((modm .|. shiftMask, xK_q),  kill) -- close focused window
-    , ((modm .|. controlMask, xK_q),  killAll) -- close all windows
+    , ((modm .|. shiftMask, xK_q), kill) -- close focused window
+    , ((modm .|. controlMask, xK_q), killAll) -- close all windows
     , ((modm .|. mod1Mask, xK_q), killOthers) -- close all windows without focus
 
     {- Make the windows fullscreen -}
     , ((modm, xK_f), sendMessage ToggleLayout)
 
     {- Operations with the master window -}
-    , ((modm, xK_comma), sendMessage $ IncMasterN 1) -- Increment the number of windows in the master area
-    , ((modm, xK_period), sendMessage $ IncMasterN $ -1) -- Decrease the number of windows in the master area
-    , ((modm .|. shiftMask, xK_m), windows W.swapMaster) -- Swap the focused window and the master window
+    , ((modm, xK_comma), sendMessage $ IncMasterN 1)
+    , ((modm, xK_period), sendMessage $ IncMasterN $ -1)
+    , ((modm .|. shiftMask, xK_m), windows W.swapMaster)
 
     , ((modm, xK_q), spawn recompileAndRestartXMonad)
     , ((modm .|. shiftMask, xK_p), spawn "rofi -dpi 1 -normal-window -modi \"drun\" -show drun")
@@ -200,11 +197,11 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         {- Aplications to spawn -}
         [ ((0, xK_b), notifyAndSpawn myBrowser)
         , ((0, xK_m), notifyAndSpawn "spotify")
-        , ((0, xK_d), viewWS 6 >> notifyAndSpawn "discord")
+        , ((0, xK_d), notifyAndSpawn "discord")
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
         , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
-        , ((0, xK_g), myRunInTerm "steam -gamepadui")
+        , ((0, xK_g), myRunInTerm "steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
         , ((0, xK_p), spawn "flatpak run io.github.alainm23.planify")
         , ((0, xK_r), spawn "ruffle")
@@ -216,6 +213,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_a), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/series.txt")
         , ((0, xK_l), spawn "~/.scripts/url-bookmarks/rofi-bookmark-open ~/.scripts/url-bookmarks/urls.txt")
         , ((shiftMask, xK_l), spawn "~/.scripts/url-bookmarks/rofi-bookmark-new-window ~/.scripts/url-bookmarks/urls.txt")
+        , ((shiftMask, xK_g), spawn "_JAVA_AWT_WM_NONREPARENTING=1 geogebra")
         ])
 
     , ((modm, xK_b), submap . M.fromList $
@@ -285,15 +283,17 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
     , ((modm, xK_s), submap . M.fromList $
         [ {- Games -}
-          ((0, xK_c), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1252780")
-        , ((0, xK_e), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1066780")
-        , ((0, xK_b), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/960090")
-        , ((0, xK_r), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/291550")
-        , ((0, xK_f), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/427520")
-        , ((0, xK_x), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/323470")
-        , ((0, xK_m), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/1604000")
-        , ((0, xK_a), viewWS 8 >> myRunInTerm "steam -gamepadui steam://rungameid/22380")
-        , ((0, xK_i), viewWS 8 >> myRunInTerm "java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
+          ((0, xK_c), myRunInTerm "steam steam://rungameid/1252780")
+        , ((0, xK_e), myRunInTerm "steam steam://rungameid/1066780")
+        , ((0, xK_b), myRunInTerm "steam steam://rungameid/960090")
+        , ((0, xK_r), myRunInTerm "steam steam://rungameid/291550")
+        , ((0, xK_f), myRunInTerm "steam steam://rungameid/427520")
+        , ((0, xK_o), myRunInTerm "steam steam://rungameid/49520")
+        , ((0, xK_x), myRunInTerm "steam steam://rungameid/323470")
+        , ((0, xK_m), myRunInTerm "steam steam://rungameid/1604000")
+        , ((0, xK_a), myRunInTerm "steam steam://rungameid/22380")
+        , ((0, xK_t), myRunInTerm "steam steam://rungameid/306020")
+        , ((0, xK_i), myRunInTerm "java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
         , ((0, xK_j), audioPrev)
@@ -311,11 +311,6 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_8), swapWorkspace 7)
         , ((0, xK_9), swapWorkspace 8)
         , ((0, xK_0), swapWorkspace 9)
-
-        {- Easier way to find and operate empty workspaces -}
-        , ((0, xK_v), viewEmptyWorkspace)
-        , ((0, xK_t), tagToEmptyWorkspace)
-        , ((0, xK_s), sendToEmptyWorkspace)
         ])
 
     {- Switch and move between workspaces -}
@@ -353,6 +348,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_t), submap . M.fromList $
         [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tmux-selector")
         , ((0, xK_p), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/ 2")
+        , ((shiftMask, xK_p), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pdfs/ 2")
         , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/leetcode/ 1")
         , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/aoc/ 4")
         , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~ 2")
@@ -360,6 +356,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.config/ 2")
         , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/dotfiles/ 2")
         , ((0, xK_s), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.scripts/ 2")
+        , ((0, xK_m), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/math/ 2")
         ])
 
     , ((modm, xK_F1), raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
@@ -393,11 +390,9 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_8), setScreenWindowSpacing 80)
         , ((0, xK_9), setScreenWindowSpacing 90)
         , ((0, xK_t), toggleBorders)
+        , ((0, xK_f), spawn "xrandr -s 1920x1080")
+        , ((0, xK_h), spawn "xrandr -s 1280x720")
         ])
-
-    , ((modm, xK_n), withFocused minimizeWindow)
-    , ((modm .|. shiftMask, xK_n), withLastMinimized maximizeWindow)
-
     ]
 
 myKeys :: [(String, X ())]
@@ -419,7 +414,6 @@ mySpacing = spacingRaw False (Border 0 0 0 0) True (Border 0 0 0 0) True
 
 tall =
       renamed [XMonad.Layout.Renamed.Replace "Tall"]
-    $ minimize
     $ mySpacing
     $ smartBorders
     $ avoidStruts
@@ -452,21 +446,21 @@ mirrorTallMasterFocus =
     $ Mirror
     $ ResizableTall 1 (2/100) (2/3) []
 
--- threeColumns =
---       renamed [Replace "ThreeCol"]
---     $ mySpacing
---     $ smartBorders
---     $ avoidStruts
---     $ windowNavigation
---     $ ThreeCol 1 (2/100) (1/2)
+threeColumns =
+      renamed [XMonad.Layout.Renamed.Replace "ThreeCol"]
+    $ mySpacing
+    $ smartBorders
+    $ avoidStruts
+    $ windowNavigation
+    $ ThreeCol 1 (2/100) (1/2)
 
--- dwindle =
---       renamed [Replace "Dwindle"]
---     $ mySpacing
---     $ smartBorders
---     $ avoidStruts
---     $ windowNavigation
---     $ Dwindle R CW 1 1
+dwindle =
+      renamed [XMonad.Layout.Renamed.Replace "Dwindle"]
+    $ mySpacing
+    $ smartBorders
+    $ avoidStruts
+    $ windowNavigation
+    $ Dwindle R CW 1 1
 
 full =
       renamed [XMonad.Layout.Renamed.Replace "Full"]
@@ -474,37 +468,23 @@ full =
     $ noBorders Full
 
 
-myLayout = addTabsBottom shrinkText def $ subLayout [0] (Simplest) $ boringWindows $ toggleLayouts full (
+myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows $ toggleLayouts full (
         tall
     ||| mirrorTall
     ||| tallMasterFocus
     ||| mirrorTallMasterFocus
-    -- ||| dwindle
-    -- ||| threeColumns
+    ||| dwindle
+    ||| threeColumns
     )
 
-------------------------------------------------------------------------
--- Window rules:
-
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
--- myManageHook = composeAll
---     [ className =? "MPlayer"        --> doFloat
---         , className =? "Gimp"           --> doFloat
---         , resource  =? "desktop_window" --> doIgnore
---         , resource  =? "kdesktop"       --> doIgnore ]
-
-myManageHook = mempty
+myManageHook = composeAll
+    [ className =? "discord" --> doShift (myWorkspaces !! 7)
+    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (myWorkspaces !! 8)
+    , className =? "spotify" --> doShift (myWorkspaces !! 9)
+    ]
+    where
+        isSteamApp :: Query Bool
+        isSteamApp = fmap ("steam_app" `isPrefixOf`) className
 
 ------------------------------------------------------------------------
 -- Event handling

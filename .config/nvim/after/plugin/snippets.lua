@@ -99,10 +99,10 @@ ls.add_snippets("tex", {
 				)
 		end, {})
 	),
-	s("Ra", t("\\Rightarrow ")),
-	s("La", t("\\Leftarrow ")),
-	s("ra", t("\\rightarrow ")),
-	s("la", t("\\leftarrow ")),
+	s("=>", t("\\Rightarrow ")),
+	s("<=", t("\\Leftarrow ")),
+	s("->", t("\\rightarrow ")),
+	s("<-", t("\\leftarrow ")),
 	s("xx", t("\\times ")),
 	s("br", {
 		t("\\bigg\\rvert_{"),
