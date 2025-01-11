@@ -2,7 +2,8 @@
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	"#282828", /* hard contrast: #1d2021 / soft contrast: #32302f */
+	/* "#282828", /1* hard contrast: #1d2021 / soft contrast: #32302f *1/ */
+	"#1d2021",
 	"#cc241d",
 	"#98971a",
 	"#d79921",
