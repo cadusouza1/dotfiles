@@ -1,7 +1,11 @@
 /* See LICENSE for license details. */
 
+#ifndef _ST_H_
+#define _ST_H_
+
 #include <stdint.h>
 #include <sys/types.h>
+#include <wchar.h>
 
 /* macros */
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
@@ -124,3 +128,5 @@ extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
 extern unsigned int defaultcs;
+
+#endif // _ST_H_

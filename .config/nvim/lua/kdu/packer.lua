@@ -11,14 +11,12 @@ require("packer").startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
-	use({ "mipmip/vim-scimark" })
-	use({ "mfussenegger/nvim-lint" })
-
 	-- colorschemes
 	use({
 		"jesseleite/nvim-noirbuddy",
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
+
 	use({ "aliqyan-21/darkvoid.nvim" })
 	use({ "Mofiqul/vscode.nvim" })
 	use({ "ptdewey/darkearth-nvim" })
@@ -97,15 +95,15 @@ require("packer").startup(function(use)
 	use({ "tpope/vim-unimpaired" })
 	use({ "tpope/vim-vinegar" })
 
-	use({ "jiangmiao/auto-pairs" })
+	-- use({ "jiangmiao/auto-pairs" })
 
 	use({ "norcalli/nvim-colorizer.lua" })
 
 	-- More and better vim objects
 	use({ "wellle/targets.vim" })
 	use({ "bkad/CamelCaseMotion" })
-	use({ "vim-scripts/argtextobj.vim" })
-	use({ "michaeljsmith/vim-indent-object" })
+	-- use({ "vim-scripts/argtextobj.vim" })
+	-- use({ "michaeljsmith/vim-indent-object" })
 
 	use({ "lewis6991/impatient.nvim" })
 
@@ -118,14 +116,6 @@ require("packer").startup(function(use)
 	})
 
 	use({ "VonHeikemen/lsp-zero.nvim" })
-
-	use({
-		"epwalsh/obsidian.nvim",
-		tag = "*",
-		requires = {
-			"nvim-lua/plenary.nvim",
-		},
-	})
 end)
 
-vim.g.AutoPairsShortcutToggle = "<M-z>"
+-- vim.g.AutoPairsShortcutToggle = "<M-z>"

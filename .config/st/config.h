@@ -1,5 +1,10 @@
+#pragma once
+
 #include <stddef.h> // Remove NULL warnings
 #include "coloscheme/gruvbox-dark.h"
+#include "custom.h"
+#include <X11/cursorfont.h>
+#include <X11/X.h>
 
 /* See LICENSE file for copyright and license details. */
 
@@ -8,7 +13,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Iosevka Nerd Font:autohint=true:pixelsize=22";
+static char font[] = "IosevkaTerm NFM:autohint=true:pixelsize=22";
 static int borderpx = 2;
 
 /*
@@ -166,7 +171,8 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
     { TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
     { MODKEY,               XK_equal,       zoom,           {.f = +1} },
-    { MODKEY,               XK_minus,       zoom,           {.f = -1} }
+    { MODKEY,               XK_minus,       zoom,           {.f = -1} },
+    { MODKEY,               XK_E,           exec_command,   {.s =  "nvim"} }
 };
 
 /*

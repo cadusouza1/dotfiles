@@ -4,7 +4,8 @@
 
 include config.mk
 
-SRC = st.c x.c
+# SRC = st.c x.c custom.c
+SRC = $(shell find . -name "*.c")
 OBJ = $(SRC:.c=.o)
 
 all: options st
