@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+selected=$(ollama ls | awk '(NR>1){print $1}' | fzf)
+
+if [ ! -z $selected ]; then
+    ollama run $selected
+fi

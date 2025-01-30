@@ -1,8 +1,9 @@
 #include "st.h"
-#include <stddef.h>
-#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
 
-void exec_command(const Arg *arg) {
-    const char *argv = {arg->s, NULL};
-    execvp(arg->s, (char *const *)argv);
+void exec_nvim(const Arg *arg) {
+    char cmd[256];
+    snprintf(cmd, 256 - strlen("nvim %s \n"), "nvim %s \n", arg->s);
+    ttywrite(cmd, strlen(cmd) * sizeof(char), 0);
 }

@@ -31,6 +31,8 @@ export PATH="$HOME/.tmuxifier/bin:$PATH"
 # Obsidian
 export PATH="$HOME/Obsidian:$PATH"
 
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+
 # Paths for my scripts
 for p in $(ls -d $HOME/.scripts/**/); do
     export PATH="$p:$PATH"

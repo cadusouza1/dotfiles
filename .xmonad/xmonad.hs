@@ -153,6 +153,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     [ ((modm, xK_Return), spawn myTerminal)
     , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man")
     , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
+    , ((modm .|. shiftMask, xK_g), myRunInTerm "~/.scripts/ollama/ollama-saved-chats")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout)
@@ -203,8 +204,6 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
         , ((0, xK_g), myRunInTerm "steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
-        , ((0, xK_p), spawn "flatpak run io.github.alainm23.planify")
-        , ((0, xK_r), spawn "ruffle")
 
         {- Terminal Commands -}
         , ((0, xK_h), myRunInTerm "htop")

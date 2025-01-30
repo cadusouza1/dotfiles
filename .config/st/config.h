@@ -172,7 +172,7 @@ static Shortcut shortcuts[] = {
     { TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
     { MODKEY,               XK_equal,       zoom,           {.f = +1} },
     { MODKEY,               XK_minus,       zoom,           {.f = -1} },
-    { MODKEY,               XK_E,           exec_command,   {.s =  "nvim"} }
+    { MODKEY,               XK_n,           ttysend,        {.s = "nvim . \n" }}
 };
 
 /*

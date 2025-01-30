@@ -1,6 +1,8 @@
 set nocompatible " Disable compatibility with vi
 set termguicolors
 
+set autoread
+
 filetype on " Enable type file detection
 filetype plugin on " Enable plugins and load plugin for the detected file type.
 filetype indent on " Load an indent file for the detected file type.
@@ -51,6 +53,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'srcery-colors/srcery-vim'
+Plug 'fcpg/vim-fahrenheit'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-surround'
@@ -59,7 +62,6 @@ Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
 " Plug 'vim-scripts/argtextobj.vim'
 Plug 'bkad/CamelCaseMotion'
-Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-airline/vim-airline'
 Plug 'kien/ctrlp.vim'
 Plug 'skywind3000/vim-auto-popmenu'
@@ -67,6 +69,8 @@ Plug 'skywind3000/vim-dict'
 call plug#end()
 
 colorscheme gruvbox
+
+nnoremap <leader>ck :checktime<cr>
 
 nnoremap <leader>so :so %<cr>
 
@@ -86,25 +90,22 @@ omap <silent> i<leader>e <Plug>CamelCaseMotion_ie
 xmap <silent> i<leader>e <Plug>CamelCaseMotion_ie
 
 " Crude simulation of harpoon
-nnoremap <silent> <C-h> 'A<cr>
-nnoremap <silent> <C-j> 'B<cr>
-nnoremap <silent> <C-k> 'C<cr>
-nnoremap <silent> <C-l> 'D<cr>
-nnoremap <silent> <leader>h1 'E<cr>
-nnoremap <silent> <leader>h2 'F<cr>
-nnoremap <silent> <leader>h3 'G<cr>
-nnoremap <silent> <leader>h4 'H<cr>
-nnoremap <silent> <leader>h5 'I<cr>
-nnoremap <silent> <C-e> :marks<cr>
+nnoremap <silent> <C-h> :b 1<cr>
+nnoremap <silent> <C-j> :b 2<cr>
+nnoremap <silent> <C-k> :b 3<cr>
+nnoremap <silent> <C-l> :b 4<cr>
+nnoremap <silent> <leader>h1 :b 5<cr>
+nnoremap <silent> <leader>h2 :b 6<cr>
+nnoremap <silent> <leader>h3 :b 7<cr>
+nnoremap <silent> <leader>h4 :b 8<cr>
+nnoremap <silent> <leader>h5 :b 9<cr>
+nnoremap <silent> <C-e> :buffers<cr>
 
-set completeopt=menu,menuone
+nnorema Y y$
 
 " Fuzzy File Search
 set path+=**
 set wildmenu
-
-cnoremap <C-j> <C-p>
-cnoremap <C-k> <C-n>
 
 " Tags
 command! MakeTags !ctags -R .
@@ -125,9 +126,8 @@ nnoremap \mainc :-1read $HOME/.vim/snippets/.skeleton.main.c<cr>j
 
 " enable this plugin for filetypes, '*' for all files.
 let g:apc_enable_ft = {'*': 1}
-set shortmess+=c
 
-" source for dictionary, current or other loaded buffers, see ':help cpt'
+" see ':help cpt'
 set cpt=.,k,w,b
 
 " don't select the first item.
@@ -136,6 +136,11 @@ set completeopt=menu,menuone,noselect
 " suppress annoy messages.
 set shortmess+=c
 
-" The brazilian dictionary is huge wtf
-set dictionary+=/usr/share/dict/words
-set dictionary+=/usr/share/dict/brazilian
+" autocmds
+"" formatters
+if executable("black")
+    augroup PythonFormatter
+        autocmd!
+        au BufWritePost *.py :silent :!black -q -l 80 %
+    augroup END
+endif

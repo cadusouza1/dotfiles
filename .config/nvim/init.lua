@@ -1,2 +1,2 @@
-require("kdu")
 require("impatient")
+require("kdu")

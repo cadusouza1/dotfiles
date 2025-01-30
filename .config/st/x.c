@@ -11,6 +11,7 @@
 #include <locale.h>
 #include <math.h>
 #include <signal.h>
+#include <string.h>
 #include <sys/select.h>
 #include <time.h>
 #include <unistd.h>

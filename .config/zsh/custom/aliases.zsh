@@ -1,6 +1,5 @@
 alias e="$EDITOR"
 alias t="tldr"
-alias r="rich"
 alias z="zathura --fork"
 alias b="bat"
 alias v="vim"
@@ -33,10 +32,13 @@ alias cgin="cargo init"
 alias sai="sudo apt install"
 alias sar="sudo apt remove" 
 alias sap="sudo apt purge" 
+alias saa="sudo apt autoremove"
 alias saup="sudo apt update"
 alias saug="sudo apt upgrade"
 
-alias tmf="tmuxifier"
-
 alias ch="curl cheat.sh/${argv[1]}"
-alias mkcd="mkdir $1 && cd $1"
+
+function mkcd() {
+    mkdir $1 
+    cd $1
+}

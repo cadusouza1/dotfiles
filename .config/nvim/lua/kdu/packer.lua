@@ -17,7 +17,6 @@ require("packer").startup(function(use)
 		requires = { "tjdevries/colorbuddy.nvim" },
 	})
 
-	use({ "aliqyan-21/darkvoid.nvim" })
 	use({ "Mofiqul/vscode.nvim" })
 	use({ "ptdewey/darkearth-nvim" })
 	use({ "ellisonleao/gruvbox.nvim" })
@@ -116,6 +115,7 @@ require("packer").startup(function(use)
 	})
 
 	use({ "VonHeikemen/lsp-zero.nvim" })
+	use({ "https://github.com/ThePrimeagen/vim-be-good" })
 end)
 
 -- vim.g.AutoPairsShortcutToggle = "<M-z>"
