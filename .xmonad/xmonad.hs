@@ -150,7 +150,8 @@ bluetoothConnect name address = spawn $ "~/.scripts/bluetooth.sh connect " ++ na
 bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect " ++ name ++ " " ++ address
 
 myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
-    [ ((modm, xK_Return), spawn myTerminal)
+    [ ((modm, xK_Return), myRunInTerm "tmux new-session -A -s 0")
+    , ((modm .|. shiftMask, xK_Return), spawn myTerminal)
     , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man")
     , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
     , ((modm .|. shiftMask, xK_g), myRunInTerm "~/.scripts/ollama/ollama-saved-chats")

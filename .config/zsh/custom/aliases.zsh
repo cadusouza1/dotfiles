@@ -7,6 +7,7 @@ alias v="vim"
 # ZSH config
 alias zup="source $ZDOTDIR/.zshrc"
 alias ls="exa --color=auto -a --group-directories-first"
+alias ll="ls -l"
 
 lt() {
     if test -n "$argv[1]"; then

@@ -40,11 +40,3 @@ export FZF_ALT_C_COMMAND=""
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
 bindkey -v
-
-export DEFAULT_TMUX_SESSION_NAME=0
-
-# Check if I'm on my termux
-if [ $(whoami) != "u0_a374" ]; then
-    export MANPAGER="nvim +Man!"
-    [ -z "$TMUX" ] && tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
-fi
