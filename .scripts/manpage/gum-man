@@ -2,5 +2,5 @@
 
 selected=$(man -k . | cut -d' ' -f1 | gum filter)
 if [ -n "$selected" ]; then
-    man $selected
+    MANPAGER="nvim +Man!" man $selected
 fi
