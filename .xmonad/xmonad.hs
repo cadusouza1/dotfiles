@@ -155,6 +155,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man")
     , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
     , ((modm .|. shiftMask, xK_g), myRunInTerm "~/.scripts/ollama/ollama-saved-chats")
+    , ((modm, xK_y), spawn "xdotool search --name 'Youtube' key --clearmodifiers space")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout)
@@ -198,7 +199,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_o), submap . M.fromList $
         {- Aplications to spawn -}
         [ ((0, xK_b), notifyAndSpawn myBrowser)
-        , ((0, xK_m), notifyAndSpawn "spotify")
+        , ((0, xK_m), spawnOn "workspace9" "spotify")
         , ((0, xK_d), notifyAndSpawn "discord")
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
@@ -225,6 +226,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
             , ((0, xK_r), bluetoothConnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
             , ((0, xK_p), bluetoothConnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
             , ((0, xK_t), bluetoothConnect "950BT" "41:42:3D:C0:7D:07")
+            , ((0, xK_f), bluetoothConnect "Fuxi-H3" "00:09:24:25:0C:51")
             ])
 
         , ((0, xK_d), submap . M.fromList $
@@ -234,6 +236,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
             , ((0, xK_r), bluetoothDisconnect "Redmi-Airdots-S" "1C:52:16:87:7B:D6")
             , ((0, xK_p), bluetoothDisconnect "Philips-SHB3175" "A4:77:58:79:9E:2F")
             , ((0, xK_t), bluetoothDisconnect "950BT" "41:42:3D:C0:7D:07")
+            , ((0, xK_f), bluetoothDisconnect "Fuxi-H3" "00:09:24:25:0C:51")
             ])
 
         {- Brightness Control -}
@@ -274,6 +277,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_f), fuzzyEdit "~/.config/fish/")
         , ((0, xK_n), fuzzyEdit "~/.config/nvim/")
         , ((0, xK_b), fuzzyEdit "~/.config/xmobar")
+        , ((0, xK_d), fuzzyEdit "~/dotfiles/")
         , ((0, xK_c), fuzzyEdit "~/.scripts/ ~/.xmonad/ ~/.local/bin/ ~/.config/")
         , ((0, xK_p), fuzzyEdit "~/.local/share/nvim/site/pack/packer/start/")
         , ((0, xK_o), fuzzyEdit "~/Documents/Kdu/")

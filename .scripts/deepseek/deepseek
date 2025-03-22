@@ -20,6 +20,6 @@ response = client.chat.completions.create(
 
 # print(response.choices[0].message.content)
 for content in response:
-    print(content.choices[0].delta.content, end="")
+    print(content.choices[0].delta.content, end="", flush=True)
 
 print()

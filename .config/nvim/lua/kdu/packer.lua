@@ -101,8 +101,6 @@ require("packer").startup(function(use)
 	-- More and better vim objects
 	use({ "wellle/targets.vim" })
 	use({ "bkad/CamelCaseMotion" })
-	-- use({ "vim-scripts/argtextobj.vim" })
-	-- use({ "michaeljsmith/vim-indent-object" })
 
 	use({ "lewis6991/impatient.nvim" })
 
@@ -115,7 +113,6 @@ require("packer").startup(function(use)
 	})
 
 	use({ "VonHeikemen/lsp-zero.nvim" })
-	use({ "https://github.com/ThePrimeagen/vim-be-good" })
+	use({ "ThePrimeagen/vim-be-good" })
+	use({ "kovetskiy/sxhkd-vim" })
 end)
-
--- vim.g.AutoPairsShortcutToggle = "<M-z>"

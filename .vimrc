@@ -66,6 +66,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'kien/ctrlp.vim'
 Plug 'skywind3000/vim-auto-popmenu'
 Plug 'skywind3000/vim-dict'
+Plug 'kovetskiy/sxhkd-vim'
 call plug#end()
 
 colorscheme gruvbox
@@ -142,5 +143,19 @@ if executable("black")
     augroup PythonFormatter
         autocmd!
         au BufWritePost *.py :silent :!black -q -l 80 %
+    augroup END
+endif
+
+if executable("prettier")
+    augroup PrettierFormatter
+        autocmd!
+        au BufWritePost *.ts,*.js,*.tsx,*.jsx,*.json,*.html,*.css :silent :!prettier --tab-width 4 --log-level silent -w %
+    augroup END
+endif
+
+if executable("clang-format")
+    augroup ClangFormat
+        autocmd!
+        au BufWritePost *.c,*.cpp :silent :!clang-format --style="{IndentWidth: 4}" -i %
     augroup END
 endif

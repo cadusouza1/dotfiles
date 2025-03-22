@@ -1,1 +1,2 @@
 Invincible > $BROWSER https://www.wcostream.tv/anime/invincible
+The Boondocks > $BROWSER https://www.wcostream.tv/anime/boondocks

@@ -1,7 +1,7 @@
 alias e="$EDITOR"
 alias t="tldr"
 alias z="zathura --fork"
-alias b="bat"
+alias b="bat --theme=gruvbox-dark --paging=never"
 alias v="vim"
 
 # ZSH config
