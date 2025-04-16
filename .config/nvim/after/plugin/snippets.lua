@@ -54,6 +54,10 @@ vim.keymap.set({ "i" }, "<A-l>", function()
 end)
 
 ls.add_snippets("tex", {
+	s(
+		"bi",
+		{ t("\\binom{"), i(1), t("}{"), i(2), t("}"), i(0) }
+	),
 	s("flan", {
 		t({ "\\begin{flalign*}", "\t& " }),
 		i(1),

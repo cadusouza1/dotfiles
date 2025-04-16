@@ -377,6 +377,18 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_8), notifySetVolume 80 )
         , ((0, xK_9), notifySetVolume 90 )
         , ((0, xK_0), notifySetVolume 100)
+        , ((0, xK_f), submap . M.fromList $
+            [ ((0, xK_1), spawn "~/.scripts/volume/volume.sh 10%")
+            , ((0, xK_2), spawn "~/.scripts/volume/volume.sh 20%")
+            , ((0, xK_3), spawn "~/.scripts/volume/volume.sh 30%")
+            , ((0, xK_4), spawn "~/.scripts/volume/volume.sh 40%")
+            , ((0, xK_5), spawn "~/.scripts/volume/volume.sh 50%")
+            , ((0, xK_6), spawn "~/.scripts/volume/volume.sh 60%")
+            , ((0, xK_7), spawn "~/.scripts/volume/volume.sh 70%")
+            , ((0, xK_8), spawn "~/.scripts/volume/volume.sh 80%")
+            , ((0, xK_9), spawn "~/.scripts/volume/volume.sh 90%")
+            , ((0, xK_0), spawn "~/.scripts/volume/volume.sh 100%")
+            ])
         ])
 
     {- Border keybindings -}
@@ -471,6 +483,14 @@ full =
     $ windowNavigation
     $ noBorders Full
 
+semiFull =
+      renamed [XMonad.Layout.Renamed.Replace "Full"]
+    $ mySpacing
+    $ smartBorders
+    $ avoidStruts
+    $ windowNavigation
+    $ noBorders Full
+
 
 myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows $ toggleLayouts full (
         tall
@@ -479,6 +499,7 @@ myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows
     ||| mirrorTallMasterFocus
     ||| dwindle
     ||| threeColumns
+    ||| semiFull
     )
 
 myManageHook = composeAll

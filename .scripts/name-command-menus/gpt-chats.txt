@@ -13,3 +13,5 @@ pygraphx > $BROWSER https://chat.deepseek.com/a/chat/s/6aa4bae5-38f4-482a-bd0f-8
 sps > $BROWSER https://chat.deepseek.com/a/chat/s/3535f44e-b09a-45af-97cb-ba44b7aab1be
 st > $BROWSER https://chat.deepseek.com/a/chat/s/ec89a8e4-eba9-4e46-9830-25fced0e46cb
 Lagrange Visualizer > $BROWSER https://chat.deepseek.com/a/chat/s/091baaf3-a442-40c6-a7aa-b10562919a88
+Governança de Dados > $BROWSER https://chat.deepseek.com/a/chat/s/e2ac9e65-fe4c-4cac-b426-f39ccb208f09
+Discreta > $BROWSER https://chat.deepseek.com/a/chat/s/8fd2d7fc-ca79-478c-b71e-af8b721f0de8

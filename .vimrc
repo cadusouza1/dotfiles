@@ -1,3 +1,6 @@
+set lazyredraw
+set ttyfast
+
 set nocompatible " Disable compatibility with vi
 set termguicolors
 
@@ -7,7 +10,7 @@ filetype on " Enable type file detection
 filetype plugin on " Enable plugins and load plugin for the detected file type.
 filetype indent on " Load an indent file for the detected file type.
 
-syntax on " Turn syntax highlighting on.
+syntax on
 
 set showcmd
 
@@ -102,7 +105,7 @@ nnoremap <silent> <leader>h4 :b 8<cr>
 nnoremap <silent> <leader>h5 :b 9<cr>
 nnoremap <silent> <C-e> :buffers<cr>
 
-nnorema Y y$
+nnoremap Y y$
 
 " Fuzzy File Search
 set path+=**
@@ -129,7 +132,8 @@ nnoremap \mainc :-1read $HOME/.vim/snippets/.skeleton.main.c<cr>j
 let g:apc_enable_ft = {'*': 1}
 
 " see ':help cpt'
-set cpt=.,k,w,b
+set cpt=.,w,b,u,t,i
+" set cpt=.,k,w,b
 
 " don't select the first item.
 set completeopt=menu,menuone,noselect
@@ -159,3 +163,5 @@ if executable("clang-format")
         au BufWritePost *.c,*.cpp :silent :!clang-format --style="{IndentWidth: 4}" -i %
     augroup END
 endif
+
+hi SpellBad cterm=underline
