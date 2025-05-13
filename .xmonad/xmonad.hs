@@ -37,6 +37,7 @@ import           XMonad.Util.EZConfig
 import           XMonad.Util.Run
 import           XMonad.Util.SpawnOnce
 import           XMonad.Util.Spotify
+import XMonad.Util.ExtensibleState (put, get)
 
 import           XMonad.Prompt
 
@@ -48,11 +49,14 @@ import qualified Data.Binary                    as GHC
 import qualified Data.Binary                    as GHC.Word
 import qualified Data.Map                       as M
 -- import           Data.Maybe
+import           Data.IORef
 import qualified Foreign.C
 import qualified XMonad.StackSet                as W
 import Data.List (isPrefixOf)
 
 import           Colors.Dracula
+import Control.Monad.IO.Class (MonadIO(liftIO))
+import GHC.IO (unsafePerformIO)
 
 myTerminal :: String
 myTerminal = "st"
@@ -82,16 +86,47 @@ myBorderWidth = 1
 myModMask :: Foreign.C.CUInt
 myModMask = mod4Mask
 
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
-myWorkspaces :: [String]
-myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8:Discord", "9:Games", "0:Music" ]
+groups :: [[String]]
+groups = [ ["1", "2", "3"]
+         , ["4:Extensão", "5:Discreta", "6:Probest"]
+         , ["7:Discord", "8:Games", "9:Music"] ]
+
+{-# NOINLINE currentGroup #-}
+currentGroup = unsafePerformIO $ newIORef 0
+
+getCurrentGroup :: IO Int
+getCurrentGroup = readIORef currentGroup
+
+setCurrentGroup :: Int -> IO ()
+setCurrentGroup = writeIORef currentGroup
+
+currentGroupWorkspaces :: IO [String]
+currentGroupWorkspaces = do
+    i <- getCurrentGroup
+    return $ groups !! i
+
+switchGroup :: Int -> X ()
+switchGroup group = do
+    liftIO $ setCurrentGroup group
+    viewWS 0
+
+viewWS :: Int -> X ()
+viewWS i = do
+    group <- liftIO getCurrentGroup
+    windows $ W.greedyView $ groups !! group !! i
+
+moveToWS :: Int -> X ()
+moveToWS i = do
+    group <- liftIO getCurrentGroup
+    windows $ W.shift $ groups !! group !! i
+
+swapWorkspace :: Int -> X ()
+swapWorkspace i = do
+    group <- liftIO getCurrentGroup
+    windows $ swapWithCurrent $ groups !! group !! i
+
+moveAndViewWS :: Int -> X ()
+moveAndViewWS i = moveToWS i >> viewWS i
 
 -- Border colors for unfocused windows
 myNormalBorderColor :: String
@@ -134,17 +169,6 @@ notifySetVolume volume = do
     -- The volume is extremelly close to the actual volume that was set, so it is not a problem to round it
     notify 1 $ "Volume: " ++ show (round v)
 
-viewWS :: Int -> X ()
-viewWS i = windows $ W.greedyView $ myWorkspaces !! i
-
-moveToWS :: Int -> X ()
-moveToWS i = windows $ W.shift $ myWorkspaces !! i
-
-swapWorkspace :: Int -> X ()
-swapWorkspace i = windows $ swapWithCurrent $ myWorkspaces !! i
-
-moveAndViewWS :: Int -> X ()
-moveAndViewWS i = moveToWS i >> viewWS i
 
 bluetoothConnect name address = spawn $ "~/.scripts/bluetooth.sh connect " ++ name ++ " " ++ address
 bluetoothDisconnect name address = spawn $ "~/.scripts/bluetooth.sh disconnect " ++ name ++ " " ++ address
@@ -318,36 +342,20 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         ])
 
     {- Switch and move between workspaces -}
+    , ((modm, xK_w), submap . M.fromList $
+        [ ((0, xK_1), switchGroup 0)
+        , ((0, xK_2), switchGroup 1)
+        , ((0, xK_3), switchGroup 2)
+        ])
     , ((modm, xK_1),                 viewWS 0)
     , ((modm, xK_2),                 viewWS 1)
     , ((modm, xK_3),                 viewWS 2)
-    , ((modm, xK_4),                 viewWS 3)
-    , ((modm, xK_5),                 viewWS 4)
-    , ((modm, xK_6),                 viewWS 5)
-    , ((modm, xK_7),                 viewWS 6)
-    , ((modm, xK_8),                 viewWS 7)
-    , ((modm, xK_9),                 viewWS 8)
-    , ((modm, xK_0),                 viewWS 9)
     , ((modm .|. shiftMask, xK_1),   moveToWS 0)
     , ((modm .|. shiftMask, xK_2),   moveToWS 1)
     , ((modm .|. shiftMask, xK_3),   moveToWS 2)
-    , ((modm .|. shiftMask, xK_4),   moveToWS 3)
-    , ((modm .|. shiftMask, xK_5),   moveToWS 4)
-    , ((modm .|. shiftMask, xK_6),   moveToWS 5)
-    , ((modm .|. shiftMask, xK_7),   moveToWS 6)
-    , ((modm .|. shiftMask, xK_8),   moveToWS 7)
-    , ((modm .|. shiftMask, xK_9),   moveToWS 8)
-    , ((modm .|. shiftMask, xK_0),   moveToWS 9)
     , ((modm .|. controlMask, xK_1), moveAndViewWS 0)
     , ((modm .|. controlMask, xK_2), moveAndViewWS 1)
     , ((modm .|. controlMask, xK_3), moveAndViewWS 2)
-    , ((modm .|. controlMask, xK_4), moveAndViewWS 3)
-    , ((modm .|. controlMask, xK_5), moveAndViewWS 4)
-    , ((modm .|. controlMask, xK_6), moveAndViewWS 5)
-    , ((modm .|. controlMask, xK_7), moveAndViewWS 6)
-    , ((modm .|. controlMask, xK_8), moveAndViewWS 7)
-    , ((modm .|. controlMask, xK_9), moveAndViewWS 8)
-    , ((modm .|. controlMask, xK_0), moveAndViewWS 9)
 
     , ((modm, xK_t), submap . M.fromList $
         [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tmux-selector")
@@ -502,10 +510,12 @@ myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows
     ||| semiFull
     )
 
+-- myManageHook = mempty
+
 myManageHook = composeAll
-    [ className =? "discord" --> doShift (myWorkspaces !! 7)
-    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (myWorkspaces !! 8)
-    , className =? "spotify" --> doShift (myWorkspaces !! 9)
+    [ className =? "discord" --> doShift (groups !! 2 !! 0)
+    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (groups !! 2 !! 1)
+    , className =? "spotify" --> doShift (groups !! 2 !! 2)
     ]
     where
         isSteamApp :: Query Bool
@@ -531,10 +541,16 @@ myLogHook xmproc0 = dynamicLogWithPP xmobarPP {
       ppOutput = hPutStrLn xmproc0
     , ppCurrent = xmobarColor color06 "" . wrap "[" "]"
     , ppVisible = xmobarColor color06 ""
-    , ppHidden = xmobarColor color12 "" . wrap "(" ")"
-    , ppHiddenNoWindows = xmobarColor color05 ""
+    -- , ppHidden = xmobarColor color12 "" . wrap "(" ")"
+    , ppHidden = \ws -> if ws `elem` unsafePerformIO currentGroupWorkspaces 
+                        then xmobarColor color12 "" . wrap "(" ")" $ ws 
+                        else ""
+    , ppHiddenNoWindows = \ws -> if ws `elem` unsafePerformIO currentGroupWorkspaces 
+                                then xmobarColor color05 "" ws 
+                                else ""
+    -- , ppHiddenNoWindows = xmobarColor color05 ""
     , ppSep = " | "
-    , ppOrder = \(ws:l:ex) -> [ws,"<fc=" ++ color03 ++ "><fn=2>\xebeb</fn> </fc>" ++ l]
+    , ppOrder = \(ws:l:ex) -> ("<fc=" ++ color05 ++ ">Group " ++ show (unsafePerformIO getCurrentGroup) ++ "</fc>" ) : [ws,"<fc=" ++ color03 ++ "><fn=2>\xebeb</fn> </fc>" ++ l]
 }
 
 ------------------------------------------------------------------------
@@ -560,7 +576,7 @@ main = do
        , borderWidth        = myBorderWidth
        , modMask            = myModMask
        , keys               = myKeys'
-       , workspaces         = myWorkspaces
+       , workspaces         = concat groups
        , normalBorderColor  = myNormalBorderColor
        , focusedBorderColor = myFocusedBorderColor
        , layoutHook         = myLayout
