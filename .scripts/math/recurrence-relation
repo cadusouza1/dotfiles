@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+import argparse
+import sys
+
+from sympy import Function, rsolve, simplify, sympify
+from sympy.abc import n
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="A script to solve recurrence relationships"
+    )
+
+    parser.add_argument(
+        "-r",
+        "--recurrence",
+        type=str,
+        required=True,
+        help="The recurrence relation to solve",
+    )
+
+
+    parser.add_argument(
+        "-i",
+        "--initials",
+        nargs="+",
+        type=int,
+        default=None,
+        required=False,
+        help="The recurrence relation's initial values",
+    )
+
+    args = parser.parse_args()
+
+    a = Function("a")
+    
+    recurrence = sympify(args.recurrence)
+    if args.initials is None:
+        print(rsolve(recurrence, a(n)))
+        return 0
+
+    initials = {}
+    for i in range(0, len(args.initials), 2):
+        initials[sympify(a(args.initials[i]))] = sympify(args.initials[i + 1])
+
+    print(rsolve(recurrence, a(n), initials))
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
