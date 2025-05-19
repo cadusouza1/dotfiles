@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+import argparse
+import sys
+
+from sympy import diff, symbols, latex
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="A script to calculate derivatives"
+    )
+
+    parser.add_argument(
+        "-s",
+        "--symbols",
+        type=str,
+        default="x",
+        required=False,
+        help="Symbols for which the derivative will be calculated in function of",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--order",
+        type=int,
+        required=False,
+        default=1,
+        help="The order of the derivative",
+    )
+
+    parser.add_argument(
+        "-e",
+        "--expression",
+        type=str,
+        required=True,
+        help="The expression to apply the derivative",
+    )
+
+    parser.add_argument(
+        "-L",
+        "--latex",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Print a LaTex expression",
+    )
+
+    args = parser.parse_args()
+
+    s = symbols(args.symbols)
+
+    derivative = diff(args.expression, s, args.order)
+
+    if args.latex:
+        print(latex(derivative))
+        return 0
+
+    print(derivative)
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

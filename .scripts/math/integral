@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+
+import argparse
+import sys
+
+from sympy import integrate, symbols, latex, Number
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="A script to calculate integrals"
+    )
+
+    parser.add_argument(
+        "-s",
+        "--symbols",
+        type=str,
+        default="x",
+        required=False,
+        help="Symbols for which the integral will be calculated in function of",
+    )
+
+    parser.add_argument(
+        "-e",
+        "--expression",
+        type=str,
+        required=True,
+        help="The expression to apply the integral",
+    )
+
+    parser.add_argument(
+        "-l",
+        "--lower",
+        type=Number,
+        required=False,
+        help="Lower bound for the integral",
+    )
+
+    parser.add_argument(
+        "-u",
+        "--upper",
+        type=Number,
+        required=False,
+        help="Upper bound for the integral",
+    )
+
+    parser.add_argument(
+        "-L",
+        "--latex",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Print a LaTex expression",
+    )
+
+    args = parser.parse_args()
+
+    s = symbols(args.symbols)
+
+    if args.lower is None or args.upper is None:
+        integral = integrate(args.expression, s)
+    else:
+        integral = integrate(args.expression, (s, args.lower, args.upper))
+
+    if args.latex:
+        print(latex(integral))
+        return 0
+
+    print(integral)
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

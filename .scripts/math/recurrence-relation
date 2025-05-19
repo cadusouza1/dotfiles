@@ -41,7 +41,7 @@ def main() -> int:
 
     initials = {}
     for i in range(0, len(args.initials), 2):
-        initials[sympify(a(args.initials[i]))] = sympify(args.initials[i + 1])
+        initials[a(args.initials[i])] = args.initials[i + 1]
 
     print(rsolve(recurrence, a(n), initials))
     return 0
