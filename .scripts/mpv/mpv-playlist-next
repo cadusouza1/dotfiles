@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+echo '{"command": ["playlist-next"]}' | socat - /tmp/mpv-socket
