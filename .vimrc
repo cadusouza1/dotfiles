@@ -1,4 +1,3 @@
-set lazyredraw
 set ttyfast
 
 set nocompatible " Disable compatibility with vi
@@ -54,6 +53,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 call plug#begin()
+Plug 'sillybun/vim-repl'
 Plug 'morhetz/gruvbox'
 Plug 'srcery-colors/srcery-vim'
 Plug 'fcpg/vim-fahrenheit'
@@ -61,6 +61,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'wellle/targets.vim'
 " Plug 'vim-scripts/argtextobj.vim'
@@ -70,9 +71,13 @@ Plug 'kien/ctrlp.vim'
 Plug 'skywind3000/vim-auto-popmenu'
 Plug 'skywind3000/vim-dict'
 Plug 'kovetskiy/sxhkd-vim'
+Plug 'mechatroner/rainbow_csv'
 call plug#end()
 
 colorscheme gruvbox
+
+nnoremap <leader>r :REPLToggle<cr>
+let g:repl_program = { 'default': ['python3.13'] }
 
 nnoremap <leader>ck :checktime<cr>
 

@@ -1,10 +1,9 @@
-ambientevirtual.nce.ufrj.br/my
+ambientevirtual.nce.ufrj.br/login/index.php
 asciiflow.com/#/
 aternos.org/server
 bloons.fandom.com/wiki/
 brawlhalla.com/news/patch-notes
 btd6index.win
-chat.deepseek.com/a/chat/s/5b5aa6c7-be50-49bb-94b8-96068e6751c7
 chatgpt.com/
 classroom.google.com/u/1/
 crunchyroll.com
@@ -14,9 +13,9 @@ drive.google.com/drive/folders/1o4R5hYaia1O5-b6t1Mq4qaEFHljs5AXO?usp=drive_link
 drive.google.com/drive/u/0/home
 github.com
 hackage.haskell.org/package/xmonad-contrib
+https://chat.deepseek.com/a/chat/s/a52b34db-958a-44e8-bed9-dda85087f52b
 kskedlaya.org/putnam-archive/
 mail.google.com/mail/u/0
-pianomarvel.com/en/nextgen/dashboard
 portal.ufrj.br/Portal/
 teoria.dcc.ufrj.br:8080/cgi-bin/recebe.pl
 topper64.co.uk/nk/btd6/income/chimps
@@ -26,4 +25,3 @@ web.whatsapp.com
 www.cs.cmu.edu/afs/cs/academic/class/15251-s04/Site/
 www.keybr.com
 youtube.com
-ambientevirtual.nce.ufrj.br/login/index.php

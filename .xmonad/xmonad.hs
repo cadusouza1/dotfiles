@@ -43,20 +43,18 @@ import           XMonad.Prompt
 
 import           System.Directory
 
--- import           Graphics.X11.ExtraTypes.XF86
-
 import qualified Data.Binary                    as GHC
 import qualified Data.Binary                    as GHC.Word
 import qualified Data.Map                       as M
--- import           Data.Maybe
 import           Data.IORef
 import qualified Foreign.C
 import qualified XMonad.StackSet                as W
 import Data.List (isPrefixOf)
 
-import           Colors.Dracula
 import Control.Monad.IO.Class (MonadIO(liftIO))
 import GHC.IO (unsafePerformIO)
+
+import           Colors.Dracula
 
 myTerminal :: String
 myTerminal = "st"
@@ -86,10 +84,17 @@ myBorderWidth = 1
 myModMask :: Foreign.C.CUInt
 myModMask = mod4Mask
 
+groupNames :: [String]
+groupNames = [
+            "Alkali Metals", "Alkaline Earth Metals",
+            "Transition Metals", "Earth Metals"
+            ]
+
 groups :: [[String]]
-groups = [ ["1", "2", "3"]
-         , ["4:Extensão", "5:Discreta", "6:Probest"]
-         , ["7:Discord", "8:Games", "9:Music"] ]
+groups = [ ["1:Hydrogen", "2:Lithium", "3:Sodium"]
+         , ["4:Beryllium", "5:Magnesium", "6:Calcium"]
+         , ["7:Iron", "8:Copper", "9:Nickel"] 
+         , ["10:Boron", "11:Aluminum", "12:Galium"] ]
 
 {-# NOINLINE currentGroup #-}
 currentGroup = unsafePerformIO $ newIORef 0
@@ -109,6 +114,15 @@ switchGroup :: Int -> X ()
 switchGroup group = do
     liftIO $ setCurrentGroup group
     viewWS 0
+
+moveToGroup :: Int -> X ()
+moveToGroup group = do
+    windows $ W.shift $ groups !! group !! 0
+
+moveToAndSwitchGroup :: Int -> X ()
+moveToAndSwitchGroup group = do
+    moveToGroup group
+    switchGroup group
 
 viewWS :: Int -> X ()
 viewWS i = do
@@ -223,13 +237,14 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_o), submap . M.fromList $
         {- Aplications to spawn -}
         [ ((0, xK_b), notifyAndSpawn myBrowser)
-        , ((0, xK_m), spawnOn "workspace9" "spotify")
         , ((0, xK_d), notifyAndSpawn "discord")
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
         , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
         , ((0, xK_g), myRunInTerm "steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
+        , ((0, xK_y), spawn "freetube")
+        , ((0, xK_m), spawnOn (groups !! 1 !! 2) "freetube --user-data-dir='~/.config/FreeTube-Music/'")
 
         {- Terminal Commands -}
         , ((0, xK_h), myRunInTerm "htop")
@@ -324,9 +339,9 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_i), myRunInTerm "java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
-        , ((0, xK_j), audioPrev)
-        , ((0, xK_k), audioNext)
-        , ((0, xK_p), audioPlayPause)
+        , ((0, xK_j), spawn "~/.scripts/mpv/mpv-playlist-prev")
+        , ((0, xK_k), spawn "~/.scripts/mpv/mpv-playlist-next") 
+        , ((0, xK_p), spawn "~/.scripts/mpv/mpv-playpause")
 
         {- Workspace swapping -}
         , ((0, xK_1), swapWorkspace 0)
@@ -341,21 +356,42 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_0), swapWorkspace 9)
         ])
 
-    {- Switch and move between workspaces -}
+    {- Switch and move between workspaces and groups -}
     , ((modm, xK_w), submap . M.fromList $
         [ ((0, xK_1), switchGroup 0)
         , ((0, xK_2), switchGroup 1)
         , ((0, xK_3), switchGroup 2)
+        , ((0, xK_4), switchGroup 3)
         ])
+
+    {- Switch and move between workspaces -}
+    , ((modm .|. shiftMask, xK_w), submap . M.fromList $
+        [ ((0, xK_1), moveToGroup 0)
+        , ((0, xK_2), moveToGroup 1)
+        , ((0, xK_3), moveToGroup 2)
+        , ((0, xK_4), moveToGroup 3)
+        ])
+
+    {- Switch and move between workspaces -}
+    , ((modm .|. controlMask, xK_w), submap . M.fromList $
+        [ ((0, xK_1), moveToAndSwitchGroup 0)
+        , ((0, xK_2), moveToAndSwitchGroup 1)
+        , ((0, xK_3), moveToAndSwitchGroup 2)
+        , ((0, xK_4), moveToAndSwitchGroup 3)
+        ])
+
     , ((modm, xK_1),                 viewWS 0)
     , ((modm, xK_2),                 viewWS 1)
     , ((modm, xK_3),                 viewWS 2)
+    , ((modm, xK_4),                 viewWS 3)
     , ((modm .|. shiftMask, xK_1),   moveToWS 0)
     , ((modm .|. shiftMask, xK_2),   moveToWS 1)
     , ((modm .|. shiftMask, xK_3),   moveToWS 2)
+    , ((modm .|. shiftMask, xK_4),   moveToWS 3)
     , ((modm .|. controlMask, xK_1), moveAndViewWS 0)
     , ((modm .|. controlMask, xK_2), moveAndViewWS 1)
     , ((modm .|. controlMask, xK_3), moveAndViewWS 2)
+    , ((modm .|. controlMask, xK_4), moveAndViewWS 3)
 
     , ((modm, xK_t), submap . M.fromList $
         [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tmux-selector")
@@ -453,38 +489,38 @@ mirrorTall =
     $ Mirror
     $ ResizableTall 1 (2/100) (1/2) []
 
-tallMasterFocus =
-      renamed [XMonad.Layout.Renamed.Replace "Tall Master Focus"]
-    $ mySpacing
-    $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
-    $ ResizableTall 1 (2/100) (2/3) []
+-- tallMasterFocus =
+--       renamed [XMonad.Layout.Renamed.Replace "Tall Master Focus"]
+--     $ mySpacing
+--     $ smartBorders
+--     $ avoidStruts
+--     $ windowNavigation
+--     $ ResizableTall 1 (2/100) (2/3) []
 
-mirrorTallMasterFocus =
-      renamed [XMonad.Layout.Renamed.Replace "Mirror Tall Master Focus"]
-    $ mySpacing
-    $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
-    $ Mirror
-    $ ResizableTall 1 (2/100) (2/3) []
+-- mirrorTallMasterFocus =
+--       renamed [XMonad.Layout.Renamed.Replace "Mirror Tall Master Focus"]
+--     $ mySpacing
+--     $ smartBorders
+--     $ avoidStruts
+--     $ windowNavigation
+--     $ Mirror
+--     $ ResizableTall 1 (2/100) (2/3) []
 
-threeColumns =
-      renamed [XMonad.Layout.Renamed.Replace "ThreeCol"]
-    $ mySpacing
-    $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
-    $ ThreeCol 1 (2/100) (1/2)
+-- threeColumns =
+--       renamed [XMonad.Layout.Renamed.Replace "ThreeCol"]
+--     $ mySpacing
+--     $ smartBorders
+--     $ avoidStruts
+--     $ windowNavigation
+--     $ ThreeCol 1 (2/100) (1/2)
 
-dwindle =
-      renamed [XMonad.Layout.Renamed.Replace "Dwindle"]
-    $ mySpacing
-    $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
-    $ Dwindle R CW 1 1
+-- dwindle =
+--       renamed [XMonad.Layout.Renamed.Replace "Dwindle"]
+--     $ mySpacing
+--     $ smartBorders
+--     $ avoidStruts
+--     $ windowNavigation
+--     $ Dwindle R CW 1 1
 
 full =
       renamed [XMonad.Layout.Renamed.Replace "Full"]
@@ -503,19 +539,17 @@ semiFull =
 myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows $ toggleLayouts full (
         tall
     ||| mirrorTall
-    ||| tallMasterFocus
-    ||| mirrorTallMasterFocus
-    ||| dwindle
-    ||| threeColumns
+    -- ||| tallMasterFocus
+    -- ||| mirrorTallMasterFocus
+    -- ||| dwindle
+    -- ||| threeColumns
     ||| semiFull
     )
 
--- myManageHook = mempty
-
 myManageHook = composeAll
-    [ className =? "discord" --> doShift (groups !! 2 !! 0)
-    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (groups !! 2 !! 1)
-    , className =? "spotify" --> doShift (groups !! 2 !! 2)
+    [ className =? "discord" --> doShift (groups !! 1 !! 0)
+    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (groups !! 1 !! 1)
+    , className =? "spotify" --> doShift (groups !! 1 !! 2)
     ]
     where
         isSteamApp :: Query Bool
@@ -542,15 +576,15 @@ myLogHook xmproc0 = dynamicLogWithPP xmobarPP {
     , ppCurrent = xmobarColor color06 "" . wrap "[" "]"
     , ppVisible = xmobarColor color06 ""
     -- , ppHidden = xmobarColor color12 "" . wrap "(" ")"
-    , ppHidden = \ws -> if ws `elem` unsafePerformIO currentGroupWorkspaces 
-                        then xmobarColor color12 "" . wrap "(" ")" $ ws 
+    , ppHidden = \ws -> if ws `elem` unsafePerformIO currentGroupWorkspaces
+                        then xmobarColor color12 "" . wrap "(" ")" $ ws
                         else ""
-    , ppHiddenNoWindows = \ws -> if ws `elem` unsafePerformIO currentGroupWorkspaces 
-                                then xmobarColor color05 "" ws 
+    , ppHiddenNoWindows = \ws -> if ws `elem` unsafePerformIO currentGroupWorkspaces
+                                then xmobarColor color05 "" ws
                                 else ""
     -- , ppHiddenNoWindows = xmobarColor color05 ""
     , ppSep = " | "
-    , ppOrder = \(ws:l:ex) -> ("<fc=" ++ color05 ++ ">Group " ++ show (unsafePerformIO getCurrentGroup) ++ "</fc>" ) : [ws,"<fc=" ++ color03 ++ "><fn=2>\xebeb</fn> </fc>" ++ l]
+    , ppOrder = \(ws:l:ex) -> ("<fc=" ++ color05 ++ ">" ++ groupNames !! unsafePerformIO getCurrentGroup ++ "</fc>" ) : [ws,"<fc=" ++ color03 ++ "><fn=2>\xebeb</fn> </fc>" ++ l]
 }
 
 ------------------------------------------------------------------------
