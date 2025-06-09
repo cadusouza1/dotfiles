@@ -87,14 +87,15 @@ myModMask = mod4Mask
 groupNames :: [String]
 groupNames = [
             "Alkali Metals", "Alkaline Earth Metals",
-            "Transition Metals", "Earth Metals"
+            "Transition Metals", "Post Transition Metals", "Metaloids"
             ]
 
 groups :: [[String]]
-groups = [ ["1:Hydrogen", "2:Lithium", "3:Sodium"]
-         , ["4:Beryllium", "5:Magnesium", "6:Calcium"]
-         , ["7:Iron", "8:Copper", "9:Nickel"] 
-         , ["10:Boron", "11:Aluminum", "12:Galium"] ]
+groups = [ ["1:Lithium", "2:Sodium", "3:Potasium", "4:Rubidium"]
+         , ["5:Beryllium", "6:Magnesium", "7:Calcium", "8:Strontium"]
+         , ["9:Iron", "10:Cobalt", "11:Nickel", "12:Copper"] 
+         , ["13:Aluminum", "14:Galium", "15:Indium", "16:Thalium"]
+         , ["17:Boron", "18:Silicon", "19:Germanium", "20:Arsenic"] ]
 
 {-# NOINLINE currentGroup #-}
 currentGroup = unsafePerformIO $ newIORef 0
@@ -362,6 +363,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_2), switchGroup 1)
         , ((0, xK_3), switchGroup 2)
         , ((0, xK_4), switchGroup 3)
+        , ((0, xK_5), switchGroup 4)
         ])
 
     {- Switch and move between workspaces -}
@@ -370,6 +372,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_2), moveToGroup 1)
         , ((0, xK_3), moveToGroup 2)
         , ((0, xK_4), moveToGroup 3)
+        , ((0, xK_5), moveToGroup 4)
         ])
 
     {- Switch and move between workspaces -}
@@ -378,6 +381,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_2), moveToAndSwitchGroup 1)
         , ((0, xK_3), moveToAndSwitchGroup 2)
         , ((0, xK_4), moveToAndSwitchGroup 3)
+        , ((0, xK_5), moveToAndSwitchGroup 4)
         ])
 
     , ((modm, xK_1),                 viewWS 0)
