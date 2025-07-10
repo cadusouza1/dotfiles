@@ -158,7 +158,7 @@ endif
 if executable("prettier")
     augroup PrettierFormatter
         autocmd!
-        au BufWritePost *.ts,*.js,*.tsx,*.jsx,*.json,*.html,*.css :silent :!prettier --tab-width 4 --log-level silent -w %
+        au BufWritePost *.ts,*.js,*.tsx,*.jsx,*.json,*.html,*.css,*.md :silent :!prettier --tab-width 4 --log-level silent -w %
     augroup END
 endif
 

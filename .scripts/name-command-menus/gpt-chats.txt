@@ -2,7 +2,7 @@ Bash > $BROWSER https://chat.deepseek.com/a/chat/s/b46d47af-8414-4856-8729-39e67
 Calculus > $BROWSER https://chat.deepseek.com/a/chat/s/262a3e0e-a567-4f04-b285-baaba8d68cc3
 Collatz > $BROWSER https://chat.deepseek.com/a/chat/s/976e6eaa-576f-4126-b371-7a0b6333ab63
 Dev Job > $BROWSER https://chat.deepseek.com/a/chat/s/0d23e69f-ab0f-4549-a2a7-208143dedfbf
-Discreta > $BROWSER https://chat.deepseek.com/a/chat/s/2cc01c9f-d1e4-4ba8-b6ee-b17023390f77
+Discreta > $BROWSER https://chat.deepseek.com/a/chat/s/1809d1cb-421e-43ec-a1b9-919b6a6e96f4
 Extensão > $BROWSER https://chat.deepseek.com/a/chat/s/cf44b25c-36d0-4ca7-bfab-12a953c30684
 Governança de Dados > $BROWSER https://chat.deepseek.com/a/chat/s/e2ac9e65-fe4c-4cac-b426-f39ccb208f09
 Haskell > $BROWSER https://chat.deepseek.com/a/chat/s/25487ffa-ca08-4080-9cb4-93a8acceadbe

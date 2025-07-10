@@ -1,11 +1,7 @@
 /* See LICENSE for license details. */
 
-#ifndef _ST_H_
-#define _ST_H_
-
 #include <stdint.h>
 #include <sys/types.h>
-#include <wchar.h>
 
 /* macros */
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
@@ -85,7 +81,6 @@ void die(const char *, ...);
 void redraw(void);
 void draw(void);
 
-void externalpipe(const Arg *);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
@@ -95,6 +90,8 @@ int tattrset(int);
 void tnew(int, int);
 void tresize(int, int);
 void tsetdirtattr(int);
+void tupdatebgcolor(int, int);
+void tupdatefgcolor(int, int);
 void ttyhangup(void);
 int ttynew(const char *, char *, const char *, char **);
 size_t ttyread(void);
@@ -119,15 +116,13 @@ char *xstrdup(const char *);
 /* config.h globals */
 extern char *utmp;
 extern char *scroll;
-extern char stty_args[];
-extern char vtiden[];
+extern char *stty_args;
+extern char *vtiden;
 extern wchar_t *worddelimiters;
 extern int allowaltscreen;
 extern int allowwindowops;
-extern char termname[];
+extern char *termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
 extern unsigned int defaultcs;
-
-#endif // _ST_H_

@@ -29,6 +29,6 @@ export FISHDOTDIR=$HOME/.config/fish
 
 setxkbmap -model abnt2 -layout br -variant abnt2
 
-feh --bg-scale ~/bg/spongebob-ballin-contrast.png
+feh --bg-center ~/bg/kira-queen.jpg
 
 pulseaudio --start

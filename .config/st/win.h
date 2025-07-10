@@ -1,5 +1,3 @@
-#pragma once
-
 /* See LICENSE for license details. */
 
 enum win_mode {

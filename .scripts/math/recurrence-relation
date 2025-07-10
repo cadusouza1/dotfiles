@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from sympy import Function, rsolve, simplify, sympify
+from sympy import Function, rsolve, simplify, sympify, latex
 from sympy.abc import n
 
 def main() -> int:
@@ -30,6 +30,15 @@ def main() -> int:
         help="The recurrence relation's initial values",
     )
 
+    parser.add_argument(
+        "-l",
+        "--latex",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Print as a LaTex expression",
+    )
+
     args = parser.parse_args()
 
     a = Function("a")
@@ -43,7 +52,13 @@ def main() -> int:
     for i in range(0, len(args.initials), 2):
         initials[a(args.initials[i])] = args.initials[i + 1]
 
-    print(rsolve(recurrence, a(n), initials))
+    solution = rsolve(recurrence, a(n), initials)
+
+    if args.latex:
+        print(latex(solution))
+    else:
+        print(solution)
+
     return 0
 
 if __name__ == "__main__":

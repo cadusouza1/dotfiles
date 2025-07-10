@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+
+from sympy.polys.polyfuncs import interpolate
+from sympy.abc import x
+from sympy import Number, latex, poly
+
+from datetime import date
+
+import argparse
+import sys
+
+def main() -> int:
+
+    parser = argparse.ArgumentParser(
+        description="A script to interpolate points"
+    )
+
+    parser.add_argument(
+            "-b",
+            "--basedate",
+            type=date,
+            default=date(2025, 6, 8),
+            required=False,
+            help="Base date for the interpolating polinomial calculations"
+        )
+
+    parser.add_argument(
+        "-f",
+        "--file",
+        type=str,
+        default="weights.txt",
+        required=False,
+        help="Filename with the weight data",
+    )
+
+
+    parser.add_argument(
+        "-c",
+        "--calculate",
+        nargs="+",
+        type=Number,
+        default=None,
+        required=False,
+        help="year month day values to calculate the polinomial value for",
+    )
+
+    parser.add_argument(
+        "-l",
+        "--latex",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Print as a LaTex expression",
+    )
+
+    args = parser.parse_args()
+
+    points = []
+    with open(args.file, "r") as f:
+        for line in f:
+            year, month, day, weight = line.strip().split(" ")
+            delta = date(int(year), int(month), int(day)) - args.basedate 
+
+            points.append((delta.days, float(weight)))
+
+    polynomial = interpolate(points, x)
+
+    if args.latex:
+        print(latex(polynomial))
+    else:
+        print(polynomial)
+
+    if args.calculate:
+        polynomial = poly(polynomial)
+        for year, month, day in zip(args.calculate[::3], args.calculate[1::3], args.calculate[2::3]):
+            delta = date(year, month, day) - args.basedate 
+
+            print(polynomial(delta.days))
+
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+from sympy import Eq, solve, symbols
+import sys
+
+import argparse
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "-o",
+        "--odds",
+        type=float,
+        nargs="+",
+        required=True,
+        help="Odds to calculate for",
+    )
+
+    parser.add_argument(
+        "-p",
+        "--profit",
+        type=float,
+        required=False,
+        help="Profit to calculate for",
+    )
+
+    args = parser.parse_args()
+
+    values = [symbols(f"v{i}") for i in range(0, len(args.odds))]
+    if args.profit:
+        profit = args.profit
+    else:
+        profit = symbols("p")
+
+    total = sum(values)
+    eqs = [Eq(odd * v, total + profit) for (odd, v) in zip(args.odds, values)]
+
+    solution = solve(eqs, values)
+
+    print(solution)
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

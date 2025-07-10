@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
 echo '{"command": ["cycle", "pause"]}' | socat - /tmp/mpv-socket
+
+notify-send -t 1000 "MPV" "mpv playpause"

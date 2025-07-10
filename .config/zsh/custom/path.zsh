@@ -33,6 +33,9 @@ export PATH="$HOME/Obsidian:$PATH"
 
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
+export PATH="$HOME/vulkansdk/1.3.268.0/x86_64/bin:$PATH"
+export PATH="$HOME/google-cloud-sdk/bin:$PATH"
+
 # Paths for my scripts
 for p in $(ls -d $HOME/.scripts/**/); do
     export PATH="$p:$PATH"

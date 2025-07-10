@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+from sympy.polys.polyfuncs import interpolate
+from sympy.abc import x
+from sympy import Number, latex, poly
+
+import argparse
+import sys
+
+def main() -> int:
+
+    parser = argparse.ArgumentParser(
+        description="A script to interpolate points"
+    )
+
+    parser.add_argument(
+        "-p",
+        "--points",
+        nargs="+",
+        type=Number,
+        default=None,
+        required=True,
+        help="(x, y) pairs for wich the interpolation will be done",
+    )
+
+
+    parser.add_argument(
+        "-c",
+        "--calculate",
+        nargs="+",
+        type=Number,
+        default=None,
+        required=False,
+        help="x values to calculate the polinomial value for",
+    )
+
+    parser.add_argument(
+        "-l",
+        "--latex",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Print as a LaTex expression",
+    )
+
+    args = parser.parse_args()
+
+    points = [(args.points[i], args.points[i + 1]) 
+            for i in range(0, len(args.points), 2)]
+
+    polynomial = interpolate(points, x)
+
+    if args.latex:
+        print(latex(polynomial))
+    else:
+        print(polynomial)
+
+    if args.calculate:
+        polynomial = poly(polynomial)
+        for value in args.calculate:
+            print(polynomial(value))
+
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

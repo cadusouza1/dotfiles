@@ -13,7 +13,7 @@ drive.google.com/drive/folders/1o4R5hYaia1O5-b6t1Mq4qaEFHljs5AXO?usp=drive_link
 drive.google.com/drive/u/0/home
 github.com
 hackage.haskell.org/package/xmonad-contrib
-https://chat.deepseek.com/a/chat/s/a52b34db-958a-44e8-bed9-dda85087f52b
+https://chat.deepseek.com/
 kskedlaya.org/putnam-archive/
 mail.google.com/mail/u/0
 portal.ufrj.br/Portal/
@@ -22,6 +22,5 @@ topper64.co.uk/nk/btd6/income/chimps
 twitch.tv
 udemy.com
 web.whatsapp.com
-www.cs.cmu.edu/afs/cs/academic/class/15251-s04/Site/
 www.keybr.com
 youtube.com

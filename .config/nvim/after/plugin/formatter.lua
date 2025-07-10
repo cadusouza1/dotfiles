@@ -93,6 +93,7 @@ require("formatter").setup({
 		},
 		lua = { stylua },
 		c = { clangformat },
+		cpp = { clangformat },
 		arduino = { clangformat },
 		java = {
 			require("formatter.filetypes.java").google_java_format,
