@@ -16,3 +16,8 @@ vim.keymap.set(
 	vim.diagnostic.goto_prev,
 	{ silent = true }
 )
+
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Enter normal mode on the terminal
+vim.keymap.set("n", "<A-j>", vim.cmd.bp) -- Better buffer navigation
+vim.keymap.set("n", "<A-k>", vim.cmd.bn) -- Better buffer navigation
+vim.keymap.set("n", "<A-d>", vim.cmd.bd) -- Quickly close a buffer
