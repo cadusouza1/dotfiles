@@ -1,8 +1,0 @@
-vim.keymap.set("n", "<leader>ga", ":G add ")
-vim.keymap.set("n", "<leader>gA", ":G add %<cr>")
-vim.keymap.set("n", "<leader>gd", ":G diff %<cr>")
-vim.keymap.set("n", "<leader>gD", ":G diff<cr>")
-vim.keymap.set("n", "<leader>gl", ":G log<cr>")
-vim.keymap.set("n", "<leader>gr", ":G rebase -i<cr>")
-vim.keymap.set("n", "<leader>gs", ":G status<cr>")
-vim.keymap.set("n", "<leader>gc", ":G commit<cr>")
