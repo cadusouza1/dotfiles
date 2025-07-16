@@ -36,7 +36,6 @@ import           XMonad.Layout.WindowNavigation
 import           XMonad.Util.EZConfig
 import           XMonad.Util.Run
 import           XMonad.Util.SpawnOnce
-import           XMonad.Util.Spotify
 import XMonad.Util.ExtensibleState (put, get)
 
 import           XMonad.Prompt
@@ -465,9 +464,9 @@ myKeys = [
     , ("<XF86MonBrightnessDown>", spawn "lux -s 1%")
 
     {- Volume control -}
-    , ("<XF86AudioRaiseVolume>", raiseVolume 5 >>= \x -> notify 1 $ show $ round x)
-    , ("<XF86AudioLowerVolume>", lowerVolume 5 >>= \x -> notify 1 $ show $ round x)
-    , ("<XF86AudioMute>", toggleMute >> return ())
+    , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5 && notify-send -t 1000 $(pamixer --get-volume)")
+    , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5 && notify-send -t 1000 $(pamixer --get-volume)")
+    , ("<XF86AudioMute>", spawn "pamixer --toggle-mute")
 
     {- Resize focused window with the mouse -}
     , ("M-<button3>", withFocused Flex.mouseResizeWindow)
