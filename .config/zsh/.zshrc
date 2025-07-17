@@ -33,7 +33,7 @@ for file in $(ls $ZDOTDIR/custom/**.zsh); do
     . $file
 done
 
-. /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export FZF_ALT_C_COMMAND=""

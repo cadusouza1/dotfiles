@@ -244,7 +244,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_g), myRunInTerm "steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
         , ((0, xK_y), spawn "freetube")
-        , ((0, xK_m), spawnOn (groups !! 1 !! 2) "freetube --user-data-dir='/home/kdu/.config/FreeTube-Music/'")
+        , ((0, xK_m), spawn "freetube --user-data-dir='/home/kdu/.config/FreeTube-Music'")
 
         {- Terminal Commands -}
         , ((0, xK_h), myRunInTerm "htop")

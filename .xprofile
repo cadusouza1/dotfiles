@@ -4,6 +4,7 @@
 xset s off
 xset -dpms
 xset s noblank
+xset -b
 
 # Environment variables set everywhere
 export EDITOR="nvim"
