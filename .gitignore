@@ -7,3 +7,5 @@
 .config/zsh/custom/api.zsh
 .config/zsh/custom/secret.zsh
 .config/zsh/custom/key.zsh
+.config/zsh/.zcompdump
+.config/tmux/plugins
