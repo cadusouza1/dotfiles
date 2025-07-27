@@ -1,5 +1,7 @@
-return { 
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
-    opts = {}
-} 
+return {
+	"ellisonleao/gruvbox.nvim",
+	name = "gruvbox",
+	priority = 1000,
+	lazy = true,
+	opts = {},
+}

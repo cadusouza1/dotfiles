@@ -1,5 +1,5 @@
 return {
 	"wellle/targets.vim",
-    lazy = true
+    lazy = false
 }
 
