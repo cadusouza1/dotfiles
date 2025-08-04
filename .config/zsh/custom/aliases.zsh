@@ -8,6 +8,7 @@ alias v="vim"
 alias zup="source $ZDOTDIR/.zshrc"
 alias ls="exa --color=auto -a --group-directories-first"
 alias ll="ls -l"
+alias sp="sudo pacman"
 
 lt() {
     if test -n "$argv[1]"; then
