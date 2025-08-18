@@ -550,8 +550,8 @@ myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows
     )
 
 myManageHook = composeAll
-    [ className =? "discord" --> doShift (groups !! 1 !! 0)
-    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (groups !! 1 !! 1)
+    [ className =? "discord" --> doShift (groups !! 1 !! 1)
+    , title =? "Steam" <||> title =? "steam" <||> isSteamApp --> doShift (groups !! 1 !! 0)
     , className =? "spotify" --> doShift (groups !! 1 !! 2)
     ]
     where

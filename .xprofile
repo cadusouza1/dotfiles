@@ -9,7 +9,7 @@ xset -b
 # Environment variables set everywhere
 export EDITOR="nvim"
 export TERMINAL="alacritty"
-export BROWSER="librewolf"
+export BROWSER="firefox"
 
 # XDG Paths
 export XDG_CONFIG_HOME=$HOME/.config

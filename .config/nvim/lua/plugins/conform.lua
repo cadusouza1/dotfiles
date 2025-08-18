@@ -10,6 +10,9 @@ return {
 			python = { "isort", "black" },
 			html = { "prettier" },
 			json = { "prettier" },
+			bash = { "beautysh" },
+			sh = { "beautysh" },
+			zsh = { "beautysh" },
 		},
 		format_on_save = { timeout_ms = 5000 },
 		formatters = {

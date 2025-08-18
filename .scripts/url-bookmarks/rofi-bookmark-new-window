@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 rofi -i -dpi 1 -auto-select -normal-window -dmenu <"${1:-/dev/stdin}" |
-    xargs -r $BROWSER --new-window
+xargs -r $BROWSER --new-window
