@@ -8,7 +8,7 @@ alias v="vim"
 alias zup="source $ZDOTDIR/.zshrc"
 alias ls="exa --color=auto -a --group-directories-first"
 alias ll="ls -l"
-alias sp="sudo pacman"
+alias sp="sudo pacman --color=auto"
 
 lt() {
     if test -n "$argv[1]"; then
@@ -32,8 +32,8 @@ alias cgrm="cargo rm"
 alias cgin="cargo init"
 
 alias sai="sudo apt install"
-alias sar="sudo apt remove" 
-alias sap="sudo apt purge" 
+alias sar="sudo apt remove"
+alias sap="sudo apt purge"
 alias saa="sudo apt autoremove"
 alias saup="sudo apt update"
 alias saug="sudo apt upgrade"
@@ -41,6 +41,6 @@ alias saug="sudo apt upgrade"
 alias ch="curl cheat.sh/${argv[1]}"
 
 function mkcd() {
-    mkdir $1 
+    mkdir $1
     cd $1
 }
