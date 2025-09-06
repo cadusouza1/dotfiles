@@ -280,17 +280,18 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
         {- Brightness Control -}
         , ((0, xK_s), submap . M.fromList $
-            [ ((0, xK_m), spawn "lux -S 1")
-            , ((0, xK_1), spawn "lux -S 10%")
-            , ((0, xK_2), spawn "lux -S 20%")
-            , ((0, xK_3), spawn "lux -S 30%")
-            , ((0, xK_4), spawn "lux -S 40%")
-            , ((0, xK_5), spawn "lux -S 50%")
-            , ((0, xK_6), spawn "lux -S 60%")
-            , ((0, xK_7), spawn "lux -S 70%")
-            , ((0, xK_8), spawn "lux -S 80%")
-            , ((0, xK_9), spawn "lux -S 90%")
-            , ((0, xK_0), spawn "lux -S 100%")
+            [ ((0, xK_t), spawn "xset dpms force off")
+            , ((0, xK_m), spawn "ddcutil setvcp 10 1")
+            , ((0, xK_1), spawn "ddcutil setvcp 10 10")
+            , ((0, xK_2), spawn "ddcutil setvcp 10 20")
+            , ((0, xK_3), spawn "ddcutil setvcp 10 30")
+            , ((0, xK_4), spawn "ddcutil setvcp 10 40")
+            , ((0, xK_5), spawn "ddcutil setvcp 10 50")
+            , ((0, xK_6), spawn "ddcutil setvcp 10 60")
+            , ((0, xK_7), spawn "ddcutil setvcp 10 70")
+            , ((0, xK_8), spawn "ddcutil setvcp 10 80")
+            , ((0, xK_9), spawn "ddcutil setvcp 10 90")
+            , ((0, xK_0), spawn "ddcutil setvcp 10 100")
             ])
 
         {- Alternative to look at the battery in full screen -}
