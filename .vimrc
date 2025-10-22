@@ -170,3 +170,7 @@ if executable("clang-format")
 endif
 
 hi SpellBad cterm=underline
+
+function! EppSetup()
+    norm :e auto€kb€kb€kb€kbconfigure.ac:vs m4/check.m3€kb4h:termk
+endfunction
