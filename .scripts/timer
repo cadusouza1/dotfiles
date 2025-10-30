@@ -6,7 +6,7 @@ while true; do
     minutes=$((($counter % 60)))
     hours=$((($counter / 60)))
     echo $hours h $minutes m
-    sleep 0.1
+    sleep 60
     counter=$((($counter + 1)))
 
     clear
