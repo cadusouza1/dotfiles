@@ -1,0 +1,13 @@
+#/usr/bin/env sh
+
+counter=0
+
+while true; do
+    minutes=$((($counter % 60)))
+    hours=$((($counter / 60)))
+    echo $hours h $minutes m
+    sleep 0.1
+    counter=$((($counter + 1)))
+
+    clear
+done
