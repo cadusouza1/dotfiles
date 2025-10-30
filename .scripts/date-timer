@@ -1,0 +1,20 @@
+#/usr/bin/env sh
+
+initial_date=$(date +"%s")
+
+seconds=0
+minutes=0
+hours=0
+
+while true; do
+    current_date=$(date +"%s")
+    date_diff=$((($current_date - $initial_date)))
+
+    seconds=$((($date_diff % 60)))
+    minutes=$((( ($date_diff / 60) % 60)))
+    hours=$((($date_diff / 3600)))
+
+    echo ${hours}h ${minutes}m ${seconds}s
+    sleep 1
+    clear
+done
