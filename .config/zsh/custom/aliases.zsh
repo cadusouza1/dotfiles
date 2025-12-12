@@ -6,9 +6,18 @@ alias v="vim"
 
 # ZSH config
 alias zup="source $ZDOTDIR/.zshrc"
+
 alias ls="exa --color=auto -a --group-directories-first"
 alias ll="ls -l"
 alias sp="sudo pacman --color=auto"
+alias y="yay --color=auto"
+
+alias rm="rm -v"
+alias mv="mv -v"
+alias cp="cp -v"
+alias mkdir="mkdir -v"
+
+alias mvd="mv ~/Downloads/$1 $2"
 
 lt() {
     if test -n "$argv[1]"; then

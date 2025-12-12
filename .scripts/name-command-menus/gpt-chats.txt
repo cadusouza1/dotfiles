@@ -1,18 +1,10 @@
 Bash > $BROWSER https://chat.deepseek.com/a/chat/s/b46d47af-8414-4856-8729-39e677492e78
-Calculus > $BROWSER https://chat.deepseek.com/a/chat/s/262a3e0e-a567-4f04-b285-baaba8d68cc3
-Collatz > $BROWSER https://chat.deepseek.com/a/chat/s/976e6eaa-576f-4126-b371-7a0b6333ab63
-Dev Job > $BROWSER https://chat.deepseek.com/a/chat/s/0d23e69f-ab0f-4549-a2a7-208143dedfbf
-Discreta > $BROWSER https://chat.deepseek.com/a/chat/s/1809d1cb-421e-43ec-a1b9-919b6a6e96f4
 Extensão > $BROWSER https://chat.deepseek.com/a/chat/s/cf44b25c-36d0-4ca7-bfab-12a953c30684
-Governança de Dados > $BROWSER https://chat.deepseek.com/a/chat/s/e2ac9e65-fe4c-4cac-b426-f39ccb208f09
 Haskell > $BROWSER https://chat.deepseek.com/a/chat/s/25487ffa-ca08-4080-9cb4-93a8acceadbe
 Lagrange Interpolator > $BROWSER https://chat.deepseek.com/a/chat/s/493a2da7-5a00-41fd-852a-3cd1ac1275d1
 Lagrange Visualizer > $BROWSER https://chat.deepseek.com/a/chat/s/091baaf3-a442-40c6-a7aa-b10562919a88
 Personal Homepage > $BROWSER https://chat.deepseek.com/a/chat/s/216e6edc-6bb7-4a59-acd4-a9b0d1ced259
 Probest > $BROWSER https://chat.deepseek.com/a/chat/s/d3b3f0ec-d842-4af0-885e-a50f7dbb86b2
-Psychological Support > $BROWSER https://chat.deepseek.com/a/chat/s/4357eea1-7c4e-4083-af1a-de76a4f44b56
 Taylor Polinomial > $BROWSER https://chat.deepseek.com/a/chat/s/978b5917-013a-4fe8-8fbc-020581c76637
 Web Dev > $BROWSER https://chat.deepseek.com/a/chat/s/52c8b1aa-155a-4fb5-a166-95ab42a35abb
-pygraphx > $BROWSER https://chat.deepseek.com/a/chat/s/6aa4bae5-38f4-482a-bd0f-8272a2dfe506
-sps > $BROWSER https://chat.deepseek.com/a/chat/s/3535f44e-b09a-45af-97cb-ba44b7aab1be
 st > $BROWSER https://chat.deepseek.com/a/chat/s/ec89a8e4-eba9-4e46-9830-25fced0e46cb

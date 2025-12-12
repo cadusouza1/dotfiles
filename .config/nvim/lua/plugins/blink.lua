@@ -3,7 +3,7 @@ return {
 	-- optional: provides snippets for the snippet source
 	dependencies = {
 		{ "rafamadriz/friendly-snippets" },
-		{ "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" } },
+		-- { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" } },
 	},
 
 	-- use a release tag to download pre-built binaries
@@ -43,19 +43,19 @@ return {
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lsp", "snippets", "path", "dictionary", "buffer", "cmdline" },
-			providers = {
-				dictionary = {
-					module = "blink-cmp-dictionary",
-					name = "Dict",
-					-- Make sure this is at least 2.
-					-- 3 is recommended
-					min_keyword_length = 4,
-					opts = {
-						dictionary_files = { vim.fn.expand("~/br-words-base.txt") },
-					},
-				},
-			},
+			default = { "lsp", "snippets", "path", "buffer", "cmdline" },
+			-- providers = {
+			-- 	dictionary = {
+			-- 		module = "blink-cmp-dictionary",
+			-- 		name = "Dict",
+			-- 		-- Make sure this is at least 2.
+			-- 		-- 3 is recommended
+			-- 		min_keyword_length = 4,
+			-- 		opts = {
+			-- 			dictionary_files = { vim.fn.expand("~/dicionario_PT-BR.txt") },
+			-- 		},
+			-- 	},
+			-- },
 		},
 
 		-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance

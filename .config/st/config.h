@@ -5,7 +5,16 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "IosevkaTerm NFM:autohint=true:pixelsize=22";
+static char font[] = "IosevkaTerm NFM:style=regular:pixelsize=20";
+static char *font2[] = {
+    "Noto Sans Mono CJK KR:style=regular:pixelsize=20",
+    "Noto Sans Mono CJK HK:style=regular:pixelsize=20",
+    "Noto Sans Mono CJK JP:style=regular:pixelsize=20",
+    "Noto Sans Mono CJK SC:style=regular:pixelsize=20",
+    "Noto Sans Mono CJK TC:style=regular:pixelsize=20",
+};
+
+// static char font[] = "FiraCode Nerd Font Mono:pixelsize=16";
 static int borderpx = 2;
 
 /*
@@ -228,8 +237,8 @@ static Shortcut shortcuts[] = {
     {ControlMask, XK_Print, toggleprinter, {.i = 0}},
     {ShiftMask, XK_Print, printscreen, {.i = 0}},
     {XK_ANY_MOD, XK_Print, printsel, {.i = 0}},
-    {TERMMOD, XK_Prior, zoom, {.f = +1}},
-    {TERMMOD, XK_Next, zoom, {.f = -1}},
+    {ControlMask, XK_minus, zoom, {.f = -1}},
+    {ControlMask, XK_equal, zoom, {.f = +1}},
     {TERMMOD, XK_Home, zoomreset, {.f = 0}},
     {TERMMOD, XK_C, clipcopy, {.i = 0}},
     {TERMMOD, XK_V, clippaste, {.i = 0}},

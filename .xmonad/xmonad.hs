@@ -84,17 +84,20 @@ myModMask :: Foreign.C.CUInt
 myModMask = mod4Mask
 
 groupNames :: [String]
-groupNames = [
-            "Alkali Metals", "Alkaline Earth Metals",
-            "Transition Metals", "Post Transition Metals", "Metaloids"
-            ]
+groupNames = [ "Default", "Games", "Arq Comp", "Probest", "EPP" ]
 
-groups :: [[String]]
-groups = [ ["1:Lithium", "2:Sodium", "3:Potasium", "4:Rubidium"]
-         , ["5:Beryllium", "6:Magnesium", "7:Calcium", "8:Strontium"]
-         , ["9:Iron", "10:Cobalt", "11:Nickel", "12:Copper"] 
-         , ["13:Aluminum", "14:Galium", "15:Indium", "16:Thalium"]
-         , ["17:Boron", "18:Silicon", "19:Germanium", "20:Arsenic"] ]
+-- groups :: [[String]]
+-- groups = [ ["1:Lithium", "2:Sodium", "3:Potasium", "4:Rubidium"]
+--          , ["5:Beryllium", "6:Magnesium", "7:Calcium", "8:Strontium"]
+--          , ["9:Iron", "10:Cobalt", "11:Nickel", "12:Copper"] 
+--          , ["13:Aluminum", "14:Galium", "15:Indium", "16:Thalium"]
+--          , ["17:Boron", "18:Silicon", "19:Germanium", "20:Arsenic"] ]
+
+groups = [ ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+         , ["10", "11", "12", "13", "14", "15", "16", "17", "18"]
+         , ["19", "20", "21", "22", "23", "24", "25", "26", "27"] 
+         , ["28", "29", "30", "31", "32", "33", "34", "35", "36"]
+         , ["37", "38", "39", "40", "41", "42", "43", "44", "45"] ]
 
 {-# NOINLINE currentGroup #-}
 currentGroup = unsafePerformIO $ newIORef 0
@@ -224,6 +227,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
     {- Make the windows fullscreen -}
     , ((modm, xK_f), sendMessage ToggleLayout)
+    , ((modm, xK_x), spawn "xrandr --output eDP --auto")
 
     {- Operations with the master window -}
     , ((modm, xK_comma), sendMessage $ IncMasterN 1)
@@ -241,7 +245,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
         , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
-        , ((0, xK_g), myRunInTerm "steam")
+        , ((0, xK_g), myRunInTerm "magohud steam")
         , ((0, xK_s), spawn "xfce4-screenshooter")
         , ((0, xK_y), spawn "freetube")
         , ((0, xK_m), spawn "spotify")
@@ -281,7 +285,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         {- Brightness Control -}
         , ((0, xK_s), submap . M.fromList $
             [ ((0, xK_t), spawn "xset dpms force off")
-            , ((0, xK_m), spawn "ddcutil setvcp 10 1")
+            , ((0, xK_m), spawn "ddcutil setvcp 10 0")
             , ((0, xK_1), spawn "ddcutil setvcp 10 10")
             , ((0, xK_2), spawn "ddcutil setvcp 10 20")
             , ((0, xK_3), spawn "ddcutil setvcp 10 30")
@@ -327,17 +331,17 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
 
     , ((modm, xK_s), submap . M.fromList $
         [ {- Games -}
-          ((0, xK_c), myRunInTerm "steam steam://rungameid/1252780")
-        , ((0, xK_e), myRunInTerm "steam steam://rungameid/1066780")
-        , ((0, xK_b), myRunInTerm "steam steam://rungameid/960090")
-        , ((0, xK_r), myRunInTerm "steam steam://rungameid/291550")
-        , ((0, xK_f), myRunInTerm "steam steam://rungameid/427520")
-        , ((0, xK_o), myRunInTerm "steam steam://rungameid/49520")
-        , ((0, xK_x), myRunInTerm "steam steam://rungameid/323470")
-        , ((0, xK_m), myRunInTerm "steam steam://rungameid/1604000")
-        , ((0, xK_a), myRunInTerm "steam steam://rungameid/22380")
-        , ((0, xK_t), myRunInTerm "steam steam://rungameid/306020")
-        , ((0, xK_i), myRunInTerm "java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
+          ((0, xK_c), myRunInTerm "mangohud steam steam://rungameid/1252780")
+        , ((0, xK_e), myRunInTerm "mangohud steam steam://rungameid/1066780")
+        , ((0, xK_b), myRunInTerm "mangohud steam steam://rungameid/960090")
+        , ((0, xK_r), myRunInTerm "mangohud steam steam://rungameid/291550")
+        , ((0, xK_f), myRunInTerm "mangohud steam steam://rungameid/427520")
+        , ((0, xK_o), myRunInTerm "mangohud steam steam://rungameid/49520")
+        , ((0, xK_x), myRunInTerm "mangohud steam steam://rungameid/323470")
+        , ((0, xK_m), myRunInTerm "mangohud steam steam://rungameid/1604000")
+        , ((0, xK_a), myRunInTerm "mangohud steam steam://rungameid/22380")
+        , ((0, xK_t), myRunInTerm "mangohud steam steam://rungameid/306020")
+        , ((0, xK_i), myRunInTerm "mangohud java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
         , ((0, xK_j), spawn "~/.scripts/mpv/mpv-playlist-prev")
@@ -388,14 +392,29 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_2),                 viewWS 1)
     , ((modm, xK_3),                 viewWS 2)
     , ((modm, xK_4),                 viewWS 3)
+    , ((modm, xK_5),                 viewWS 4)
+    , ((modm, xK_6),                 viewWS 5)
+    , ((modm, xK_7),                 viewWS 6)
+    , ((modm, xK_8),                 viewWS 7)
+    , ((modm, xK_9),                 viewWS 8)
     , ((modm .|. shiftMask, xK_1),   moveToWS 0)
     , ((modm .|. shiftMask, xK_2),   moveToWS 1)
     , ((modm .|. shiftMask, xK_3),   moveToWS 2)
     , ((modm .|. shiftMask, xK_4),   moveToWS 3)
+    , ((modm .|. shiftMask, xK_5),   moveToWS 4)
+    , ((modm .|. shiftMask, xK_6),   moveToWS 5)
+    , ((modm .|. shiftMask, xK_7),   moveToWS 6)
+    , ((modm .|. shiftMask, xK_8),   moveToWS 7)
+    , ((modm .|. shiftMask, xK_9),   moveToWS 8)
     , ((modm .|. controlMask, xK_1), moveAndViewWS 0)
     , ((modm .|. controlMask, xK_2), moveAndViewWS 1)
     , ((modm .|. controlMask, xK_3), moveAndViewWS 2)
     , ((modm .|. controlMask, xK_4), moveAndViewWS 3)
+    , ((modm .|. controlMask, xK_5), moveAndViewWS 4)
+    , ((modm .|. controlMask, xK_6), moveAndViewWS 5)
+    , ((modm .|. controlMask, xK_7), moveAndViewWS 6)
+    , ((modm .|. controlMask, xK_8), moveAndViewWS 7)
+    , ((modm .|. controlMask, xK_9), moveAndViewWS 8)
 
     , ((modm, xK_t), submap . M.fromList $
         [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tmux-selector")
@@ -541,11 +560,11 @@ semiFull =
 
 
 myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows $ toggleLayouts full (
-        tall
+        dwindle
+    ||| tall
     ||| mirrorTall
     -- ||| tallMasterFocus
     -- ||| mirrorTallMasterFocus
-    ||| dwindle
     -- ||| threeColumns
     ||| semiFull
     )
@@ -597,8 +616,8 @@ myLogHook xmproc0 = dynamicLogWithPP xmobarPP {
 -- Perform an arbitrary action each time xmonad starts or is restarted
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
-myStartupHook = do
-    spawnOnOnce "workspace1" myTerminal
+myStartupHook = mempty
+    -- spawnOnOnce "workspace1" myTerminal
     -- spawnOnce "picom &"
 
 ------------------------------------------------------------------------

@@ -21,6 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.opt.textwidth = 60
 vim.opt.scrolloff = 999
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -49,8 +50,11 @@ vim.opt.wrap = true
 require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
+		{ "LazyVim/LazyVim", colorscheme = "gruber-darker" },
 	},
 
 	install = { colorscheme = { "gruber-darker" } },
 	checker = { enabled = false },
 })
+
+vim.cmd.colorscheme("gruber-darker")

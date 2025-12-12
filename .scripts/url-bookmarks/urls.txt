@@ -10,6 +10,7 @@ drive.google.com/drive/u/0/home
 github.com
 hackage.haskell.org/package/xmonad-contrib
 https://chat.deepseek.com/
+https://www.challengermode.com/s/Brawlhalla
 mail.google.com/mail/u/0
 portal.ufrj.br/Portal/
 topper64.co.uk/nk/btd6/income/chimps
