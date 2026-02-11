@@ -32,6 +32,8 @@ import           XMonad.Layout.Tabbed
 import           XMonad.Layout.ThreeColumns
 import           XMonad.Layout.ToggleLayouts
 import           XMonad.Layout.WindowNavigation
+import qualified XMonad.Layout.Magnifier as Mag
+import           XMonad.Layout.CenteredMaster
 
 import           XMonad.Util.EZConfig
 import           XMonad.Util.Run
@@ -206,6 +208,10 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. shiftMask, xK_k), windows W.swapUp)
     , ((modm .|. shiftMask, xK_t), withFocused $ windows . W.sink) -- Push window back into tiling
 
+   , ((modm .|. controlMask, xK_equal), sendMessage Mag.MagnifyMore)
+   , ((modm .|. controlMask, xK_minus), sendMessage Mag.MagnifyLess)
+   , ((modm .|. controlMask, xK_t    ), sendMessage Mag.Toggle)
+
     {- Operations with sublayouts -}
     , ((modm .|. controlMask, xK_h), sendMessage $ pullGroup L)
     , ((modm .|. controlMask, xK_l), sendMessage $ pullGroup R)
@@ -285,17 +291,17 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         {- Brightness Control -}
         , ((0, xK_s), submap . M.fromList $
             [ ((0, xK_t), spawn "xset dpms force off")
-            , ((0, xK_m), spawn "ddcutil setvcp 10 0")
-            , ((0, xK_1), spawn "ddcutil setvcp 10 10")
-            , ((0, xK_2), spawn "ddcutil setvcp 10 20")
-            , ((0, xK_3), spawn "ddcutil setvcp 10 30")
-            , ((0, xK_4), spawn "ddcutil setvcp 10 40")
-            , ((0, xK_5), spawn "ddcutil setvcp 10 50")
-            , ((0, xK_6), spawn "ddcutil setvcp 10 60")
-            , ((0, xK_7), spawn "ddcutil setvcp 10 70")
-            , ((0, xK_8), spawn "ddcutil setvcp 10 80")
-            , ((0, xK_9), spawn "ddcutil setvcp 10 90")
-            , ((0, xK_0), spawn "ddcutil setvcp 10 100")
+            , ((0, xK_m), spawn "~/.scripts/bright-set.sh 0")
+            , ((0, xK_1), spawn "~/.scripts/bright-set.sh 10")
+            , ((0, xK_2), spawn "~/.scripts/bright-set.sh 20")
+            , ((0, xK_3), spawn "~/.scripts/bright-set.sh 30")
+            , ((0, xK_4), spawn "~/.scripts/bright-set.sh 40")
+            , ((0, xK_5), spawn "~/.scripts/bright-set.sh 50")
+            , ((0, xK_6), spawn "~/.scripts/bright-set.sh 60")
+            , ((0, xK_7), spawn "~/.scripts/bright-set.sh 70")
+            , ((0, xK_8), spawn "~/.scripts/bright-set.sh 80")
+            , ((0, xK_9), spawn "~/.scripts/bright-set.sh 90")
+            , ((0, xK_0), spawn "~/.scripts/bright-set.sh 100")
             ])
 
         {- Alternative to look at the battery in full screen -}
@@ -341,7 +347,7 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_m), myRunInTerm "mangohud steam steam://rungameid/1604000")
         , ((0, xK_a), myRunInTerm "mangohud steam steam://rungameid/22380")
         , ((0, xK_t), myRunInTerm "mangohud steam steam://rungameid/306020")
-        , ((0, xK_i), myRunInTerm "mangohud java -jar ~/Downloads/TLauncher.v10/TLauncher.v10/TLauncher.jar")
+        , ((0, xK_i), myRunInTerm "mangohud java -jar ~/Downloads/TLauncher/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
         , ((0, xK_j), spawn "~/.scripts/mpv/mpv-playlist-prev")
@@ -493,79 +499,51 @@ myKeys = [
     , ("M-<button1>", withFocused mouseMoveWindow >> windows W.shiftMaster)
     ]
 
-mySpacing = spacingRaw False (Border 0 0 0 0) True (Border 0 0 0 0) True
+mySpacing = spacingRaw False (Border 20 20 20 20) True (Border 20 20 20 20) True
 
 tall =
       renamed [XMonad.Layout.Renamed.Replace "Tall"]
     $ mySpacing
     $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
     $ ResizableTall 1 (2/100) (1/2) []
 
 mirrorTall =
       renamed [XMonad.Layout.Renamed.Replace "Mirror Tall"]
     $ mySpacing
     $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
     $ Mirror
     $ ResizableTall 1 (2/100) (1/2) []
-
--- tallMasterFocus =
---       renamed [XMonad.Layout.Renamed.Replace "Tall Master Focus"]
---     $ mySpacing
---     $ smartBorders
---     $ avoidStruts
---     $ windowNavigation
---     $ ResizableTall 1 (2/100) (2/3) []
-
--- mirrorTallMasterFocus =
---       renamed [XMonad.Layout.Renamed.Replace "Mirror Tall Master Focus"]
---     $ mySpacing
---     $ smartBorders
---     $ avoidStruts
---     $ windowNavigation
---     $ Mirror
---     $ ResizableTall 1 (2/100) (2/3) []
 
 -- threeColumns =
 --       renamed [XMonad.Layout.Renamed.Replace "ThreeCol"]
 --     $ mySpacing
 --     $ smartBorders
---     $ avoidStruts
---     $ windowNavigation
 --     $ ThreeCol 1 (2/100) (1/2)
 
 dwindle =
       renamed [XMonad.Layout.Renamed.Replace "Dwindle"]
     $ mySpacing
     $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
     $ Dwindle R CW 1 1
 
 full =
       renamed [XMonad.Layout.Renamed.Replace "Full"]
-    $ windowNavigation
     $ noBorders Full
 
 semiFull =
       renamed [XMonad.Layout.Renamed.Replace "Full"]
     $ mySpacing
     $ smartBorders
-    $ avoidStruts
-    $ windowNavigation
     $ noBorders Full
 
-
-myLayout = addTabsBottom shrinkText def $ subLayout [0] Simplest $ boringWindows $ toggleLayouts full (
+myLayout = boringWindows 
+    $ toggleLayouts full 
+    $ avoidStruts 
+    $ Mag.magnifierOff 
+    $ windowNavigation (
         dwindle
     ||| tall
     ||| mirrorTall
-    -- ||| tallMasterFocus
-    -- ||| mirrorTallMasterFocus
-    -- ||| threeColumns
     ||| semiFull
     )
 
@@ -616,9 +594,9 @@ myLogHook xmproc0 = dynamicLogWithPP xmobarPP {
 -- Perform an arbitrary action each time xmonad starts or is restarted
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
-myStartupHook = mempty
+myStartupHook =
+    spawnOnce "picom &"
     -- spawnOnOnce "workspace1" myTerminal
-    -- spawnOnce "picom &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with the settings you specify. No need to modify this.
