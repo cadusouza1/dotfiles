@@ -16,7 +16,7 @@ return {
 			zsh = { "beautysh" },
 			tex = { "tex-fmt" },
 		},
-		format_on_save = { timeout_ms = 5000 },
+		format_on_save = { timeout_ms = 1000 },
 		formatters = {
 			clang_format = {
 				prepend_args = { "--style={IndentWidth: 4}" },
