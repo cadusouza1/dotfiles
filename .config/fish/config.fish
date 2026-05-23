@@ -29,3 +29,8 @@ if [ (whoami) != "u0_a374" ]
     export MANPAGER="nvim +Man!"
     [ -z "$TMUX" ] && tmux new-session -A -s $DEFAULT_TMUX_SESSION_NAME
 end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /home/kdu/.lmstudio/bin
+# End of LM Studio CLI section
+

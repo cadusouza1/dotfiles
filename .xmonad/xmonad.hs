@@ -13,7 +13,6 @@ import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.Submap
 import           XMonad.Actions.SwapWorkspaces
 import           XMonad.Actions.Volume
-import           XMonad.Actions.WithAll
 
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
@@ -21,19 +20,16 @@ import           XMonad.Hooks.ManageDocks
 
 import           XMonad.Layout.BoringWindows
 import           XMonad.Layout.Dwindle
-import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Renamed
 import           XMonad.Layout.ResizableTile
-import           XMonad.Layout.Simplest
 import           XMonad.Layout.Spacing
-import           XMonad.Layout.SubLayouts
-import           XMonad.Layout.Tabbed
-import           XMonad.Layout.ThreeColumns
 import           XMonad.Layout.ToggleLayouts
 import           XMonad.Layout.WindowNavigation
 import qualified XMonad.Layout.Magnifier as Mag
-import           XMonad.Layout.CenteredMaster
+import qualified XMonad.Layout.MultiToggle as Mt
+import           XMonad.Layout.MultiToggle.Instances
+import           XMonad.Layout.CenterMainFluid
 
 import           XMonad.Util.EZConfig
 import           XMonad.Util.Run
@@ -86,14 +82,7 @@ myModMask :: Foreign.C.CUInt
 myModMask = mod4Mask
 
 groupNames :: [String]
-groupNames = [ "Default", "Games", "Arq Comp", "Probest", "EPP" ]
-
--- groups :: [[String]]
--- groups = [ ["1:Lithium", "2:Sodium", "3:Potasium", "4:Rubidium"]
---          , ["5:Beryllium", "6:Magnesium", "7:Calcium", "8:Strontium"]
---          , ["9:Iron", "10:Cobalt", "11:Nickel", "12:Copper"] 
---          , ["13:Aluminum", "14:Galium", "15:Indium", "16:Thalium"]
---          , ["17:Boron", "18:Silicon", "19:Germanium", "20:Arsenic"] ]
+groupNames = [ "Default", "Games", "Ala", "Probest", "EPP" ]
 
 groups = [ ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
          , ["10", "11", "12", "13", "14", "15", "16", "17", "18"]
@@ -196,9 +185,6 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     [ ((modm, xK_Return), myRunInTerm "tmux new-session -A -s 0")
     , ((modm .|. shiftMask, xK_Return), spawn myTerminal)
     , ((modm, xK_m), myRunInTerm "~/.scripts/manpage/gum-man")
-    , ((modm, xK_g), spawn "~/.scripts/name-command-menu ~/.scripts/name-command-menus/gpt-chats.txt")
-    , ((modm .|. shiftMask, xK_g), myRunInTerm "~/.scripts/ollama/ollama-saved-chats")
-    , ((modm, xK_y), spawn "xdotool search --name 'Youtube' key --clearmodifiers space")
 
     {- Operations with windows -}
     , ((modm, xK_space), sendMessage NextLayout)
@@ -208,32 +194,19 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. shiftMask, xK_k), windows W.swapUp)
     , ((modm .|. shiftMask, xK_t), withFocused $ windows . W.sink) -- Push window back into tiling
 
-   , ((modm .|. controlMask, xK_equal), sendMessage Mag.MagnifyMore)
-   , ((modm .|. controlMask, xK_minus), sendMessage Mag.MagnifyLess)
-   , ((modm .|. controlMask, xK_t    ), sendMessage Mag.Toggle)
+    , ((modm .|. controlMask, xK_equal), sendMessage Mag.MagnifyMore)
+    , ((modm .|. controlMask, xK_minus), sendMessage Mag.MagnifyLess)
+    , ((modm .|. controlMask, xK_t    ), sendMessage Mag.Toggle)
 
-    {- Operations with sublayouts -}
-    , ((modm .|. controlMask, xK_h), sendMessage $ pullGroup L)
-    , ((modm .|. controlMask, xK_l), sendMessage $ pullGroup R)
-    , ((modm .|. controlMask, xK_k), sendMessage $ pullGroup U)
-    , ((modm .|. controlMask, xK_j), sendMessage $ pullGroup D)
-
-    , ((modm .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
-    , ((modm .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
-
-    , ((modm .|. controlMask, xK_period), onGroup W.focusDown')
-    , ((modm .|. controlMask, xK_comma), onGroup W.focusUp')
+    , ((modm, xK_x ), sendMessage $ Mt.Toggle MIRROR)
 
     , ((modm, xK_h), sendMessage Shrink)
     , ((modm, xK_l), sendMessage Expand)
 
     , ((modm .|. shiftMask, xK_q), kill) -- close focused window
-    , ((modm .|. controlMask, xK_q), killAll) -- close all windows
-    , ((modm .|. mod1Mask, xK_q), killOthers) -- close all windows without focus
 
     {- Make the windows fullscreen -}
     , ((modm, xK_f), sendMessage ToggleLayout)
-    , ((modm, xK_x), spawn "xrandr --output eDP --auto")
 
     {- Operations with the master window -}
     , ((modm, xK_comma), sendMessage $ IncMasterN 1)
@@ -250,9 +223,9 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_d), notifyAndSpawn "discord")
         , ((0, xK_t), notifyAndSpawn "~/Telegram/Telegram")
         , ((0, xK_o), notifyAndSpawn "obs")
-        , ((0, xK_i), notifyAndSpawn "~/Obsidian/obsidian")
+        , ((0, xK_i), notifyAndSpawn "obsidian")
         , ((0, xK_g), myRunInTerm "magohud steam")
-        , ((0, xK_s), spawn "xfce4-screenshooter")
+        , ((0, xK_s), spawn "ksnip -f")
         , ((0, xK_y), spawn "freetube")
         , ((0, xK_m), spawn "spotify")
 
@@ -344,10 +317,10 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_f), myRunInTerm "mangohud steam steam://rungameid/427520")
         , ((0, xK_o), myRunInTerm "mangohud steam steam://rungameid/49520")
         , ((0, xK_x), myRunInTerm "mangohud steam steam://rungameid/323470")
-        , ((0, xK_m), myRunInTerm "mangohud steam steam://rungameid/1604000")
+        , ((0, xK_i), myRunInTerm "mangohud steam steam://rungameid/1604000")
         , ((0, xK_a), myRunInTerm "mangohud steam steam://rungameid/22380")
         , ((0, xK_t), myRunInTerm "mangohud steam steam://rungameid/306020")
-        , ((0, xK_i), myRunInTerm "mangohud java -jar ~/Downloads/TLauncher/TLauncher.v10/TLauncher.jar")
+        , ((0, xK_m), myRunInTerm "mangohud java -jar ~/Downloads/TLauncher/TLauncher.v10/TLauncher.jar")
 
         {- Spotify integration -}
         , ((0, xK_j), spawn "~/.scripts/mpv/mpv-playlist-prev")
@@ -425,14 +398,15 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm, xK_t), submap . M.fromList $
         [ ((0, xK_l), myRunInTerm "~/.scripts/tmux/tmux-selector")
         , ((0, xK_p), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/ 2")
-        , ((shiftMask, xK_p), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pdfs/ 2")
+        , ((shiftMask, xK_p), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/sync-dir/pdfs/ 2")
         , ((shiftMask, xK_l), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/leetcode/ 1")
         , ((0, xK_a), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/pprojects/aoc/ 4")
         , ((0, xK_h), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~ 2")
         , ((0, xK_n), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/Documents/Kdu/ 3")
         , ((0, xK_c), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.config/ 2")
         , ((0, xK_d), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/dotfiles/ 2")
-        , ((0, xK_s), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.scripts/ 2")
+        , ((shiftMask, xK_s), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/.scripts/ 2")
+        , ((0, xK_s), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/sync-dir/ 2")
         , ((0, xK_m), myRunInTerm "~/.scripts/tmux/tmux-dir-launch ~/math/ 2")
         ])
 
@@ -479,8 +453,6 @@ myKeys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList
         , ((0, xK_8), setScreenWindowSpacing 80)
         , ((0, xK_9), setScreenWindowSpacing 90)
         , ((0, xK_t), toggleBorders)
-        , ((0, xK_f), spawn "xrandr -s 1920x1080")
-        , ((0, xK_h), spawn "xrandr -s 1280x720")
         ])
     ]
 
@@ -507,24 +479,17 @@ tall =
     $ smartBorders
     $ ResizableTall 1 (2/100) (1/2) []
 
-mirrorTall =
-      renamed [XMonad.Layout.Renamed.Replace "Mirror Tall"]
-    $ mySpacing
-    $ smartBorders
-    $ Mirror
-    $ ResizableTall 1 (2/100) (1/2) []
-
--- threeColumns =
---       renamed [XMonad.Layout.Renamed.Replace "ThreeCol"]
---     $ mySpacing
---     $ smartBorders
---     $ ThreeCol 1 (2/100) (1/2)
-
 dwindle =
       renamed [XMonad.Layout.Renamed.Replace "Dwindle"]
     $ mySpacing
     $ smartBorders
     $ Dwindle R CW 1 1
+
+centerMainFluid =
+      renamed [XMonad.Layout.Renamed.Replace "Center Main Fluid"]
+    $ mySpacing
+    $ smartBorders
+    $ CenterMainFluid 1 (2/100) (1/2)
 
 full =
       renamed [XMonad.Layout.Renamed.Replace "Full"]
@@ -540,10 +505,12 @@ myLayout = boringWindows
     $ toggleLayouts full 
     $ avoidStruts 
     $ Mag.magnifierOff 
-    $ windowNavigation (
+    $ windowNavigation 
+    $ Mt.mkToggle (Mt.single MIRROR)
+    (
         dwindle
     ||| tall
-    ||| mirrorTall
+    ||| centerMainFluid
     ||| semiFull
     )
 

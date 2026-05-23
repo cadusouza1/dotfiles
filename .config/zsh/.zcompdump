@@ -89,7 +89,6 @@ _comps=(
 'bibtex' '_bibtex'
 'bindkey' '_bindkey'
 'bison' '_bison'
-'bluetoothctl' '_bluetoothctl'
 'bmake' '_make'
 'bogofilter' '_bogofilter'
 'bogotune' '_bogofilter'
@@ -136,6 +135,11 @@ _comps=(
 'cabal' '_cabal'
 'cal' '_cal'
 'calendar' '_calendar'
+'calibre' '_calibre'
+'calibredb' '_calibre'
+'calibre-debug' '_calibre'
+'calibre-server' '_calibre'
+'calibre-smtp' '_calibre'
 'cargo' '_cargo'
 'cat' '_cat'
 'catchsegv' '_precommand'
@@ -278,6 +282,8 @@ _comps=(
 'dunst' '_dunst'
 '_dunstctl' '_dunstctl'
 'dunstctl' '_dunstctl'
+'_dunstify' '_dunstify'
+'dunstify' '_dunstify'
 'dvibook' '_dvi'
 'dviconcat' '_dvi'
 'dvicopy' '_dvi'
@@ -290,6 +296,11 @@ _comps=(
 'dwb' '_webbrowser'
 'e2label' '_e2label'
 'eatmydata' '_precommand'
+'ebook-convert' '_calibre'
+'ebook-edit' '_calibre'
+'ebook-meta' '_calibre'
+'ebook-polish' '_calibre'
+'ebook-viewer' '_calibre'
 'ecasound' '_ecasound'
 'echotc' '_echotc'
 'echoti' '_echoti'
@@ -325,13 +336,16 @@ _comps=(
 'express' '_webbrowser'
 'extcheck' '_java'
 'extractres' '_psutils'
+'eza' '_eza'
 'fakeroot' '_fakeroot'
 'false' '_nothing'
+'fastfetch' '_fastfetch'
 'fc' '_fc'
 'fc-list' '_xft_fonts'
 'fc-match' '_xft_fonts'
 'fd' '_fd'
 'feh' '_feh'
+'fetch-ebook-metadata' '_calibre'
 'fetchmail' '_fetchmail'
 'ffmpeg' '_ffmpeg'
 'fg' '_jobs_fg'
@@ -474,7 +488,6 @@ _comps=(
 'gnutls-serv' '_gnutls'
 'god' '_od'
 'gofmt' '_go'
-'googler' '_googler'
 'gpasswd' '_gpasswd'
 'gpaste' '_paste'
 'gpatch' '_patch'
@@ -590,7 +603,6 @@ _comps=(
 'hostnamectl' '_hostnamectl'
 'hotjava' '_webbrowser'
 'htop' '_htop'
-'hugo' '_hugo'
 'iceweasel' '_mozilla'
 'icombine' '_ispell'
 'iconv' '_iconv'
@@ -673,8 +685,6 @@ _comps=(
 'ldd' '_ldd'
 'less' '_less'
 'let' '_math'
-'lf' '_lf'
-'lfcd' '_lf'
 'lftp' '_ncftp'
 'lha' '_lha'
 'light' '_webbrowser'
@@ -707,6 +717,8 @@ _comps=(
 'lpr' '_lp'
 'lprm' '_lp'
 'lpstat' '_lp'
+'lrf2lrs' '_calibre'
+'lrfviewer' '_calibre'
 'ls' '_ls'
 'lsattr' '_lsattr'
 'lsblk' '_lsblk'
@@ -719,7 +731,6 @@ _comps=(
 'ltrace' '_ltrace'
 'lua' '_lua'
 'luarocks' '_luarocks'
-'luarocks-admin' '_luarocks-admin'
 'lynx' '_lynx'
 'lz4' '_lz4'
 'lz4c' '_lz4'
@@ -849,7 +860,6 @@ _comps=(
 'neutron' '_openstack'
 'new' '_mh'
 'newgrp' '_groups'
-'newsboat' '_newsboat'
 'next' '_mh'
 'nginx' '_nginx'
 'ngrep' '_ngrep'
@@ -872,8 +882,6 @@ _comps=(
 'ntalk' '_other_accounts'
 'numfmt' '_numfmt'
 'nvim' '_vim'
-'_nvme' '_nvme'
-'nvme' '_nvme'
 'objdump' '_objdump'
 'od' '_od'
 'ogg123' '_vorbis'
@@ -1234,6 +1242,8 @@ _comps=(
 'systemd-cgtop' '_systemd'
 'systemd-delta' '_systemd-delta'
 'systemd-detect-virt' '_systemd'
+'systemd-hwdb' '_systemd-hwdb'
+'systemd-id128' '_systemd-id128'
 'systemd-inhibit' '_systemd-inhibit'
 'systemd-machine-id-setup' '_systemd'
 'systemd-notify' '_systemd'
@@ -1355,6 +1365,7 @@ _comps=(
 'urxvt256c-mlc' '_urxvt'
 'urxvtc' '_urxvt'
 'useradd' '_user_admin'
+'userdbctl' '_userdbctl'
 'userdel' '_users'
 'usermod' '_user_admin'
 'vacuumdb' '_postgresql'
@@ -1691,21 +1702,21 @@ bindkey '^[,' _history-complete-newer
 bindkey '^[/' _history-complete-older
 bindkey '^[~' _bash_complete-word
 
-autoload -Uz _alacritty _bat _bluetoothctl _bootctl _busctl \
-            _bwrap _cargo _coredumpctl _curl _ddgr \
-            _deno _dunst _dunstctl _fd _googler \
-            _gum _hostnamectl _hugo _img2sixel _insmod \
-            _journalctl _kernel-install _lf _localectl _loginctl \
-            _lsmod _luarocks _luarocks-admin _machinectl _meson \
-            _mkinitcpio _mpv _networkctl _newsboat _ninja \
-            _nvme _oomctl _p11-kit _pacman _parallel \
-            _pass _pip _pulseaudio _resolvectl _rg \
-            _rmmod _run0 _sd_bus_address _sd_hosts_or_user_at_host _sd_machines \
-            _sd_outputmodes _sd_unit_files _sensors _sensors-detect _shtab \
-            _systemctl _systemd _systemd-analyze _systemd-delta _systemd-inhibit \
-            _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles _tailscale \
-            _texdoc _timedatectl _tldr _trust _udevadm \
-            _udisks2 _varlinkctl _wikiman _wpctl _yay \
+autoload -Uz _alacritty _bat _bootctl _busctl _bwrap \
+            _calibre _cargo _coredumpctl _curl _ddgr \
+            _deno _dkms _dunst _dunstctl _dunstify \
+            _eza _fastfetch _fd _gum _hostnamectl \
+            _img2sixel _insmod _journalctl _kernel-install _localectl \
+            _loginctl _lsmod _machinectl _meson _mkinitcpio \
+            _mpv _networkctl _ninja _oomctl _p11-kit \
+            _pacman _parallel _pass _pip _pulseaudio \
+            _resolvectl _rg _rmmod _run0 _sd_bus_address \
+            _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files _sensors \
+            _sensors-detect _shtab _systemctl _systemd _systemd-analyze \
+            _systemd-delta _systemd-hwdb _systemd-id128 _systemd-inhibit _systemd-nspawn \
+            _systemd-path _systemd-run _systemd-tmpfiles _tailscale _texdoc \
+            _timedatectl _tldr _trust _udevadm _udisks2 \
+            _userdbctl _varlinkctl _wikiman _wpctl _yay \
             _yt-dlp _zathura _cdr _all_labels _all_matches \
             _alternative _approximate _arg_compile _arguments _bash_completions \
             _cache_invalid _call_function _combination _complete _complete_debug \

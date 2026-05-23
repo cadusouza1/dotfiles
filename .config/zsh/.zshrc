@@ -37,6 +37,7 @@ done
 . $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export FZF_ALT_C_COMMAND=""
-[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+[ -f /usr/share/fzf/completion.zsh ] && . /usr/share/fzf/completion.zsh
+[ -f /usr/share/fzf/key-bindings.zsh ] && . /usr/share/fzf/key-bindings.zsh
 
 bindkey -v
