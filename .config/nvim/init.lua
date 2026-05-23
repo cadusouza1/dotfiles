@@ -15,5 +15,4 @@ end)
 
 vim.lsp.enable("clangd")
 vim.lsp.enable("texlab")
-vim.lsp.enable("gopls")
-vim.lsp.enable("ltex-ls-plus")
+vim.lsp.enable("pyright")

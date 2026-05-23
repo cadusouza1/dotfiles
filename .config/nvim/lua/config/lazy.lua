@@ -58,8 +58,3 @@ require("lazy").setup({
 })
 
 vim.cmd.colorscheme("gruber-darker")
-
-
-require("flutter-tools").setup {
-    fvm = true
-}

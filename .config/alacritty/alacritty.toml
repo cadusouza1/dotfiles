@@ -1,3 +1,5 @@
+# dynamic_title = true
+import = ["/home/kdu/.config/alacritty/themes/themes/gruvbox_material.toml"]
 
 # import = ["/home/kdu/srcery-terminal/alacritty/srcery_alacritty.toml"]
 # title = "Alacritty"
@@ -20,7 +22,3 @@ style = "Italic"
 [font.normal]
 family = "Iosevka Nerd Font"
 style = "Regular"
-
-[general]
-# dynamic_title = true
-import = ["/home/kdu/.config/alacritty/themes/themes/gruvbox_material.toml"]

@@ -3,7 +3,6 @@ alias t="tldr"
 alias z="zathura --fork"
 alias b="bat --theme=gruvbox-dark --paging=never"
 alias v="vim"
-alias p="DISPLAY= pass"
 
 # ZSH config
 alias zup="source $ZDOTDIR/.zshrc"

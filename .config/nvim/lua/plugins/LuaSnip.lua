@@ -15,19 +15,19 @@ return {
 			enable_autosnippets = true,
 		})
 
-		vim.keymap.set({ "i" }, "<C-K>", function()
+		vim.keymap.set({ "i" }, "<A-l>", function()
 			ls.expand()
 		end, { silent = true })
 
-		vim.keymap.set({ "i", "s" }, "<C-L>", function()
+		vim.keymap.set({ "i", "s" }, "<A-j>", function()
 			ls.jump(1)
 		end, { silent = true })
 
-		vim.keymap.set({ "i", "s" }, "<C-J>", function()
+		vim.keymap.set({ "i", "s" }, "<A-k>", function()
 			ls.jump(-1)
 		end, { silent = true })
 
-		vim.keymap.set({ "i", "s" }, "<C-E>", function()
+		vim.keymap.set({ "i", "s" }, "<A-e>", function()
 			if ls.choice_active() then
 				ls.change_choice(1)
 			end
